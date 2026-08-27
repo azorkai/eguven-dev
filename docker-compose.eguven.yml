@@ -19,13 +19,13 @@ services:
       - eguven_data:/app/server/data
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.eguven.rule=Host(`eguven.dev`, `www.eguven.dev`)"
+      - "traefik.http.routers.eguven.rule=Host(`eguven.dev`) || Host(`www.eguven.dev`)"
       - "traefik.http.routers.eguven.entrypoints=websecure"
       - "traefik.http.routers.eguven.tls.certresolver=letsencrypt"
       - "traefik.http.services.eguven.loadbalancer.server.port=8080"
       # HTTP -> HTTPS: landing servisinin tanimladigi ortak middleware'i
       # yeniden kullanir (docs servisi de ayni sekilde yapiyor).
-      - "traefik.http.routers.eguven-http.rule=Host(`eguven.dev`, `www.eguven.dev`)"
+      - "traefik.http.routers.eguven-http.rule=Host(`eguven.dev`) || Host(`www.eguven.dev`)"
       - "traefik.http.routers.eguven-http.entrypoints=web"
       - "traefik.http.routers.eguven-http.middlewares=redirect-to-https"
     networks:
