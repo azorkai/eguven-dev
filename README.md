@@ -2,7 +2,7 @@
 
 Personal site and portfolio. Single-container app: an Express server serves the
 Vite-built React SPA **and** the API from the same port, so the frontend talks to
-`/api` same-origin — no CORS layer, no second service.
+`/api` same-origin, so there is no CORS layer and no second service.
 
 ## Stack
 
@@ -16,9 +16,9 @@ Vite-built React SPA **and** the API from the same port, so the frontend talks t
 
 ## Routes
 
-- `/` — projects
-- `/articles` — writing
-- `/contact` — contact form (Turnstile-gated, delivered over SMTP)
+- `/`: projects
+- `/articles`: writing
+- `/contact`: contact form (Turnstile-gated, delivered over SMTP)
 
 `GET /api/posts`, `POST /api/contact`.
 
@@ -51,7 +51,7 @@ Deployment (DNS, Traefik wiring, rollback) is documented in [DEPLOY.md](./DEPLOY
 
 ## Notes
 
-- `server/.env` and `server/data/` are gitignored — secrets live on the server,
+- `server/.env` and `server/data/` are gitignored. Secrets live on the server,
   blog data lives in a Docker volume.
 - The runtime image installs production dependencies only; every module the
   server imports (`express`, `cors`, `dotenv`, `nedb-promises`, `nodemailer`)

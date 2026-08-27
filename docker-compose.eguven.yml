@@ -1,4 +1,4 @@
-# eguven.dev — AYRI compose projesi.
+# eguven.dev: AYRI compose projesi.
 #
 # Production /root/docker-compose.yml dosyasina DOKUNMAZ. Traefik zaten Docker
 # socket'ini dinledigi icin bu container'i label'larindan otomatik alir; ayni

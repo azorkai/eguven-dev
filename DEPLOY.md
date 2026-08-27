@@ -1,8 +1,8 @@
-# eguven.dev — Deploy
+# eguven.dev Deploy
 
 Site tek container: Express hem `dist/` statiklerini hem `/api` rotalarini
 **ayni porttan (8080)** serve ediyor. Frontend relative `/api` cagirdigi icin
-same-origin — CORS ayari, ikinci container, path routing gerekmiyor.
+same-origin. CORS ayari, ikinci container, path routing gerekmiyor.
 
 Yerelde dogrulandi: imaj kuruluyor, container 8080'de dinliyor, `/`, `/contact`,
 `/articles`, `/api/posts` ve statik asset'ler 200 donuyor, `.env` imaja girmiyor.
@@ -19,7 +19,7 @@ Kazanc: bu servis coksede, build'i bozulsa da **crmsolid yigini etkilenmez**.
 
 ---
 
-## 1. DNS (once bu — sitede is yok, domain cozulmuyor)
+## 1. DNS (once bu: domain cozulmeden sitede is yok)
 
 Su an `eguven.dev` **SERVFAIL** donuyor (NXDOMAIN degil). Yani domain kayitli ve
 delege edilmis, ama atandigi nameserver'lar cevap vermiyor.
@@ -37,7 +37,7 @@ crmsolid.com zaten orada). Sonra Cloudflare'de:
 | A   | `eguven.dev`| `46.225.21.115`  | **gri (DNS only)** |
 | A   | `www`       | `46.225.21.115`  | **gri (DNS only)** |
 
-> Ilk sertifika cikarken **gri bulut** sart — Let's Encrypt HTTP-01 challenge
+> Ilk sertifika cikarken **gri bulut** sart, Let's Encrypt HTTP-01 challenge
 > temiz gecsin. Sertifika geldikten sonra turuncuya cevirebilirsin, ama SSL
 > modunu **Full (strict)** yap. "Flexible" birakirsan yonlendirme dongusune girer.
 
@@ -75,7 +75,7 @@ chmod 600 /root/eguven-secrets.env
 
 Sunucuda kontrol edildi: ag adi duz **`web`** (compose'un uretecegi `root_web`
 degil) ve `traefik` container'i bu aga bagli. `docker-compose.eguven.yml` bunu
-`external: true, name: web` olarak kullaniyor — ekstra ayar gerekmiyor.
+`external: true, name: web` olarak kullaniyor, ekstra ayar gerekmiyor.
 
 Teyit icin:
 ```bash
@@ -90,7 +90,7 @@ cd /root/eguven-dev
 docker compose -f docker-compose.eguven.yml up -d --build
 ```
 
-Production yigini calisirken bu komut ona **dokunmaz** — ayri proje, ayri
+Production yigini calisirken bu komut ona **dokunmaz**: ayri proje, ayri
 container, ayri volume.
 
 ---
