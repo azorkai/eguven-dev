@@ -35,11 +35,9 @@ services:
 networks:
   web:
     external: true
-    # DIKKAT: sunucudaki gercek ag adiyla dogrula:
-    #   docker network ls | grep web
-    # /root/docker-compose.yml calistigi icin proje adi "root" -> "root_web"
-    # beklenir, ama once dogrula. Yanlis ad => container Traefik'i goremez.
-    name: ${TRAEFIK_NETWORK:-root_web}
+    # Sunucuda dogrulandi: ag adi duz "web" (docker network ls) ve traefik
+    # container'i bu aga bagli. Compose'un olusturdugu <proje>_web DEGIL.
+    name: web
 
 volumes:
   eguven_data:

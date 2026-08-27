@@ -71,22 +71,17 @@ chmod 600 /root/eguven-secrets.env
 
 ---
 
-## 4. Traefik agini DOGRULA (tahmin etme)
+## 4. Traefik agi (dogrulandi)
 
+Sunucuda kontrol edildi: ag adi duz **`web`** (compose'un uretecegi `root_web`
+degil) ve `traefik` container'i bu aga bagli. `docker-compose.eguven.yml` bunu
+`external: true, name: web` olarak kullaniyor — ekstra ayar gerekmiyor.
+
+Teyit icin:
 ```bash
 docker network ls | grep web
+docker inspect traefik --format '{{range $k,$v := .NetworkSettings.Networks}}{{$k}}{{end}}'
 ```
-
-Cikan ada gore compose'daki `name:` alanini ayarla. `/root/docker-compose.yml`
-calistigi icin proje adi `root` -> ag `root_web` bekleniyor, ama **once dogrula**.
-Yanlis ad verirsen container Traefik'i goremez ve site 404 doner.
-
-Farkli cikarsa dosyayi duzenlemek yerine env ile gec:
-```bash
-export TRAEFIK_NETWORK=<gercek_ad>
-```
-
----
 
 ## 5. Ayaga kaldir
 
