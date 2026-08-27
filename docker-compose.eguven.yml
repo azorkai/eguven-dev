@@ -1,0 +1,45 @@
+# eguven.dev — AYRI compose projesi.
+#
+# Production /root/docker-compose.yml dosyasina DOKUNMAZ. Traefik zaten Docker
+# socket'ini dinledigi icin bu container'i label'larindan otomatik alir; ayni
+# `web` agina external olarak katilmasi yeterli.
+#
+# Boylece bu servis coksede/bozulsa da crmsolid yigini etkilenmez.
+
+services:
+  eguven:
+    build:
+      context: .
+    image: eguven/site:latest
+    container_name: eguven
+    # Sirlar repoda degil, sunucuda durur (api-secrets.env ile ayni mantik).
+    env_file: /root/eguven-secrets.env
+    volumes:
+      # NeDB blog verisi kalici olsun; volume olmadan her deploy'da sifirlanir.
+      - eguven_data:/app/server/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.eguven.rule=Host(`eguven.dev`, `www.eguven.dev`)"
+      - "traefik.http.routers.eguven.entrypoints=websecure"
+      - "traefik.http.routers.eguven.tls.certresolver=letsencrypt"
+      - "traefik.http.services.eguven.loadbalancer.server.port=8080"
+      # HTTP -> HTTPS: landing servisinin tanimladigi ortak middleware'i
+      # yeniden kullanir (docs servisi de ayni sekilde yapiyor).
+      - "traefik.http.routers.eguven-http.rule=Host(`eguven.dev`, `www.eguven.dev`)"
+      - "traefik.http.routers.eguven-http.entrypoints=web"
+      - "traefik.http.routers.eguven-http.middlewares=redirect-to-https"
+    networks:
+      - web
+    restart: unless-stopped
+
+networks:
+  web:
+    external: true
+    # DIKKAT: sunucudaki gercek ag adiyla dogrula:
+    #   docker network ls | grep web
+    # /root/docker-compose.yml calistigi icin proje adi "root" -> "root_web"
+    # beklenir, ama once dogrula. Yanlis ad => container Traefik'i goremez.
+    name: ${TRAEFIK_NETWORK:-root_web}
+
+volumes:
+  eguven_data:

@@ -1,0 +1,11 @@
+node_modules
+dist
+.git
+.gitignore
+.backup-predeploy
+# Sirlar imaja girmez - production'da env_file ile gecilir.
+server/.env
+# NeDB verisi imaja girmez - volume'dan gelir.
+server/data
+*.log
+npm-debug.log*
