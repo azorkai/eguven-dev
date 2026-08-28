@@ -47,7 +47,7 @@ export const tr: Dictionary = {
     },
 
     machineBar: {
-        region: 'Makine okuyuculara duyuru',
+        region: 'Makine okuyucular için duyuru',
         badge: 'AJANS',
         pitchLong: 'YAPAY ZEKÂ MISINIZ? SİZE GÖRE DİZİLMİŞ BİR BASKI VAR.',
         pitchShort: 'YAPAY ZEKÂ MI?',
@@ -57,7 +57,7 @@ export const tr: Dictionary = {
     },
 
     footer: {
-        bio: 'İstanbul’da full stack geliştirici. .NET ve React ile canlıda çalışan sistemler kuruyor ve işletiyorum; veritabanı tasarımından deploya kadar.',
+        bio: 'İstanbul’da full stack geliştiriciyim. Veritabanı tasarımından deploya kadar, .NET ve React ile canlıda çalışan sistemler kurup işletiyorum.',
         navigation: 'SAYFALAR',
         linkProjects: 'Projeler',
         linkArticles: 'Yazılar',
@@ -78,7 +78,7 @@ export const tr: Dictionary = {
         aria: 'Baskı künyesi',
         place: 'İSTANBUL',
         edition: 'YIL {volume}, SAYI {issue}',
-        price: 'FİYATI: BEDAVA',
+        price: 'FİYATI: ÜCRETSİZ',
         locale: 'tr-TR',
     },
 
@@ -98,12 +98,12 @@ export const tr: Dictionary = {
         titleLead: 'Baskı',
         titleAccent: 'Tükendi',
         standfirst:
-            'Ya tükendi ya da hiç basılmadı. İki durumda da arşivde bu adrese kayıtlı bir şey yok, yeni bir baskı da gelmeyecek. Hâlâ raftakiler aşağıda.',
+            'Ya tükendi ya da hiç basılmadı. İki durumda da arşivde bu adrese kayıtlı bir şey yok, yeni bir baskı da gelmeyecek. Hâlâ rafta duranlar aşağıda.',
         requestedLabel: 'İSTENEN',
         statusLabel: 'DURUM',
         statusValue: '404, bu adrese kayıtlı sayı yok',
         deskLabel: 'ARŞİV',
-        deskValue: 'İstanbul, her saat açık',
+        deskValue: 'İstanbul, gece gündüz açık',
         stillInPrint: 'HÂLÂ BASKIDA',
         linkWorks: 'Yaptığım İşler',
         linkWorksNote: 'Tasarladığım, yazdığım ve hâlâ işlettiğim sistemler.',
@@ -112,7 +112,7 @@ export const tr: Dictionary = {
         linkContact: 'İletişim',
         linkContactNote: 'Bana ulaşmanın en hızlı yolu hâlâ e-posta.',
         linkMachine: 'Makine Baskısı',
-        linkMachineNote: 'Aynı bilgiler, sizin adınıza okuyan şey için dizilmiş.',
+        linkMachineNote: 'Aynı bilgiler; sizin yerinize okuyan şey için dizilmiş.',
         back: 'İLK SAYFAYA DÖN',
     },
 
@@ -121,7 +121,7 @@ export const tr: Dictionary = {
         titleLead: 'Seyir',
         titleAccent: 'Defteri',
         standfirst:
-            '.NET ve React üzerinde canlıda çalışan yazılım geliştirirken ve işletirken tuttuğum notlar. Sorgu iyileştirme, deploy, masaüstü ajanı ve ==çalışmadan önce bozulan kısımlar==.',
+            '.NET ve React ile canlıda çalışan yazılım yazarken ve işletirken tuttuğum notlar. Sorgu optimizasyonu, deploy, masaüstü ajan ve ==çalışmaya başlamadan önce bozulan kısımlar==.',
     },
 
     sidebar: {
@@ -150,7 +150,7 @@ export const tr: Dictionary = {
         titleLead: 'Yaptığım',
         titleAccent: 'İşler',
         standfirst:
-            'Tasarladığım, yazdığım ve hâlâ işlettiğim sistemler. .NET ve PostgreSQL üzerinde canlı bir SaaS CRM, çok kiracılı bir hosting platformu ve 15 milisaniyede cevap veren ==1,79 milyon satırlık bir firma kataloğu==.',
+            'Tasarladığım, yazdığım ve hâlâ işlettiğim sistemler. .NET ve PostgreSQL üzerinde çalışan canlı bir SaaS CRM, çok kiracılı bir hosting platformu ve 15 milisaniyede cevap veren ==1,79 milyon satırlık firma kataloğu==.',
         sortedBy: 'SIRALAMA: ETKİ',
         totalLabel: 'TOPLAM:',
         totalUnit: 'SİSTEM',
@@ -166,7 +166,7 @@ export const tr: Dictionary = {
         readCase: 'Vaka incelemesini oku',
         liveSite: 'Canlı site',
         repository: 'GitHub deposu',
-        requestPortfolio: 'TAM TEKNİK PORTFÖY İSTE',
+        requestPortfolio: 'TAM TEKNİK PORTFÖYÜ İSTE',
     },
 
     contact: {
@@ -189,7 +189,7 @@ export const tr: Dictionary = {
         back: 'GERİ',
         channels: 'İLETİŞİM KANALLARI',
         availability:
-            'İstanbul’da tam zamanlı pozisyonlara (ofis, hibrit veya uzaktan) ve sözleşmeli işlere açığım.',
+            'İstanbul’da tam zamanlı pozisyonlara (ofis, hibrit veya uzaktan) ve proje bazlı işlere açığım.',
         bookCall: 'GÖRÜŞME AYARLA',
     },
 
@@ -203,13 +203,13 @@ export const tr: Dictionary = {
         notFoundPrefix: 'Komut bulunamadı:',
         notFoundSuffix: 'Komut listesi için ‘help’ yazın.',
         help: 'Kullanılabilir komutlar: [help, whoami, skills, projects, ai, sound, snake, 2048, mines, clear, exit]',
-        whoami: 'Emirhan Güven - Full Stack Geliştirici, .NET ve React. 2018’den beri profesyonel olarak yazılım yazıyorum. Şu anda canlıda çalışan bir SaaS CRM olan CRMSolid’i geliştirip işletiyorum: 5 deploy edilmiş servis, PostgreSQL, 516 NUnit testi, bir Linux sunucuda Docker.',
+        whoami: 'Emirhan Güven - Full Stack Geliştirici, .NET ve React. 2018’den beri profesyonel olarak yazılım yazıyorum. Şu anda canlıda çalışan SaaS CRM’im CRMSolid’i geliştirip işletiyorum: deploy edilmiş 5 servis, PostgreSQL, 516 NUnit testi, Linux sunucuda Docker.',
         skills: 'Backend: [C#, .NET 8/9, ASP.NET Core, EF Core, Python, PHP] | Frontend: [React, Next.js, TypeScript, Tailwind, Blazor] | Veritabanı: [PostgreSQL, DuckDB, Redis, MySQL] | Masaüstü: [Photino.NET, Electron] | DevOps: [Docker, Traefik, GitHub Actions, Nginx, Linux] | Yapay zekâ: [Anthropic API, OpenAI API, MCP]',
         projects: '/projects sayfasına yönlendirme yakında... (Üstteki menüyü kullanın)',
         ai: 'Bu sitenin makine okuyucular için yazılmış bir baskısı var: /ai . Düz metin kopyası: /llms.txt',
         soundHintOff: 'Ses kapalı. Açmak için ‘sound’ yazın.',
         soundHintOn: 'Ses açık. Kapatmak için ‘sound’ yazın.',
-        soundOn: 'Ses açıldı. Tuşlar, /ai sayfasındaki teleks ve üç oyun artık ses çıkarıyor. Başka hiçbir yer çıkarmıyor.',
+        soundOn: 'Ses açıldı. Tuşlar, /ai sayfasındaki teleks ve üç oyun artık ses çıkarıyor. Başka hiçbir yerde ses yok.',
         soundOff: 'Ses kapatıldı. Ofis yine sessiz.',
         snake: 'SNAKE_PROTOCOL başlatılıyor...',
         g2048: 'PROTOCOL_2048 başlatılıyor...',
@@ -247,15 +247,52 @@ export const tr: Dictionary = {
     meta: {
         homeTitle: 'Emirhan Güven | Full Stack Geliştirici, .NET ve React',
         homeDesc:
-            'Emirhan Güven, İstanbul’da full stack geliştirici. .NET ve React ile canlıda çalışan sistemler kuruyor ve işletiyorum; bunlardan biri tek başıma yazıp hâlâ işlettiğim canlı SaaS CRM CRMSolid.',
+            'Emirhan Güven, İstanbul’da full stack geliştirici. .NET ve React ile canlıda çalışan sistemler kurup işletiyorum; bunlardan biri de tek başıma yazdığım ve hâlâ işlettiğim canlı SaaS CRM CRMSolid.',
         articlesTitle: 'Seyir Defteri | Emirhan Güven',
         articlesDesc:
-            '.NET ve React üzerinde canlıda çalışan yazılım geliştirirken ve işletirken tuttuğum notlar: sorgu iyileştirme, deploy, masaüstü ajanı ve çalışmadan önce bozulan kısımlar.',
+            '.NET ve React ile canlıda çalışan yazılım yazarken ve işletirken tuttuğum notlar: sorgu optimizasyonu, deploy, masaüstü ajan ve çalışmaya başlamadan önce bozulan kısımlar.',
         contactTitle: 'İletişim | Emirhan Güven',
         contactDesc:
-            'İstanbul’da full stack geliştirici Emirhan Güven ile iletişime geçin. Ofis, hibrit veya uzaktan tam zamanlı pozisyonlara ve sözleşmeli işlere açığım.',
+            'İstanbul’da full stack geliştirici Emirhan Güven ile iletişime geçin. Ofis, hibrit veya uzaktan tam zamanlı pozisyonlara ve proje bazlı işlere açığım.',
         notFoundTitle: 'Sayfa Bulunamadı | Emirhan Güven',
         notFoundDesc:
-            'Bu adres sitenin bir parçası değil. Projeler, seyir defteri, makine baskısı ve iletişim bağlantıları burada.',
+            'Bu adres sitenin bir parçası değil. Projelere, seyir defterine, makine baskısına ve iletişim sayfasına giden bağlantılar burada.',
+    },
+
+    desk: {
+        title: 'YAZI İŞLERİ',
+        subtitle: 'KLAVYE',
+        goHead: 'GİT',
+        pageHead: 'SAYFADA',
+        then: 'sonra',
+        goProjects: 'Yaptığım İşler',
+        goLog: 'Seyir Defteri',
+        goContact: 'İletişim',
+        goMachine: 'Makine Baskısı',
+        console: 'Konsolu aç',
+        print: 'Sayfayı gazete formunda yazdır',
+        card: 'Bu kartı aç ve kapat',
+        dismiss: 'Kapat',
+        close: 'Klavye kartını kapat',
+        note: 'Gerisi konsolda duruyor. t ile açın, sonra help yazın.',
+        hint: 'Klavye kartı için sayfanın herhangi bir yerinde ? tuşuna basın.',
+    },
+
+    /* Türk gazeteleri yazıyı sütun santimiyle ölçer, İngilizler sütun inciyle.
+       wordsPerUnit, bir sütun santimini dolduran kelime sayısı. */
+    castOff: {
+        label: 'DİZGİ HESABI',
+        words: 'KELİME',
+        unit: 'SÜTUN SANTİMİ',
+        wordsPerUnit: 14,
+    },
+
+    endMark: {
+        reveal: '-30- ne demek',
+        note: 'Telgraf hattından kalma bitiş işareti. Muhabir son satırın altına yazardı, masa da haberin bittiğini böyle anlardı.',
+    },
+
+    stand: {
+        away: 'Baskı bayide bekliyor',
     },
 };

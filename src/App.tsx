@@ -9,12 +9,15 @@ import Contact from './pages/Contact';
 import MachineEdition from './pages/MachineEdition';
 import CrmSolid from './pages/CrmSolid';
 import { Terminal } from 'lucide-react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import TerminalOverlay from './components/TerminalOverlay';
 import PageTransition from './components/PageTransition';
 import NothingHere from './components/NothingHere';
 import NotFound from './pages/NotFound';
 import CopyCredit from './components/CopyCredit';
+import CastOff from './components/CastOff';
+import CopyDesk from './components/CopyDesk';
+import OnTheStand from './components/OnTheStand';
 import PrintColophon from './components/PrintColophon';
 import ScrollToTop from './components/ScrollToTop';
 import MachineBar from './components/MachineBar';
@@ -37,6 +40,10 @@ function AppContent() {
   const { t } = useLanguage();
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [dockPosition, setDockPosition] = useState<'floating' | 'top' | 'bottom' | 'left' | 'right'>('bottom');
+
+  /* Stable, because the keyboard listener in <CopyDesk> is keyed on it and a
+     new function every render would tear the listener down every render. */
+  const openTerminal = useCallback(() => setIsTerminalOpen(true), []);
 
   const getLayoutStyles = () => {
     // On mobile, we might not want to shift content if it squishes too much
@@ -61,7 +68,7 @@ function AppContent() {
       <div data-print="hide" className="fixed left-6 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col items-center gap-6 z-[36] text-xs tracking-widest text-ink-muted">
         <button
           className="hover:text-ink transition-colors cursor-pointer border border-rule rounded-sm bg-paper-raised p-2"
-          onClick={() => setIsTerminalOpen(true)}
+          onClick={openTerminal}
           title={t.rail.openTerminal}
         >
           <Terminal size={16} />
@@ -105,6 +112,12 @@ function AppContent() {
 
       {['/', '/articles'].includes(location.pathname) && <NothingHere />}
 
+      {/* The keyboard, and the tape measure the desk puts over a passage.
+          Both sit outside the page so they survive a route change. */}
+      <CopyDesk terminalOpen={isTerminalOpen} onOpenTerminal={openTerminal} />
+
+      <CastOff />
+
       <TerminalOverlay
         isOpen={isTerminalOpen}
         onClose={() => setIsTerminalOpen(false)}
@@ -122,6 +135,7 @@ function App() {
       <LanguageProvider>
         <DocumentMeta />
         <CopyCredit />
+        <OnTheStand />
         <AppContent />
       </LanguageProvider>
     </Router>

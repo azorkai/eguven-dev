@@ -279,6 +279,56 @@ export const en = {
         notFoundDesc:
             'This address is not part of the site. Links to the projects, the log, the machine edition and the contact page.',
     },
+
+    /* ---- the desk ( the keyboard, behind ? ) -----------------------------
+       Every newsroom system is driven from the keyboard. The card is also the
+       one signpost the hidden half of this site has: everything else is one
+       line away from it. */
+    desk: {
+        title: 'THE DESK',
+        subtitle: 'KEYBOARD',
+        goHead: 'GO TO',
+        pageHead: 'ON THE PAGE',
+        /* Reads as a sentence: g, then p. */
+        then: 'then',
+        goProjects: 'The Works',
+        goLog: 'The Log',
+        goContact: 'Contact',
+        goMachine: 'The Machine Edition',
+        console: 'Open the console',
+        print: 'Print this page as a newspaper sheet',
+        card: 'This card, on and off',
+        dismiss: 'Close it again',
+        close: 'Close the keyboard card',
+        note: 'The console keeps the rest of it. Open it with t, then type help.',
+        /* One line in the console banner, the same way the sound switch is
+           made findable, rather than a question mark button sitting in the
+           chrome all day. */
+        hint: 'Press ? anywhere on the site for the keyboard card.',
+    },
+
+    /* ---- casting off ( a selection long enough to be a passage ) ---------
+       Copy is measured in space, not in words, and the two editions do not
+       measure in the same unit: English papers count column inches, Turkish
+       papers still sell and set by the sütun santimi, the column centimetre.
+       wordsPerUnit is how many words of newspaper text fill one of them. */
+    castOff: {
+        label: 'CAST OFF',
+        words: 'WORDS',
+        unit: 'COLUMN INCHES',
+        wordsPerUnit: 35,
+    },
+
+    /* ---- the end mark, at the foot of every page ------------------------- */
+    endMark: {
+        reveal: 'What -30- means',
+        note: 'Wire code for the end of a story. A reporter typed it under the last line so the desk knew nothing else was coming.',
+    },
+
+    /* ---- the tab, while the reader is somewhere else --------------------- */
+    stand: {
+        away: 'Still on the stand',
+    },
 };
 
 /* Derived from the English object, with string literals widened, so tr.ts must

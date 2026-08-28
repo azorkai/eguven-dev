@@ -3,9 +3,24 @@ import { Mail, Github, Linkedin, Twitter, ArrowUp, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n/useLanguage';
 
+/* ---------------------------------------------------------------------------
+ *  The end mark.
+ *
+ *  Before the wire was a metaphor it was a wire, and a reporter filing over it
+ *  closed the story with -30-. Nobody agrees on where the number came from,
+ *  everybody agrees on what it meant: that is the end of it, stop waiting for
+ *  more. Papers still set it under the last line out of habit.
+ *
+ *  So it sits under the last line here too, at the foot of every page, doing
+ *  nothing at all until somebody wonders what it is and pokes it. Then it says
+ *  what it is, and goes quiet again.
+ * ------------------------------------------------------------------------- */
+const END_MARK = '-30-';
+
 const Footer: React.FC = () => {
     const { t } = useLanguage();
     const [currentTime, setCurrentTime] = useState<string>('');
+    const [endMarkOpen, setEndMarkOpen] = useState(false);
 
     useEffect(() => {
         const updateTime = () => {
@@ -155,6 +170,32 @@ const Footer: React.FC = () => {
                         {t.footer.madeIn}
                     </div>
                 </motion.div>
+
+                <div className="mt-10 flex flex-col items-center gap-3 text-center">
+                    <button
+                        type="button"
+                        onClick={() => setEndMarkOpen((was) => !was)}
+                        aria-expanded={endMarkOpen}
+                        aria-controls="end-mark"
+                        /* The visible text is a printer's mark, which a screen
+                           reader would read out as arithmetic. The label keeps
+                           the mark inside it, so the spoken name still contains
+                           the visible one. */
+                        aria-label={t.endMark.reveal}
+                        title={t.endMark.reveal}
+                        className="folio inline-flex min-h-11 items-center px-4 tracking-[0.12em] text-ink-faint transition-colors hover:text-ink"
+                    >
+                        {END_MARK}
+                    </button>
+
+                    <p
+                        id="end-mark"
+                        hidden={!endMarkOpen}
+                        className="max-w-sm text-[13px] leading-relaxed text-ink-muted"
+                    >
+                        {t.endMark.note}
+                    </p>
+                </div>
             </div>
         </footer>
     );

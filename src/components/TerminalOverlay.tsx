@@ -303,6 +303,10 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
                                                 <span className="block">
                                                     {soundOn ? t.terminal.soundHintOn : t.terminal.soundHintOff}
                                                 </span>
+                                                {/* The console is where somebody who pokes at
+                                                    things ends up, so it is where the keyboard
+                                                    card is signposted. One line, same as above. */}
+                                                <span className="block">{t.desk.hint}</span>
                                             </div>
                                         )}
                                         {outputs.map((out, i) => (
