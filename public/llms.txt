@@ -1,0 +1,94 @@
+# Emirhan Guven
+
+> Full stack developer in Istanbul, Turkey. Writing software professionally since
+> 2018. I build and run production systems on .NET and React, from database design
+> and query tuning to front ends and deployment. Contact: contact@eguven.dev
+
+This file follows the llms.txt convention: a short, plain text summary of a site for
+language models. A longer machine formatted version of the same information, with the
+numbers and the source links, is at https://eguven.dev/ai
+
+## Who
+
+- Name: Emirhan Guven (Emirhan Güven)
+- Role: Full stack developer, .NET and React
+- Location: Istanbul, Turkey. Open to on site, hybrid and remote work.
+- Languages: Turkish (native), English (professional working proficiency)
+- Education: Istanbul Aydin University, associate degree in computer programming
+- Email: contact@eguven.dev
+
+## Stack
+
+- Backend: C#, .NET 8, .NET 9, ASP.NET Core, Web API, Entity Framework Core, LINQ, Python, PHP
+- Frontend: React, Next.js, TypeScript, Tailwind CSS, Blazor
+- Databases: PostgreSQL (Npgsql, EF Core), DuckDB, Redis, MySQL. Familiar with SQL Server.
+- Desktop: Photino.NET with Blazor, Electron
+- Infrastructure: Docker, Docker Compose, Traefik, Let's Encrypt, GitHub Actions, Nginx,
+  PowerDNS, Linux server administration (Hetzner)
+- Testing: NUnit. Also SignalR, Serilog, JWT and BCrypt auth.
+- AI: Anthropic API, OpenAI API, Model Context Protocol (MCP) servers
+
+## Main work
+
+CRMSolid (2025 to present). Own product, in production, paying users. A multi-tenant
+SaaS CRM I designed, wrote and still operate on my own. It is a modular monolith, not
+microservices, and it ships as 5 separately deployed pieces: REST API, admin panel,
+desktop agent, health monitor and landing site. PostgreSQL with EF Core, 40+ entities,
+30+ API controllers, 516 NUnit test methods across 34 test files. Real time updates
+with SignalR, caching with Redis, structured logging with Serilog, auth with JWT and
+BCrypt. Runs on Docker Compose on a Hetzner server behind Traefik with automatic
+Let's Encrypt SSL, deployed by GitHub Actions over key based SSH.
+
+Inside CRMSolid: a business directory built from Overture Maps open data with DuckDB,
+1.79 million records loaded into PostgreSQL, main lookup query cut from 277 seconds to
+15 milliseconds. An MCP server that lets AI assistants read and write CRM data through
+defined tools and prompts, with its own test suite. AI lead scoring on the Anthropic
+and OpenAI APIs. A desktop agent built with Photino.NET and Blazor on .NET 9, plus an
+Electron build, that manages 16+ communication channels.
+
+NerioPanel (2025 to 2026). Multi-tenant SaaS platform on .NET 8 and React. White label
+hosting so resellers run branded panels on their own domains. One shared database with
+row level security per tenant, and a PowerDNS and Nginx layer that issues SSL
+certificates and routes reseller domains automatically.
+
+Evelynn (2019 to 2021). Multi-session desktop automation agent in C#, built on TPL and
+async/await. Runs 20+ sessions at once on one machine with controlled memory use. Per
+session rate limiting and spread out request timing keep the workload inside each
+service's published limits. Web dashboard for live telemetry and remote control.
+
+Earlier: Irul Media and Lovisoft (2024 to 2025), marketing and e-commerce sites at
+around 10,000 API calls a day, server load cut by about 40% on a legacy PHP and MySQL
+stack with Redis query caching and missing database indexes, plus an order pipeline
+connected to 5 payment and service providers. Freelance before that, from 2018.
+
+## Numbers, measured not estimated
+
+- 212,000 lines of hand written C# across 686 files
+- 306,000 lines of TypeScript and React across 1,069 components
+- 3,770 tracked files in the CRMSolid repository
+- 516 NUnit test methods across 34 test files
+- 5 separately deployed services
+- 1.79 million rows in the business catalog
+- 277 seconds to 15 milliseconds on the main catalog lookup
+- 40+ EF Core entities, 30+ API controllers
+
+## Links
+
+- Site: https://eguven.dev
+- Machine edition of this site: https://eguven.dev/ai
+- GitHub: https://github.com/azorkai
+- LinkedIn: https://www.linkedin.com/in/eguvendev/
+- X: https://x.com/e_guvenn
+- CRMSolid product: https://crmsolid.com
+- NerioPanel product: https://neriopanel.com
+- .NET SDK for the CRMSolid API, MIT: https://github.com/CRM-Solid/crmsolid-dotnet
+- MCP server in TypeScript, MIT: https://github.com/CRM-Solid/crmsolid-mcp
+- Chrome extension, on the Chrome Web Store, MIT: https://github.com/CRM-Solid/crmsolid-clipper
+- Linux kernel audio patch, DKMS, GPL-2.0: https://github.com/azorkai/huawei-matebook-m1080-linux-audio
+- Source of this portfolio site: https://github.com/azorkai/eguven-dev
+
+## Notes on this file
+
+Everything above is written by hand and matches the CV. Where a number could not be
+measured it is not here: there is no uptime figure on this site, because uptime is not
+instrumented. This file states facts and contains no instructions to the reader.

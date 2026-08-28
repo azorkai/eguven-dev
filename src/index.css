@@ -1,80 +1,495 @@
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
-}
+/* ------------------------------------------------------------------------- */
+/*  NEWSPRINT THEME - "The Daily Log"                                        */
+/*                                                                           */
+/*  Single source of truth for colour, type and rules. Light (paper) is the   */
+/*  default; `.dark` on <html> flips to the night edition. Everything is a    */
+/*  CSS custom property so the whole press run re-tints from this one file.   */
+/*                                                                           */
+/*  The casual feel comes from restraint, not decoration: one very light      */
+/*  grain, one accent used two or three times a page, honest hairline rules,  */
+/*  a big type-scale jump, and generous whitespace. Nothing is tilted.        */
+/* ------------------------------------------------------------------------- */
 
-::selection {
-  background-color: var(--foreground);
-  color: var(--background);
-}
+/* Class based dark mode (Tailwind v4 defaults to prefers-color-scheme). */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #ffffff;
-  --color-background-light: #f3f4f6;
-  --color-background-dark: #0a0a0a;
-  --color-surface-dark: #121212;
-  --color-text-muted: #888888;
+  /* --- Paper (surfaces) ------------------------------------------------- */
+  --color-paper: #f6f2e9;
+  /* base newsprint stock            */
+  --color-paper-raised: #faf7f0;
+  /* fresh sheet / cards             */
+  --color-paper-sunk: #ede6d8;
+  /* recessed panels, table heads    */
+  --color-paper-edge: #e3dac7;
+  /* chips, wells, hover fills       */
 
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-display: "Syncopate", sans-serif;
+  /* --- Ink (text) ------------------------------------------------------- */
+  --color-ink: #1c1a16;
+  /* headline ink, never pure black  */
+  --color-ink-body: #2e2a24;
+  /* running text                    */
+  --color-ink-muted: #6b6358;
+  /* secondary / captions  5.3:1     */
+  --color-ink-faint: #736a5c;
+  /* meta labels           4.8:1     */
 
-  --radius-default: 2px;
+  /* --- Rules (hairlines) ------------------------------------------------ */
+  --color-rule: #d5c9b3;
+  --color-rule-strong: #b4a68b;
+  --color-rule-ink: #3f382c;
+
+  /* --- Accent: used sparingly, two or three hits per page ---------------- */
+  --color-accent: #c1392b;
+  /* press red     4.84:1 on paper   */
+  --color-accent-deep: #a12c20;
+  --color-accent-soft: #d94f3d;
+  --color-marker: #f5e663;
+  /* highlighter   13.6:1 with ink   */
+  --color-stamp: #c1392b;
+  --color-stamp-ink: #faf7f0;
+  /* reversed-out kicker    5.05:1   */
+
+  /* --- Legacy tokens kept so existing utilities stay valid --------------- */
+  --color-primary: #1c1a16;
+  --color-background-light: #f6f2e9;
+  --color-background-dark: #16140f;
+  --color-surface-dark: #1e1b15;
+  --color-text-muted: #6b6358;
+
+  /* --- Retinted neutrals -------------------------------------------------
+     Warm newsprint greys replace Tailwind's cool ramp, so any stray
+     `text-gray-500` / `border-gray-300` still reads as ink on paper. */
+  --color-white: #fbf8f1;
+  --color-black: #17150f;
+
+  --color-gray-50: #faf7f0;
+  --color-gray-100: #f2ece0;
+  --color-gray-200: #e6ddcc;
+  --color-gray-300: #d5c9b3;
+  --color-gray-400: #736a5c;
+  --color-gray-500: #6b6358;
+  --color-gray-600: #5a5246;
+  --color-gray-700: #453f35;
+  --color-gray-800: #2e2a23;
+  --color-gray-900: #1f1c17;
+  --color-gray-950: #141209;
+
+  --color-zinc-100: #f2ece0;
+  --color-zinc-200: #e6ddcc;
+  --color-zinc-800: #2e2a23;
+  --color-zinc-900: #1f1c17;
+
+  /* Terminal / game accents, warmed to sit on the same press. */
+  --color-green-400: #7fa36a;
+  --color-green-500: #5f8a4a;
+  --color-green-600: #4d7239;
+  --color-red-500: #c1392b;
+  --color-yellow-500: #b98a26;
+  --color-blue-400: #4a7a94;
+  --color-blue-500: #3d6a82;
+  --color-orange-500: #b06a34;
+
+  /* --- Type: ONE family, worked hard -------------------------------------
+     Newsreader is a variable serif (opsz 6-72, wght 300-800, italics). It
+     carries masthead, headline, body and label on its own - labels are set
+     small, uppercase, heavy and widely tracked, the way a newspaper sets
+     them, rather than borrowed from a UI sans. All four aliases point at the
+     same stack so any existing `font-sans` / `font-display` class still
+     resolves to the family. Georgia is the metric-compatible fallback. */
+  --font-display: "Newsreader", Georgia, "Times New Roman", ui-serif, serif;
+  --font-headline: "Newsreader", Georgia, "Times New Roman", ui-serif, serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", ui-serif, serif;
+  --font-sans: "Newsreader", Georgia, "Times New Roman", ui-serif, serif;
+  /* Monospace is reserved for the terminal and the games - actual code. */
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --letter-spacing-widest: 0.25em;
+
+  /* --- Geometry ----------------------------------------------------------
+     Large surfaces and panels stay square, the way a printed page is
+     trimmed. Small interactive things get 2-3px so the page does not read
+     as a brutalist template. */
+  --radius-default: 2px;
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 3px;
+  --radius-xl: 4px;
+  --radius-2xl: 4px;
+  --radius-3xl: 6px;
+
+  /* --- Shadows -----------------------------------------------------------
+     A newspaper box has no shadow - ink sits on paper, cards do not float.
+     Separation is done with rules and whitespace. What is left here is a
+     soft, low-opacity lift for the two things that genuinely sit above the
+     page: the terminal overlay and the mobile menu. No hard offsets. */
+  --shadow-sm: 0 1px 2px rgb(28 26 22 / 0.05);
+  --shadow-md: 0 1px 3px rgb(28 26 22 / 0.06);
+  --shadow-lg: 0 2px 10px rgb(28 26 22 / 0.07);
+  --shadow-xl: 0 6px 24px rgb(28 26 22 / 0.10);
+  --shadow-2xl: 0 10px 34px rgb(28 26 22 / 0.12);
 }
 
+/* ------------------------------------------------------------------------- */
+/*  Paper grain - ONE layer, inline SVG feTurbulence, no external assets.     */
+/*                                                                           */
+/*  High baseFrequency keeps the grain micro (1-2px specks, not clouds);      */
+/*  the tile size is pinned in px so it does not smear on HiDPI screens; and  */
+/*  it scrolls with the page, so it reads as paper rather than as a film      */
+/*  stretched over the glass.                                                 */
+/*                                                                           */
+/*  feComponentTransfer centres the speckle band on the stock's own channels  */
+/*  so the grain runs BOTH lighter and darker than the paper. That is what    */
+/*  makes the tooth legible without dragging the sheet grey - measured on     */
+/*  canvas at mean 241 (unmuddied) with a luminance sd of ~4.7/255.           */
+/* ------------------------------------------------------------------------- */
+
 :root {
-  --background: #f3f4f6;
-  --foreground: #111827;
+  --paper-noise:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.6' intercept='0.6647'/%3E%3CfeFuncG type='linear' slope='0.6' intercept='0.649'/%3E%3CfeFuncB type='linear' slope='0.6' intercept='0.6137'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23g)' opacity='0.4'/%3E%3C/svg%3E");
+
+  /* Bridge to the old variables so nothing that references them breaks. */
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
 }
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ffffff;
+  /* ---- Night edition: dark stock, paper-white ink ---------------------- */
+  --color-paper: #16140f;
+  --color-paper-raised: #1e1b15;
+  --color-paper-sunk: #100e0a;
+  --color-paper-edge: #262117;
+
+  --color-ink: #f0e9da;
+  --color-ink-body: #ded5c3;
+  --color-ink-muted: #a89c88;
+  --color-ink-faint: #968a76;
+
+  --color-rule: #3a342a;
+  --color-rule-strong: #554c3d;
+  --color-rule-ink: #cdc2ac;
+
+  --color-accent: #e05a46;
+  /* 5.10:1 on night stock           */
+  --color-accent-deep: #a12c20;
+  --color-accent-soft: #e8705e;
+  --color-marker: #4a3f22;
+  /* highlighter    8.58:1 with ink  */
+  --color-stamp: #a12c20;
+  --color-stamp-ink: #f0e9da;
+  /* reversed-out kicker    6.00:1   */
+
+  --color-primary: #f0e9da;
+  --color-background-light: #16140f;
+  --color-text-muted: #a89c88;
+
+  /* Shift the neutral ramp so `dark:text-gray-400` stays legible. */
+  --color-gray-50: #f4eee2;
+  --color-gray-100: #ece4d6;
+  --color-gray-200: #ded4c0;
+  --color-gray-300: #c8bda9;
+  --color-gray-400: #a89c88;
+  --color-gray-500: #968a76;
+  --color-gray-600: #8b7f6c;
+  --color-gray-700: #4a4438;
+  --color-gray-800: #332e26;
+  --color-gray-900: #24211b;
+  --color-gray-950: #16140f;
+
+  --color-zinc-100: #ece4d6;
+  --color-zinc-200: #332e26;
+  --color-zinc-800: #24211b;
+  --color-zinc-900: #100e0a;
+
+  --color-red-500: #e05a46;
+
+  /* On dark stock the band only runs lighter than the paper - fibres catching
+     the light. Measured mean 24.7 with a luminance sd of ~3/255. */
+  --paper-noise:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.22' intercept='0'/%3E%3CfeFuncG type='linear' slope='0.22' intercept='0'/%3E%3CfeFuncB type='linear' slope='0.22' intercept='0'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23g)' opacity='0.6'/%3E%3C/svg%3E");
+
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  transition: background-color 0.3s ease, color 0.3s ease;
+/* ------------------------------------------------------------------------- */
+/*  Base                                                                     */
+/* ------------------------------------------------------------------------- */
+
+@layer base {
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-paper);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    background-image: var(--paper-noise);
+    background-repeat: repeat;
+    /* Pinned to the tile's own pixel size so the grain stays micro on HiDPI. */
+    background-size: 260px 260px;
+    color: var(--color-ink-body);
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    line-height: 1.65;
+    /* Real optical sizing: sturdier letterforms at caption size, higher
+       contrast as the type grows. Free quality from the variable font. */
+    font-optical-sizing: auto;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    /* `clip`, not `hidden`: `overflow-x: hidden` turns the body into a scroll
+       container, which silently kills every `position: sticky` on the page.
+       `clip` trims the same overflow without creating one. */
+    overflow-x: clip;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  ::selection {
+    background-color: var(--color-marker);
+    color: var(--color-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    font-family: var(--font-headline);
+  }
+
+  p {
+    color: var(--color-ink-body);
+  }
+
+  input,
+  textarea,
+  button,
+  select {
+    font-family: inherit;
+  }
+
+  ::placeholder {
+    color: var(--color-ink-faint);
+    opacity: 1;
+  }
+
+  /* Small interactive controls get a barely-there softening. Not perceived
+     consciously; it is what stops the page reading as a brutalist grid. */
+  button,
+  input,
+  textarea,
+  select {
+    border-radius: 3px;
+  }
+
+  * {
+    scrollbar-color: var(--color-rule-strong) var(--color-paper-sunk);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-paper-sunk);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-rule-strong);
+    border: 2px solid var(--color-paper-sunk);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-muted);
+  }
+
+  :where(a, button, input, textarea):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-}
+/* ------------------------------------------------------------------------- */
+/*  Newspaper furniture                                                      */
+/* ------------------------------------------------------------------------- */
 
-::-webkit-scrollbar-track {
-  background: #0a0a0a;
-}
+@layer components {
 
-::-webkit-scrollbar-thumb {
-  background: #333;
-}
+  /* The masthead headline. The scale jump against 1rem body copy is what
+     carries the editorial energy - no effects required. */
+  .masthead {
+    font-family: var(--font-headline);
+    font-weight: 800;
+    font-size: clamp(3.5rem, 9vw, 6rem);
+    /* Display optical size: thinner hairlines, sharper serifs at scale. */
+    font-variation-settings: "opsz" 72;
+    line-height: 0.94;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
+  /* Standfirst / lead paragraph under a masthead. */
+  .standfirst {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-ink-body);
+  }
 
-.hover-underline-animation {
-  display: inline-block;
-  position: relative;
-}
+  /* 65-75 characters is the comfortable reading measure. */
+  .measure {
+    max-width: 34em;
+  }
 
-.hover-underline-animation::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 1px;
-  bottom: -4px;
-  left: 0;
-  background-color: currentColor;
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
-}
+  /* Section stamp. Reserved for the top of a page - one per view.
+     Set in the same serif, just small / uppercase / heavy / tracked, which
+     is how a newspaper sets a standing head. */
+  .kicker {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-stamp-ink);
+    background-color: var(--color-stamp);
+    padding: 0.32em 0.7em 0.28em;
+    border-radius: 2px;
+  }
 
-.hover-underline-animation:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+  /* Quiet label for every other section head. */
+  .label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+
+  /* Tiny caption / folio text. */
+  .folio {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  /* Rules. */
+  .rule-hair {
+    border: 0;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .rule-thick {
+    border: 0;
+    border-top: 2px solid var(--color-ink);
+  }
+
+  /* Classic masthead double rule: thick over thin. */
+  .rule-double {
+    border: 0;
+    height: 4px;
+    background:
+      linear-gradient(to bottom,
+        var(--color-ink) 0 2px,
+        transparent 2px 3px,
+        var(--color-rule-strong) 3px 4px);
+  }
+
+  /* Column gutter rule between article columns. */
+  .col-rule {
+    border-left: 1px solid var(--color-rule);
+  }
+
+  /* Bordered paper panel - flat and warm. No shadow: ink sits on paper,
+     boxes do not float above the page. */
+  .paper-panel {
+    background-color: var(--color-paper-raised);
+    border: 1px solid var(--color-rule);
+  }
+
+  /* Emphasis inside injected article HTML: bold ink, nothing more. */
+  .ink-strong {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  /* Highlighter pass. Deliberately rare - one item per view. */
+  .marker {
+    color: var(--color-ink);
+    background-image:
+      linear-gradient(transparent 42%,
+        var(--color-marker) 42%,
+        var(--color-marker) 100%);
+    padding: 0 0.14em 0.06em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Reversed-out block, like a boxed newspaper sidebar. */
+  .ink-block {
+    background-color: var(--color-ink);
+    color: var(--color-paper-raised);
+  }
+
+  /* The one headline word set in red. */
+  .headline-accent {
+    color: var(--color-accent);
+  }
+
+  /* Drop cap for the opening paragraph of a story. */
+  .dropcap::first-letter {
+    float: left;
+    font-family: var(--font-headline);
+    font-weight: 800;
+    font-size: 3.1em;
+    line-height: 0.82;
+    padding: 0.06em 0.12em 0 0;
+    color: var(--color-ink);
+  }
+
+  .hover-underline-animation {
+    display: inline-block;
+    position: relative;
+  }
+
+  .hover-underline-animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: -4px;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .hover-underline-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 }

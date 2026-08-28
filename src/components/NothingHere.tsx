@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../i18n/useLanguage';
 
 const NothingHere: React.FC = () => {
+    const { t } = useLanguage();
     const [isVisible, setIsVisible] = useState(false);
     const scrollAttempts = React.useRef(0);
     const threshold = 5;
@@ -70,7 +72,7 @@ const NothingHere: React.FC = () => {
                         duration: 1.2,
                         ease: [0.22, 1, 0.36, 1]
                     }}
-                    className="flex items-center justify-center overflow-hidden bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-gray-900"
+                    className="flex items-center justify-center overflow-hidden bg-paper-sunk/60 border-t border-rule"
                 >
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -82,15 +84,15 @@ const NothingHere: React.FC = () => {
                         }}
                         className="text-center"
                     >
-                        <h3 className="text-sm md:text-base font-display font-light tracking-[0.4em] text-gray-400 dark:text-gray-600 uppercase">
-                            There is nothing here
+                        <h3 className="text-base md:text-lg font-headline italic tracking-[0.18em] text-ink-muted uppercase">
+                            {t.nothingHere}
                         </h3>
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: "40px" }}
                             exit={{ width: 0 }}
                             transition={{ delay: 0, duration: 0.5 }}
-                            className="h-[1px] bg-gray-300 dark:bg-gray-800 mx-auto mt-4"
+                            className="h-[1px] bg-rule-strong mx-auto mt-4"
                         />
                     </motion.div>
                 </motion.div>

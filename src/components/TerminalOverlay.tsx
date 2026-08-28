@@ -6,6 +6,7 @@ import Game2048 from './Game2048';
 
 
 import MinesGame from './MinesGame';
+import { useLanguage } from '../i18n/useLanguage';
 
 
 interface CommandOutput {
@@ -21,15 +22,19 @@ interface TerminalOverlayProps {
 }
 
 const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dockPosition, setDockPosition }) => {
+    const { t } = useLanguage();
     const [inputValue, setInputValue] = useState('');
     const [showSnake, setShowSnake] = useState(false);
     const [show2048, setShow2048] = useState(false);
     const [showMines, setShowMines] = useState(false);
     const [snapPreview, setSnapPreview] = useState<'floating' | 'top' | 'bottom' | 'left' | 'right' | null>(null);
 
-    const [outputs, setOutputs] = useState<CommandOutput[]>([
-        { type: 'response', text: "Welcome to the interactive portfolio terminal. Type 'help' to see available commands." }
-    ]);
+    /* The banner is rendered from the dictionary rather than pushed into the
+       transcript, so it is in the right language even if the reader switches
+       editions before typing anything. Printed lines are history and stay as
+       they were typed. */
+    const [showWelcome, setShowWelcome] = useState(true);
+    const [outputs, setOutputs] = useState<CommandOutput[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -46,13 +51,14 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
     }, [outputs]);
 
     const commands: Record<string, string> = {
-        help: "Available commands: [help, whoami, skills, projects, snake, 2048, mines, clear, exit]",
-        whoami: "Emirhan Güven - Senior Full Stack Developer. Specialized in architecting scalable SaaS solutions and high-throughput automation systems using .NET 8 and React. Expertise in CRM ecosystems and AI-driven automation.",
-        skills: "Backend: [.NET 8, C#, ASP.NET Core, Python, EF Core, Redis] | Frontend: [React, TypeScript, Tailwind, JavaScript] | Database: [SQL Server, PostgreSQL, MySQL] | DevOps: [Docker, Git, CI/CD]",
-        projects: "Directing to /projects page soon... (Check the navigation bar)",
-        snake: "Initializing SNAKE_PROTOCOL...",
-        2048: "Initializing PROTOCOL_2048...",
-        mines: "Initializing MINES_SCAN_PROTOCOL...",
+        help: t.terminal.help,
+        whoami: t.terminal.whoami,
+        skills: t.terminal.skills,
+        projects: t.terminal.projects,
+        ai: t.terminal.ai,
+        snake: t.terminal.snake,
+        2048: t.terminal.g2048,
+        mines: t.terminal.mines,
     };
 
 
@@ -72,6 +78,7 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
 
             if (cmd === 'clear') {
                 setOutputs([]);
+                setShowWelcome(false);
                 return;
             }
 
@@ -96,7 +103,8 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
                 return;
             }
 
-            const response = commands[cmd] || `Command not found: ${cmd}. Type 'help' for available commands.`;
+            const response =
+                commands[cmd] || `${t.terminal.notFoundPrefix} ${cmd}. ${t.terminal.notFoundSuffix}`;
 
             setTimeout(() => {
                 setOutputs(prev => [...prev, { type: 'response', text: response }]);
@@ -165,9 +173,9 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
             case 'floating':
             default:
                 if (isMobile) {
-                    return "top-[5%] left-[5%] right-[5%] w-[90%] h-[80vh] rounded-xl shadow-2xl border border-gray-700";
+                    return "top-[5%] left-[5%] right-[5%] w-[90%] h-[80vh] rounded-md shadow-xl border border-rule-ink";
                 }
-                return "top-1/2 left-1/2 rounded-xl shadow-2xl w-[600px] h-[600px]";
+                return "top-1/2 left-1/2 rounded-md shadow-xl w-[600px] h-[600px]";
         }
     };
 
@@ -196,7 +204,7 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
             {isOpen && (
                 <>
                     {snapPreview && (
-                        <div className={`fixed z-[90] bg-white/5 border-2 border-dashed border-white/20 pointer-events-none transition-all duration-300 ${snapPreview === 'top' ? 'top-0 left-0 h-[300px] w-full' :
+                        <div className={`fixed z-[90] bg-paper-edge/70 border border-dashed border-rule-strong pointer-events-none transition-all duration-300 ${snapPreview === 'top' ? 'top-0 left-0 h-[300px] w-full' :
                             snapPreview === 'bottom' ? 'bottom-0 left-0 h-[300px] w-full' :
                                 snapPreview === 'left' ? 'top-0 left-0 w-[400px] h-full' :
                                     'top-0 right-0 w-[400px] h-full'
@@ -229,27 +237,28 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
                         }
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className={`fixed z-[100] bg-[#0a0a0a]/95 backdrop-blur-md border border-gray-800 shadow-[0_-10px_40px_-10px_rgba(255,255,255,0.05)] overflow-hidden ${getDockStyles()}`}
+                        className={`fixed z-[100] bg-paper-raised border border-rule-ink shadow-xl overflow-hidden ${getDockStyles()}`}
                         style={{
                             transform: dockPosition === 'floating' ? undefined : 'none'
                         }}
                     >
-                        <div className="flex items-center justify-between px-6 py-2 border-b border-gray-800 bg-black/40 cursor-grab active:cursor-grabbing">
+                        <div className="flex items-center justify-between px-6 py-2 border-b border-rule-ink bg-ink text-paper-raised cursor-grab active:cursor-grabbing">
                             <div className="flex items-center gap-2">
-                                <span className="w-2.5 h-2.5 rounded-full bg-red-500/20 border border-red-500/40"></span>
-                                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/20 border border-yellow-500/40"></span>
-                                <span className="w-2.5 h-2.5 rounded-full bg-green-500/20 border border-green-500/40"></span>
-                                <span className="ml-4 text-[9px] tracking-[0.25em] uppercase font-mono text-gray-500 font-bold">System Console v1.0.4 {dockPosition.toUpperCase()}</span>
+                                <span className="w-2.5 h-2.5 rounded-full bg-accent"></span>
+                                <span className="w-2.5 h-2.5 rounded-full bg-paper-raised/45"></span>
+                                <span className="w-2.5 h-2.5 rounded-full bg-paper-raised/25"></span>
+                                <span className="ml-4 text-[9px] tracking-[0.25em] uppercase font-mono text-paper-raised font-bold">{t.terminal.console} {dockPosition.toUpperCase()}</span>
                             </div>
                             <div className="flex items-center gap-4">
                                 <button
                                     onClick={() => setDockPosition(dockPosition === 'floating' ? 'bottom' : 'floating')}
-                                    className="text-gray-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] uppercase tracking-wider"
-                                    title={dockPosition === 'floating' ? "Dock to Bottom" : "Make Floating"}
+                                    className="text-paper-raised/70 hover:text-paper-raised transition-colors flex items-center gap-2 text-[10px] uppercase tracking-wider"
+                                    aria-label={dockPosition === 'floating' ? t.terminal.dockBottom : t.terminal.makeFloating}
+                                    title={dockPosition === 'floating' ? t.terminal.dockBottom : t.terminal.makeFloating}
                                 >
                                     {dockPosition === 'floating' ? <Anchor size={14} /> : <Maximize2 size={14} />}
                                 </button>
-                                <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
+                                <button onClick={onClose} aria-label={t.terminal.close} title={t.terminal.close} className="text-paper-raised/70 hover:text-paper-raised transition-colors">
                                     <X size={14} />
                                 </button>
                             </div>
@@ -257,7 +266,7 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
 
                         <div
                             ref={scrollRef}
-                            className={`p-6 overflow-y-auto font-mono leading-relaxed text-gray-400 ${getContentHeight()} ${isVertical ? 'text-[11px]' : 'text-sm'
+                            className={`p-6 overflow-y-auto font-mono leading-relaxed text-ink-body bg-paper-raised ${getContentHeight()} ${isVertical ? 'text-[11px]' : 'text-sm'
                                 }`}
                         >
                             {showSnake ? (
@@ -270,13 +279,18 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
 
                                 <>
                                     <div className="space-y-2">
+                                        {showWelcome && (
+                                            <div className="mb-4 text-ink-muted font-light break-words">
+                                                <span className="block">{t.terminal.welcome}</span>
+                                            </div>
+                                        )}
                                         {outputs.map((out, i) => (
-                                            <div key={i} className={out.type === 'input' ? (isVertical ? 'flex flex-col gap-1' : 'flex gap-2') : 'mb-4 text-gray-500 font-light break-words'}>
+                                            <div key={i} className={out.type === 'input' ? (isVertical ? 'flex flex-col gap-1' : 'flex gap-2') : 'mb-4 text-ink-muted font-light break-words'}>
                                                 {out.type === 'input' && (
                                                     <div className="flex gap-2 flex-wrap">
-                                                        <span className="text-green-500 whitespace-nowrap">guest@eg-portfolio</span>
-                                                        <span className="text-gray-600">$</span>
-                                                        <span className="text-white break-all">{out.text}</span>
+                                                        <span className="text-accent whitespace-nowrap">guest@eg-portfolio</span>
+                                                        <span className="text-ink-faint">$</span>
+                                                        <span className="text-ink font-semibold break-all">{out.text}</span>
                                                     </div>
                                                 )}
                                                 {out.type === 'response' && <span className="block">{out.text}</span>}
@@ -286,10 +300,10 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
 
                                     <div className={`flex items-start gap-2 mt-2 ${isVertical ? 'flex-col' : ''}`}>
                                         <div className="flex items-center gap-2">
-                                            <span className="text-green-500 whitespace-nowrap">guest@eg-portfolio</span>
-                                            <span className="text-gray-600">:</span>
-                                            <span className="text-blue-400">~</span>
-                                            <span className="text-gray-600">$</span>
+                                            <span className="text-accent whitespace-nowrap">guest@eg-portfolio</span>
+                                            <span className="text-ink-faint">:</span>
+                                            <span className="text-ink-muted">~</span>
+                                            <span className="text-ink-faint">$</span>
                                         </div>
                                         <input
                                             ref={inputRef}
@@ -297,7 +311,7 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
                                             value={inputValue}
                                             onChange={(e) => setInputValue(e.target.value)}
                                             onKeyDown={handleCommand}
-                                            className={`bg-transparent border-none p-0 flex-1 text-white font-mono focus:ring-0 outline-none w-full ${isVertical ? 'pt-1' : ''
+                                            className={`bg-transparent border-none p-0 flex-1 text-ink font-mono focus:ring-0 outline-none w-full ${isVertical ? 'pt-1' : ''
                                                 }`}
                                             autoComplete="off"
                                             spellCheck="false"

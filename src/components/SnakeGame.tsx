@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../i18n/useLanguage';
 
 interface Point {
     x: number;
@@ -17,6 +18,7 @@ const INITIAL_DIRECTION: Point = { x: 0, y: -1 };
 const INITIAL_SPEED = 150;
 
 const SnakeGame: React.FC<SnakeGameProps> = ({ onExit, isVertical = false }) => {
+    const { t } = useLanguage();
     const [snake, setSnake] = useState<Point[]>(INITIAL_SNAKE);
     const [food, setFood] = useState<Point>({ x: 5, y: 5 });
     const [direction, setDirection] = useState<Point>(INITIAL_DIRECTION);
@@ -114,15 +116,15 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ onExit, isVertical = false }) => 
     }, [direction, onExit]);
 
     return (
-        <div className={`relative w-full flex items-center justify-center bg-black/40 rounded-lg border border-gray-800 overflow-hidden font-mono ${isVertical ? 'h-[400px]' : 'h-[220px]'
+        <div className={`relative w-full flex items-center justify-center bg-paper-sunk border border-rule-strong overflow-hidden font-mono ${isVertical ? 'h-[400px]' : 'h-[220px]'
             }`}>
             <div className="absolute top-2 left-6 right-6 flex justify-between items-center z-10">
-                <div className="text-[10px] text-gray-500 uppercase tracking-widest">SNAKE_PROTOCOL v1.0</div>
-                <div className="text-sm font-bold text-green-500">SCORE: {score.toString().padStart(4, '0')}</div>
+                <div className="text-[10px] text-ink-muted uppercase tracking-widest">SNAKE_PROTOCOL v1.0</div>
+                <div className="text-sm font-bold text-accent">{t.games.score}: {score.toString().padStart(4, '0')}</div>
             </div>
 
             <div
-                className="relative bg-[#050505] border border-gray-900 shadow-2xl"
+                className="relative bg-paper-raised rounded-sm border border-rule-strong"
                 style={{
                     display: 'grid',
                     gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
@@ -133,7 +135,7 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ onExit, isVertical = false }) => 
                 <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ repeat: Infinity, duration: 1 }}
-                    className="absolute bg-red-500 rounded-full"
+                    className="absolute bg-accent rounded-full"
                     style={{
                         width: isVertical ? '14px' : '9px',
                         height: isVertical ? '14px' : '9px',
@@ -146,7 +148,7 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ onExit, isVertical = false }) => 
                 {snake.map((segment, i) => (
                     <div
                         key={i}
-                        className={`absolute ${i === 0 ? 'bg-green-400' : 'bg-green-600/60'} rounded-sm border border-black/20`}
+                        className={`absolute ${i === 0 ? 'bg-ink' : 'bg-ink/55'} border border-paper-raised/40`}
                         style={{
                             width: isVertical ? '14px' : '9px',
                             height: isVertical ? '14px' : '9px',
@@ -158,62 +160,62 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ onExit, isVertical = false }) => 
             </div>
 
             {gameOver && (
-                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center z-20">
-                    <div className="text-red-500 text-xl font-bold mb-2 tracking-tighter">CONNECTION LOST: GAME OVER</div>
-                    <div className="text-gray-400 text-xs mb-4 uppercase">Final Score: {score}</div>
+                <div className="absolute inset-0 bg-paper/95 flex flex-col items-center justify-center z-20">
+                    <div className="px-4 text-center font-headline text-accent text-xl font-bold mb-2 tracking-tight">{t.games.snakeOver}</div>
+                    <div className="text-ink-muted text-xs mb-4 uppercase">{t.games.snakeFinal} {score}</div>
                     <div className="flex gap-4">
                         <button
                             onClick={resetGame}
-                            className="px-4 py-1.5 bg-green-500/10 border border-green-500/50 text-green-500 text-xs hover:bg-green-500/20 transition-colors uppercase"
+                            className="px-4 py-1.5 border border-ink text-ink text-xs hover:bg-ink hover:text-paper-raised transition-colors uppercase"
                         >
-                            Restart
+                            {t.games.snakeRestart}
                         </button>
                         <button
                             onClick={onExit}
-                            className="px-4 py-1.5 bg-red-500/10 border border-red-500/50 text-red-500 text-xs hover:bg-red-500/20 transition-colors uppercase"
+                            className="px-4 py-1.5 border border-accent text-accent text-xs hover:bg-accent hover:text-paper-raised transition-colors uppercase"
                         >
-                            Exit
+                            {t.games.exit}
                         </button>
                     </div>
                 </div>
             )}
 
             {isPaused && !gameOver && (
-                <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-20">
-                    <div className="text-white text-xs font-bold tracking-widest animate-pulse uppercase">Protocol Paused - Press 'P' to Resume</div>
+                <div className="absolute inset-0 bg-paper/85 flex items-center justify-center z-20">
+                    <div className="px-6 text-center text-ink text-xs font-bold tracking-widest animate-pulse uppercase">{t.games.snakePaused}</div>
                 </div>
             )}
 
-            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-gray-600 uppercase flex justify-between md:flex">
-                <span>Arrows to Move</span>
-                <span>'P' to Pause</span>
-                <span>'Esc' to Exit</span>
+            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-ink-muted uppercase flex justify-between md:flex">
+                <span>{t.games.snakeMove}</span>
+                <span>{t.games.snakePause}</span>
+                <span>{t.games.snakeExit}</span>
             </div>
 
             {/* Mobile Controls */}
             <div className="absolute bottom-4 right-4 flex flex-col items-center gap-1 md:hidden opacity-50 hover:opacity-100 transition-opacity z-30">
                 <button
-                    className="w-8 h-8 bg-gray-800/80 rounded flex items-center justify-center text-white active:bg-green-500/50"
+                    className="w-8 h-8 bg-paper-raised border border-ink flex items-center justify-center text-ink active:bg-ink active:text-paper-raised"
                     onClick={() => direction.y === 0 && setDirection({ x: 0, y: -1 })}
                 >
                     ↑
                 </button>
                 <div className="flex gap-1">
                     <button
-                        className="w-8 h-8 bg-gray-800/80 rounded flex items-center justify-center text-white active:bg-green-500/50"
+                        className="w-8 h-8 bg-paper-raised border border-ink flex items-center justify-center text-ink active:bg-ink active:text-paper-raised"
                         onClick={() => direction.x === 0 && setDirection({ x: -1, y: 0 })}
                     >
                         ←
                     </button>
                     <button
-                        className="w-8 h-8 bg-gray-800/80 rounded flex items-center justify-center text-white active:bg-green-500/50"
+                        className="w-8 h-8 bg-paper-raised border border-ink flex items-center justify-center text-ink active:bg-ink active:text-paper-raised"
                         onClick={() => direction.x === 0 && setDirection({ x: 1, y: 0 })}
                     >
                         →
                     </button>
                 </div>
                 <button
-                    className="w-8 h-8 bg-gray-800/80 rounded flex items-center justify-center text-white active:bg-green-500/50"
+                    className="w-8 h-8 bg-paper-raised border border-ink flex items-center justify-center text-ink active:bg-ink active:text-paper-raised"
                     onClick={() => direction.y === 0 && setDirection({ x: 0, y: 1 })}
                 >
                     ↓

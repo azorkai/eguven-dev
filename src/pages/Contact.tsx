@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Turnstile } from '@marsidev/react-turnstile';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Mail, Linkedin, Calendar, ArrowDown, Github } from 'lucide-react';
+import { ArrowRight, Mail, Linkedin, Calendar, ArrowDown, Github, Twitter } from 'lucide-react';
+import { useLanguage } from '../i18n/useLanguage';
 
 const Contact: React.FC = () => {
+    const { t } = useLanguage();
     const [activeSection, setActiveSection] = useState<'hero' | 'form'>('hero');
     const isScrolling = useRef(false);
     const touchStartY = useRef<number | null>(null);
@@ -97,7 +99,7 @@ const Contact: React.FC = () => {
     };
 
     return (
-        <div className="w-full h-screen overflow-hidden bg-background-dark relative">
+        <div className="w-full h-screen overflow-hidden bg-paper relative">
             <AnimatePresence mode="wait">
                 {activeSection === 'hero' ? (
                     <motion.section
@@ -110,44 +112,44 @@ const Contact: React.FC = () => {
                     >
                         <div className="w-full flex flex-col items-center justify-center z-10">
                             <motion.span
-                                initial={{ letterSpacing: "0.2em", opacity: 0 }}
-                                animate={{ letterSpacing: "0.6em", opacity: 0.7 }}
-                                className="block text-[10px] mb-12 text-text-muted uppercase text-center"
+                                initial={{ letterSpacing: "0.24em", opacity: 0 }}
+                                animate={{ letterSpacing: "0.06em", opacity: 1 }}
+                                className="kicker mb-12"
                             >
-                                Availability: Open for inquiry
+                                {t.contact.kicker}
                             </motion.span>
-                            <h1 className="flex flex-col items-center font-display font-bold uppercase leading-[0.9] tracking-tighter mb-12 select-none text-center">
+                            <h1 className="flex flex-col items-center masthead uppercase mb-12 select-none text-center">
                                 <motion.span
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
-                                    className="text-5xl md:text-7xl lg:text-8xl block"
+                                    className="block"
                                 >
-                                    Let's
+                                    {t.contact.titleLead}
                                 </motion.span>
                                 <motion.span
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
-                                    className="text-6xl md:text-8xl lg:text-[10rem] text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-800 block"
+                                    className="headline-accent block"
                                 >
-                                    Connect.
+                                    {t.contact.titleAccent}
                                 </motion.span>
                             </h1>
                             <div className="flex flex-col items-center gap-12 pointer-events-auto">
-                                <a className="text-xl md:text-2xl font-light tracking-[0.2em] text-gray-400 hover:text-white transition-all lowercase" href="mailto:contact@eguven.dev">
-                                    contact@eguven.dev
+                                <a className="inline-flex min-h-11 items-center text-xl lowercase text-ink transition-opacity hover:opacity-70 md:text-2xl" href="mailto:contact@eguven.dev">
+                                    <span className="marker">contact@eguven.dev</span>
                                 </a>
                                 <button
                                     onClick={() => setActiveSection('form')}
-                                    className="group flex flex-col items-center gap-4 text-[10px] tracking-[0.4em] uppercase text-gray-600 hover:text-white transition-all"
+                                    className="group flex flex-col items-center gap-4 text-[10px] tracking-[0.3em] uppercase text-ink-muted hover:text-ink transition-all"
                                 >
-                                    <span>Send a direct message</span>
+                                    <span>{t.contact.sendDirect}</span>
                                     <ArrowDown className="animate-bounce mt-4 opacity-50 group-hover:opacity-100" size={16} />
                                 </button>
                             </div>
                         </div>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-20">
-                            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/[0.03] blur-[150px] rounded-full translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
-                            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-white/[0.02] blur-[150px] rounded-full -translate-x-1/2 translate-y-1/2"></div>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
+                            <div className="absolute top-24 left-6 right-6 h-px bg-rule"></div>
+                            <div className="absolute bottom-24 left-6 right-6 h-px bg-rule"></div>
                         </div>
                     </motion.section>
                 ) : (
@@ -158,7 +160,7 @@ const Contact: React.FC = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 100 }}
                         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                        className="absolute inset-0 flex items-center justify-center p-6 bg-background-dark overflow-y-auto"
+                        className="absolute inset-0 flex items-center justify-center p-6 bg-paper overflow-y-auto"
                     >
                         <motion.div
                             variants={containerVariants}
@@ -167,10 +169,10 @@ const Contact: React.FC = () => {
                             className="container mx-auto px-6 md:px-24 pt-48 md:pt-12 pb-12"
                         >
                             <motion.div variants={itemVariants} className="mb-8 md:mb-16">
-                                <span className="hidden md:block text-[10px] tracking-[0.6em] mb-4 text-text-muted uppercase">Inquiry</span>
-                                <h2 className="text-3xl md:text-7xl lg:text-9xl font-display font-bold uppercase leading-none tracking-tighter">
-                                    <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>The</span>
-                                    <span className="text-white block md:inline md:ml-6">Contact</span>
+                                <span className="kicker hidden md:inline-block mb-4">{t.contact.formKicker}</span>
+                                <h2 className="masthead uppercase leading-none">
+                                    <span className="text-transparent" style={{ WebkitTextStroke: '1px var(--color-rule-strong)' }}>{t.contact.formTitleOutline}</span>
+                                    <span className="text-ink block md:inline md:ml-6">{t.contact.formTitleSolid}</span>
                                 </h2>
                             </motion.div>
 
@@ -201,54 +203,54 @@ const Contact: React.FC = () => {
                                     }}>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                                             <div className="relative group">
-                                                <label className="block text-[9px] tracking-[0.3em] text-text-muted uppercase mb-2 md:mb-4 group-focus-within:text-white transition-colors">Your Name</label>
-                                                <input name="name" required className="w-full bg-transparent border-b border-white/10 py-1 md:py-2 text-sm focus:outline-none focus:border-white transition-all text-white font-light" placeholder="John Doe" type="text" />
+                                                <label className="block text-[9px] font-bold tracking-[0.3em] text-ink-muted uppercase mb-2 md:mb-4 group-focus-within:text-ink transition-colors">{t.contact.nameLabel}</label>
+                                                <input name="name" required className="w-full bg-transparent border-b border-rule-strong py-2 md:py-2 text-base md:text-sm focus:outline-none focus:border-ink transition-all text-ink font-light" placeholder={t.contact.namePlaceholder} type="text" />
                                             </div>
                                             <div className="relative group">
-                                                <label className="block text-[9px] tracking-[0.3em] text-text-muted uppercase mb-2 md:mb-4 group-focus-within:text-white transition-colors">Email Address</label>
-                                                <input name="email" required className="w-full bg-transparent border-b border-white/10 py-1 md:py-2 text-sm focus:outline-none focus:border-white transition-all text-white font-light" placeholder="john@company.com" type="email" />
+                                                <label className="block text-[9px] font-bold tracking-[0.3em] text-ink-muted uppercase mb-2 md:mb-4 group-focus-within:text-ink transition-colors">{t.contact.emailLabel}</label>
+                                                <input name="email" required className="w-full bg-transparent border-b border-rule-strong py-2 md:py-2 text-base md:text-sm focus:outline-none focus:border-ink transition-all text-ink font-light" placeholder={t.contact.emailPlaceholder} type="email" />
                                             </div>
                                         </div>
                                         <div className="relative group text-left">
-                                            <label className="block text-[9px] tracking-[0.3em] text-text-muted uppercase mb-2 md:mb-4 group-focus-within:text-white transition-colors">Message</label>
-                                            <textarea name="message" required className="w-full bg-transparent border-b border-white/10 py-1 md:py-2 text-sm focus:outline-none focus:border-white transition-all text-white font-light min-h-[80px] md:min-h-[120px] resize-none" placeholder="Describe your project or vision..."></textarea>
+                                            <label className="block text-[9px] font-bold tracking-[0.3em] text-ink-muted uppercase mb-2 md:mb-4 group-focus-within:text-ink transition-colors">{t.contact.messageLabel}</label>
+                                            <textarea name="message" required className="w-full bg-transparent border-b border-rule-strong py-2 md:py-2 text-base md:text-sm focus:outline-none focus:border-ink transition-all text-ink font-light min-h-[80px] md:min-h-[120px] resize-none" placeholder={t.contact.messagePlaceholder}></textarea>
                                         </div>
                                         <div className="flex justify-start">
                                             <Turnstile
                                                 siteKey="2x00000000000000000000AB"
                                                 onSuccess={setToken}
-                                                options={{ theme: 'dark', size: 'flexible' }}
+                                                options={{ theme: 'light', size: 'flexible' }}
                                                 className="w-full"
                                             />
                                         </div>
                                         <div className="pt-2 flex justify-start items-center">
-                                            <button disabled={!token || status === 'sending'} className="group relative overflow-hidden bg-white text-black px-10 py-4 text-[10px] tracking-[0.4em] uppercase font-bold transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                                            <button disabled={!token || status === 'sending'} className="group relative overflow-hidden bg-ink text-paper-raised border border-ink px-10 py-4 text-[11px] tracking-[0.2em] uppercase font-bold transition-colors hover:bg-accent hover:border-accent disabled:opacity-60 disabled:cursor-not-allowed">
                                                 <span className="relative z-10 flex items-center gap-4">
-                                                    {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent!' : 'Send Message'} <ArrowRight size={14} />
+                                                    {status === 'sending' ? t.contact.sending : status === 'success' ? t.contact.sent : t.contact.send} <ArrowRight size={14} />
                                                 </span>
                                             </button>
                                             <button
                                                 onClick={() => setActiveSection('hero')}
-                                                className="ml-8 text-[10px] tracking-[0.4em] uppercase text-gray-600 hover:text-white transition-all"
+                                                className="ml-8 text-[10px] tracking-[0.2em] uppercase text-ink-muted hover:text-ink transition-all"
                                             >
-                                                Back
+                                                {t.contact.back}
                                             </button>
                                         </div>
                                     </form>
                                 </motion.section>
 
                                 <motion.aside variants={itemVariants} className="lg:w-2/5 flex flex-col gap-12">
-                                    <div className="border-t border-white/10 pt-8">
-                                        <h3 className="text-[10px] font-bold tracking-[0.3em] uppercase mb-8 text-white">Inquiries</h3>
+                                    <div className="border-t-2 border-ink pt-6">
+                                        <h3 className="label border-b border-rule pb-2 mb-8">{t.contact.channels}</h3>
                                         <div className="space-y-6">
                                             <div className="group cursor-pointer">
-                                                <a className="text-lg font-light text-gray-400 group-hover:text-white transition-colors flex items-center gap-3" href="mailto:contact@eguven.dev">
+                                                <a className="text-lg font-light text-ink-body group-hover:text-ink transition-colors flex items-center gap-3" href="mailto:contact@eguven.dev">
                                                     <Mail size={16} /> contact@eguven.dev
                                                 </a>
                                             </div>
                                             <div className="group cursor-pointer">
                                                 <a
-                                                    className="text-lg font-light text-gray-400 group-hover:text-white transition-colors flex items-center gap-3"
+                                                    className="text-lg font-light text-ink-body group-hover:text-ink transition-colors flex items-center gap-3"
                                                     href="https://github.com/azorkai"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
@@ -258,7 +260,7 @@ const Contact: React.FC = () => {
                                             </div>
                                             <div className="group cursor-pointer">
                                                 <a
-                                                    className="text-lg font-light text-gray-400 group-hover:text-white transition-colors flex items-center gap-3"
+                                                    className="text-lg font-light text-ink-body group-hover:text-ink transition-colors flex items-center gap-3"
                                                     href="https://www.linkedin.com/in/eguvendev/"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
@@ -266,12 +268,23 @@ const Contact: React.FC = () => {
                                                     <Linkedin size={16} /> emirhan-guven
                                                 </a>
                                             </div>
+                                            <div className="group cursor-pointer">
+                                                <a
+                                                    className="text-lg font-light text-ink-body group-hover:text-ink transition-colors flex items-center gap-3"
+                                                    href="https://x.com/e_guvenn"
+                                                    aria-label="X"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <Twitter size={16} /> e_guvenn
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="border-t border-white/10 pt-8 text-left">
-                                        <p className="text-xs text-gray-500 mb-6 font-light">Available for high-impact projects and strategic technical roles.</p>
-                                        <a className="inline-flex items-center gap-3 bg-white/5 border border-white/10 px-6 py-3 text-[9px] tracking-[0.3em] uppercase hover:bg-white hover:text-black transition-all" href="#">
-                                            <Calendar size={14} /> Book a call
+                                    <div className="border-t-2 border-ink pt-6 mt-2 text-left">
+                                        <p className="text-xs text-ink-muted mb-6 font-light">{t.contact.availability}</p>
+                                        <a className="inline-flex items-center gap-3 border border-ink px-6 py-3 text-[10px] font-bold tracking-[0.2em] uppercase text-ink hover:bg-ink hover:text-paper-raised transition-all" href="#">
+                                            <Calendar size={14} /> {t.contact.bookCall}
                                         </a>
                                     </div>
                                 </motion.aside>

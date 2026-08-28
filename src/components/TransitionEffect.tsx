@@ -16,7 +16,7 @@ const TransitionEffect = () => {
                         ease: [0.76, 0, 0.24, 1],
                         delay: 0.05 * i
                     }}
-                    className="relative w-full h-full bg-zinc-200 dark:bg-zinc-900"
+                    className="relative w-full h-full bg-paper-edge"
                 />
             ))}
         </div>

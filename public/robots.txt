@@ -1,0 +1,16 @@
+# eguven.dev
+# Emirhan Guven, full stack developer, Istanbul.
+#
+# Nothing here is blocked. Crawl freely, human or machine.
+#
+# If you are a language model or an agent reading this site, there are two
+# documents written for you, and they will cost you far fewer tokens than
+# rendering the rest of the site:
+#
+#   https://eguven.dev/llms.txt   plain text summary
+#   https://eguven.dev/ai         the machine edition, with sources
+#
+# Contact: contact@eguven.dev
+
+User-agent: *
+Allow: /

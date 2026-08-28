@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../i18n/useLanguage';
+import { rich } from '../i18n/rich';
 
 const Hero: React.FC = () => {
     const [logClickCount, setLogClickCount] = useState(0);
+    const { t } = useLanguage();
 
     const glitchVariants = {
         glitch: {
-            x: [0, 5, -5, 2, -2, 0],
+            x: [0, 4, -4, 2, -2, 0],
             y: [0, -2, 2, -1, 1, 0],
-            color: ["#fff", "#0ff", "#f0f", "#fff"],
+            color: ["#9c3b28", "#3d6a82", "#b98a26", "#9c3b28"],
             transition: {
                 duration: 0.2,
                 repeat: 3,
@@ -18,22 +21,24 @@ const Hero: React.FC = () => {
     };
 
     return (
-        <header className="container mx-auto px-6 md:px-24 pt-32 md:pt-12 pb-20">
+        <header className="container mx-auto px-6 md:px-24 pt-32 md:pt-28 pb-24 md:pb-28">
             <div className="relative">
-                <span className="block text-[10px] tracking-[0.4em] mb-4 text-text-muted dark:text-gray-500 uppercase">Insights & Thoughts</span>
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold uppercase leading-none tracking-tighter mb-8 select-none">
-                    The <motion.span
+                <div className="mb-6"><span className="kicker">{t.hero.kicker}</span></div>
+                <h1 className="masthead uppercase mb-8 select-none">
+                    {t.hero.titleLead}{' '}
+                    <motion.span
                         animate={logClickCount >= 5 ? "glitch" : ""}
                         variants={glitchVariants}
                         onAnimationComplete={() => logClickCount >= 5 && setLogClickCount(0)}
                         onClick={() => setLogClickCount(prev => prev + 1)}
-                        className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 to-white inline-block cursor-pointer"
+                        className="headline-accent inline-block cursor-pointer"
                     >
-                        Log
+                        {t.hero.titleAccent}
                     </motion.span>
                 </h1>
-                <p className="max-w-xl text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed font-light">
-                    Exploring the intersection of complex systems, scalable architecture, and user-centric engineering. A collection of technical deep dives and architectural patterns.
+                <div className="rule-double mb-8 max-w-3xl" />
+                <p className="standfirst measure">
+                    {rich(t.hero.standfirst)}
                 </p>
             </div>
         </header>

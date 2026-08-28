@@ -1,24 +1,28 @@
+import { useLanguage } from '../i18n/useLanguage';
+
 const Sidebar: React.FC = () => {
+    const { t } = useLanguage();
+
     const topics = [
-        { name: 'All Posts', count: 12, active: true },
-        { name: 'Backend Engineering', count: 5 },
-        { name: 'Frontend Performance', count: 3 },
-        { name: 'Artificial Intelligence', count: 2 },
-        { name: 'DevOps', count: 2 },
+        { key: 'all', name: t.sidebar.topicAll, count: 12, active: true },
+        { key: 'backend', name: t.sidebar.topicBackend, count: 5 },
+        { key: 'frontend', name: t.sidebar.topicFrontend, count: 3 },
+        { key: 'ai', name: t.sidebar.topicAi, count: 2 },
+        { key: 'devops', name: t.sidebar.topicDevops, count: 2 },
     ];
 
     return (
-        <aside className="lg:w-1/4 flex flex-col gap-8 lg:sticky lg:top-12 h-fit">
-            <div className="border-t border-gray-300 dark:border-gray-800 pt-6">
-                <h3 className="text-xs font-bold tracking-[0.2em] uppercase mb-6 text-black dark:text-white">Topics</h3>
-                <ul className="space-y-4 text-sm font-light">
+        <aside className="lg:w-1/4 flex flex-col gap-10 lg:sticky lg:top-28 h-fit">
+            <div className="border-t-2 border-ink pt-5">
+                <h3 className="label mb-5">{t.sidebar.topics}</h3>
+                <ul className="divide-y divide-rule text-[15px]">
                     {topics.map((topic) => (
-                        <li key={topic.name}>
-                            <button className={`group flex items-center justify-between w-full text-left transition-colors ${topic.active ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white'}`}>
-                                <span className={`${topic.active ? 'border-b border-black dark:border-white pb-0.5' : 'group-hover:translate-x-1 transition-transform duration-300'}`}>
+                        <li key={topic.key}>
+                            <button className={`group flex min-h-11 w-full items-center justify-between gap-3 py-2.5 text-left transition-colors ${topic.active ? 'text-ink font-semibold' : 'text-ink-muted hover:text-ink'}`}>
+                                <span className={`${topic.active ? 'marker text-ink' : 'group-hover:translate-x-1 transition-transform duration-300'}`}>
                                     {topic.name}
                                 </span>
-                                <span className={`text-[10px] ${topic.active ? 'text-gray-400' : 'text-gray-600 dark:text-gray-600'} group-hover:text-black dark:group-hover:text-white transition-colors`}>
+                                <span className="shrink-0 text-xs tabular-nums text-ink-faint group-hover:text-ink transition-colors">
                                     {topic.count.toString().padStart(2, '0')}
                                 </span>
                             </button>
@@ -26,19 +30,20 @@ const Sidebar: React.FC = () => {
                     ))}
                 </ul>
             </div>
-            <div className="border-t border-gray-300 dark:border-gray-800 pt-6 mt-4">
-                <h3 className="text-xs font-bold tracking-[0.2em] uppercase mb-6 text-black dark:text-white">Subscribe</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
-                    Get the latest articles delivered directly to your inbox once a month.
+            <div className="border-t-2 border-ink pt-5 mt-6">
+                <h3 className="label mb-4">{t.sidebar.subscribe}</h3>
+                <p className="mb-4 text-[15px] leading-relaxed text-ink-muted">
+                    {t.sidebar.subscribeCopy}
                 </p>
                 <form className="flex flex-col gap-3">
                     <input
-                        className="bg-transparent border-b border-gray-400 dark:border-gray-700 text-sm py-2 placeholder-gray-500 focus:outline-none focus:border-black dark:focus:border-white transition-colors text-black dark:text-white w-full"
-                        placeholder="Email Address"
+                        className="w-full min-h-11 border-b border-rule-strong bg-transparent text-base py-2 text-ink transition-colors focus:border-ink focus:outline-none md:text-sm"
+                        placeholder={t.sidebar.emailPlaceholder}
+                        aria-label={t.sidebar.emailLabel}
                         type="email"
                     />
-                    <button className="text-xs tracking-widest uppercase text-left mt-2 hover:text-black dark:hover:text-white hover:underline text-gray-500 dark:text-gray-400 transition-colors">
-                        Subscribe →
+                    <button className="mt-1 inline-flex min-h-11 items-center text-left text-[11px] font-bold tracking-[0.16em] text-ink-muted uppercase underline-offset-4 transition-colors hover:text-ink hover:underline">
+                        {t.sidebar.subscribeCta} →
                     </button>
                 </form>
             </div>

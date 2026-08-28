@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../i18n/useLanguage';
 
 interface Game2048Props {
     onExit: () => void;
@@ -11,6 +12,7 @@ type Grid = number[][];
 const GRID_SIZE = 4;
 
 const Game2048: React.FC<Game2048Props> = ({ onExit, isVertical = false }) => {
+    const { t } = useLanguage();
     const [grid, setGrid] = useState<Grid>(Array(GRID_SIZE).fill(0).map(() => Array(GRID_SIZE).fill(0)));
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
@@ -131,40 +133,40 @@ const Game2048: React.FC<Game2048Props> = ({ onExit, isVertical = false }) => {
 
     const getTileColor = (val: number) => {
         const colors: Record<number, string> = {
-            2: 'bg-gray-800 text-gray-200',
-            4: 'bg-gray-700 text-gray-100',
-            8: 'bg-orange-900/40 text-orange-200 border-orange-500/30',
-            16: 'bg-orange-800/50 text-orange-100 border-orange-500/40',
-            32: 'bg-red-900/40 text-red-200 border-red-500/30',
-            64: 'bg-red-800/50 text-red-100 border-red-500/40',
-            128: 'bg-yellow-900/40 text-yellow-200 border-yellow-500/30',
-            256: 'bg-yellow-800/50 text-yellow-100 border-yellow-500/40',
-            512: 'bg-green-900/40 text-green-200 border-green-500/30',
-            1024: 'bg-green-800/50 text-green-100 border-green-500/40',
-            2048: 'bg-blue-900/40 text-blue-200 border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.3)]',
+            2: 'bg-paper-sunk text-ink border-rule',
+            4: 'bg-paper-edge text-ink border-rule',
+            8: 'bg-paper-edge text-ink border-rule-strong',
+            16: 'bg-accent/20 text-ink border-accent/40',
+            32: 'bg-accent/35 text-ink border-accent/50',
+            64: 'bg-accent/55 text-ink border-accent/70',
+            128: 'bg-accent/75 text-paper-raised border-accent',
+            256: 'bg-accent text-paper-raised border-accent',
+            512: 'bg-ink/70 text-paper-raised border-ink',
+            1024: 'bg-ink/85 text-paper-raised border-ink',
+            2048: 'bg-ink text-paper-raised border-ink',
         };
-        return colors[val] || 'bg-blue-800 text-white';
+        return colors[val] || 'bg-ink text-paper-raised border-ink';
     };
 
     return (
-        <div className={`relative w-full flex items-center justify-center bg-black/40 rounded-lg border border-gray-800 overflow-hidden font-mono text-gray-400 ${isVertical ? 'h-[400px]' : 'h-[220px]'
+        <div className={`relative w-full flex items-center justify-center bg-paper-sunk border border-rule-strong overflow-hidden font-mono text-ink-body ${isVertical ? 'h-[400px]' : 'h-[220px]'
             }`}>
             <div className="absolute top-2 left-6 right-6 flex justify-between items-center z-10">
-                <div className="text-[10px] text-gray-500 uppercase tracking-widest">PROTOCOL_2048 v1.0</div>
-                <div className="text-sm font-bold text-blue-400 flex items-center gap-2">
-                    <span className="text-[10px] text-gray-600">SCORE</span>
+                <div className="text-[10px] text-ink-muted uppercase tracking-widest">PROTOCOL_2048 v1.0</div>
+                <div className="text-sm font-bold text-accent flex items-center gap-2">
+                    <span className="text-[10px] text-ink-muted">{t.games.score}</span>
                     {score.toString().padStart(5, '0')}
                 </div>
             </div>
 
-            <div className={`grid grid-cols-4 gap-2 bg-[#050505] p-2 rounded-md border border-gray-900 shadow-2xl ${isVertical ? 'p-4 gap-3' : 'p-2 gap-2'
+            <div className={`grid grid-cols-4 gap-2 bg-paper-raised p-2 rounded-sm border border-rule-strong ${isVertical ? 'p-4 gap-3' : 'p-2 gap-2'
                 }`}>
                 {grid.map((row, r) => (
                     row.map((cell, c) => (
                         <div
                             key={`${r}-${c}`}
                             className={`${isVertical ? 'w-16 h-16 text-lg' : 'w-10 h-10 text-xs'
-                                } rounded-sm flex items-center justify-center font-bold transition-all duration-200 border border-transparent ${cell === 0 ? 'bg-black/20' : getTileColor(cell)}`}
+                                } flex items-center justify-center font-bold transition-all duration-200 border ${cell === 0 ? 'bg-paper-sunk border-rule/60' : getTileColor(cell)}`}
                         >
                             {cell !== 0 ? cell : ''}
                         </div>
@@ -177,32 +179,32 @@ const Game2048: React.FC<Game2048Props> = ({ onExit, isVertical = false }) => {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center z-20"
+                        className="absolute inset-0 bg-paper/95 flex flex-col items-center justify-center z-20"
                     >
-                        <div className="text-red-500 text-xl font-bold mb-2 tracking-tighter uppercase">Memory Overflow: Game Over</div>
-                        <div className="text-gray-400 text-xs mb-4 uppercase">Data Harvested: {score}</div>
+                        <div className="px-4 text-center font-headline text-accent text-xl font-bold mb-2 tracking-tight uppercase">{t.games.g2048Over}</div>
+                        <div className="text-ink-muted text-xs mb-4 uppercase">{t.games.g2048Harvested} {score}</div>
                         <div className="flex gap-4">
                             <button
                                 onClick={initGame}
-                                className="px-4 py-1.5 bg-blue-500/10 border border-blue-500/50 text-blue-500 text-xs hover:bg-blue-500/20 transition-colors uppercase"
+                                className="px-4 py-1.5 border border-ink text-ink text-xs hover:bg-ink hover:text-paper-raised transition-colors uppercase"
                             >
-                                Re-init
+                                {t.games.g2048Restart}
                             </button>
                             <button
                                 onClick={onExit}
-                                className="px-4 py-1.5 bg-red-500/10 border border-red-500/50 text-red-500 text-xs hover:bg-red-500/20 transition-colors uppercase"
+                                className="px-4 py-1.5 border border-accent text-accent text-xs hover:bg-accent hover:text-paper-raised transition-colors uppercase"
                             >
-                                Exit
+                                {t.games.exit}
                             </button>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-gray-600 uppercase flex justify-between">
-                <span>Navigate with Arrows</span>
-                <span>'Esc' to Break</span>
-                <span>Reach 2048</span>
+            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-ink-muted uppercase flex justify-between">
+                <span>{t.games.g2048Move}</span>
+                <span>{t.games.g2048Exit}</span>
+                <span>{t.games.g2048Goal}</span>
             </div>
         </div>
     );

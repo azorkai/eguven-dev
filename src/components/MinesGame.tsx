@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bomb, Flag } from 'lucide-react';
+import { useLanguage } from '../i18n/useLanguage';
 
 interface MinesGameProps {
     onExit: () => void;
@@ -18,6 +19,7 @@ const GRID_SIZE = 10;
 const MINE_COUNT = 10;
 
 const MinesGame: React.FC<MinesGameProps> = ({ onExit, isVertical = false }) => {
+    const { t } = useLanguage();
     const [grid, setGrid] = useState<Cell[][]>([]);
     const [gameOver, setGameOver] = useState(false);
     const [gameWon, setGameWon] = useState(false);
@@ -136,17 +138,17 @@ const MinesGame: React.FC<MinesGameProps> = ({ onExit, isVertical = false }) => 
     }, [handleKeyDown]);
 
     return (
-        <div className={`relative w-full flex items-center justify-center bg-black/40 rounded-lg border border-gray-800 overflow-hidden font-mono ${isVertical ? 'h-[400px]' : 'h-[220px]'
+        <div className={`relative w-full flex items-center justify-center bg-paper-sunk border border-rule-strong overflow-hidden font-mono ${isVertical ? 'h-[400px]' : 'h-[220px]'
             }`}>
             <div className="absolute top-2 left-6 right-6 flex justify-between items-center z-10">
-                <div className="text-[10px] text-gray-500 uppercase tracking-widest text-[#00ff41]">MINES_SCAN_PROTOCOL v2.1</div>
-                <div className="text-sm font-bold text-red-500 flex items-center gap-2">
-                    <span className="text-[10px] text-gray-600 uppercase">Mines</span>
+                <div className="text-[10px] uppercase tracking-widest text-ink-muted">MINES_SCAN_PROTOCOL v2.1</div>
+                <div className="text-sm font-bold text-accent flex items-center gap-2">
+                    <span className="text-[10px] text-ink-muted uppercase">{t.games.minesLabel}</span>
                     {minesRemaining.toString().padStart(2, '0')}
                 </div>
             </div>
 
-            <div className={`grid grid-cols-10 gap-1 bg-[#050505] p-2 rounded-md border border-gray-900 shadow-2xl ${isVertical ? 'scale-150' : ''
+            <div className={`grid grid-cols-10 gap-1 bg-paper-raised p-2 rounded-sm border border-rule-strong ${isVertical ? 'scale-150' : ''
                 }`}>
                 {grid.map((row, r) => (
                     row.map((cell, c) => (
@@ -161,15 +163,15 @@ const MinesGame: React.FC<MinesGameProps> = ({ onExit, isVertical = false }) => 
                                 }
                             }}
                             onContextMenu={(e) => toggleFlag(e, r, c)}
-                            className={`w-4 h-4 rounded-sm flex items-center justify-center text-[8px] font-bold cursor-pointer transition-all duration-100 border ${cell.isRevealed
-                                ? 'bg-black/40 border-gray-800 text-gray-400'
-                                : 'bg-gray-800/50 border-gray-700 hover:bg-gray-700/50'
+                            className={`w-4 h-4 flex items-center justify-center text-[8px] font-bold cursor-pointer transition-all duration-100 border ${cell.isRevealed
+                                ? 'bg-paper-sunk border-rule text-ink-body'
+                                : 'bg-paper-edge border-rule-strong hover:bg-paper-sunk'
                                 }`}
                         >
                             {cell.isRevealed ? (
-                                cell.isMine ? <Bomb size={8} className="text-red-500" /> : (cell.neighborMines > 0 ? cell.neighborMines : '')
+                                cell.isMine ? <Bomb size={8} className="text-accent" /> : (cell.neighborMines > 0 ? cell.neighborMines : '')
                             ) : (
-                                cell.isFlagged ? <Flag size={8} className="text-yellow-500" /> : ''
+                                cell.isFlagged ? <Flag size={8} className="text-accent" /> : ''
                             )}
                         </div>
                     ))
@@ -181,42 +183,42 @@ const MinesGame: React.FC<MinesGameProps> = ({ onExit, isVertical = false }) => 
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center z-20"
+                        className="absolute inset-0 bg-paper/95 flex flex-col items-center justify-center z-20"
                     >
-                        <div className={`text-xl font-bold mb-2 tracking-tighter uppercase ${gameOver ? 'text-red-500' : 'text-[#00ff41]'}`}>
-                            {gameOver ? 'Scan Failed: Mine Detonated' : 'Sector Secured: Scan Complete'}
+                        <div className={`px-4 text-center font-headline text-xl font-bold mb-2 tracking-tight uppercase ${gameOver ? 'text-accent' : 'text-ink'}`}>
+                            {gameOver ? t.games.minesLost : t.games.minesWon}
                         </div>
                         <div className="flex gap-4">
                             <button
                                 onClick={initGame}
-                                className={`px-4 py-1.5 bg-black/40 border text-xs transition-colors uppercase ${gameOver ? 'border-red-500/50 text-red-500 hover:bg-red-500/10' : 'border-[#00ff41]/50 text-[#00ff41] hover:bg-[#00ff41]/10'
+                                className={`px-4 py-1.5 border text-xs transition-colors uppercase ${gameOver ? 'border-accent text-accent hover:bg-accent hover:text-paper-raised' : 'border-ink text-ink hover:bg-ink hover:text-paper-raised'
                                     }`}
                             >
-                                Restart Scan
+                                {t.games.minesRestart}
                             </button>
                             <button
                                 onClick={onExit}
-                                className="px-4 py-1.5 bg-black/40 border border-gray-500/50 text-gray-400 text-xs hover:bg-gray-500/10 transition-colors uppercase"
+                                className="px-4 py-1.5 border border-rule-strong text-ink-muted text-xs hover:bg-paper-edge transition-colors uppercase"
                             >
-                                Abort
+                                {t.games.minesAbort}
                             </button>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-gray-600 uppercase flex justify-between md:hidden">
+            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-ink-muted uppercase flex justify-between md:hidden">
                 <button
                     onClick={() => setIsFlagMode(!isFlagMode)}
-                    className={`px-2 py-1 rounded border ${isFlagMode ? 'bg-yellow-500/20 border-yellow-500 text-yellow-500' : 'bg-gray-800 border-gray-600 text-gray-400'}`}
+                    className={`px-2 py-1 border ${isFlagMode ? 'bg-accent border-accent text-paper-raised' : 'bg-paper-raised border-rule-strong text-ink-muted'}`}
                 >
-                    {isFlagMode ? '🚩 FLAG MODE' : '⛏️ DIG MODE'}
+                    {isFlagMode ? `🚩 ${t.games.minesFlagMode}` : `⛏️ ${t.games.minesDigMode}`}
                 </button>
             </div>
-            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-gray-600 uppercase justify-between hidden md:flex">
-                <span>L-Click: Reveal</span>
-                <span>R-Click: Flag</span>
-                <span>'Esc' to Abort</span>
+            <div className="absolute bottom-2 left-6 right-6 text-[8px] text-ink-muted uppercase justify-between hidden md:flex">
+                <span>{t.games.minesReveal}</span>
+                <span>{t.games.minesFlag}</span>
+                <span>{t.games.minesExit}</span>
             </div>
         </div>
     );
