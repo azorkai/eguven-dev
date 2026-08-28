@@ -59,6 +59,7 @@ const MachineBar: React.FC = () => {
     return (
         <div
             role="region"
+            data-print="hide"
             aria-label={t.machineBar.region}
             className="fixed top-0 left-0 w-full z-40 bg-paper-raised border-b border-rule-strong"
             style={{ height: BAR_HEIGHT }}

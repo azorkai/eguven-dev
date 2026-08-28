@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bomb, Flag } from 'lucide-react';
 import { useLanguage } from '../i18n/useLanguage';
+import { sound } from '../sound';
+import SoundToggle from './SoundToggle';
 
 interface MinesGameProps {
     onExit: () => void;
@@ -82,6 +84,7 @@ const MinesGame: React.FC<MinesGameProps> = ({ onExit, isVertical = false }) => 
         const newGrid = [...grid.map(row => [...row])];
 
         if (newGrid[r][c].isMine) {
+            sound.thud();
             setGameOver(true);
 
             newGrid.forEach(row => row.forEach(cell => {
@@ -142,9 +145,12 @@ const MinesGame: React.FC<MinesGameProps> = ({ onExit, isVertical = false }) => 
             }`}>
             <div className="absolute top-2 left-6 right-6 flex justify-between items-center z-10">
                 <div className="text-[10px] uppercase tracking-widest text-ink-muted">MINES_SCAN_PROTOCOL v2.1</div>
-                <div className="text-sm font-bold text-accent flex items-center gap-2">
-                    <span className="text-[10px] text-ink-muted uppercase">{t.games.minesLabel}</span>
-                    {minesRemaining.toString().padStart(2, '0')}
+                <div className="flex items-center gap-1">
+                    <SoundToggle />
+                    <div className="text-sm font-bold text-accent flex items-center gap-2">
+                        <span className="text-[10px] text-ink-muted uppercase">{t.games.minesLabel}</span>
+                        {minesRemaining.toString().padStart(2, '0')}
+                    </div>
                 </div>
             </div>
 

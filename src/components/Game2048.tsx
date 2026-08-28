@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../i18n/useLanguage';
+import { sound } from '../sound';
+import SoundToggle from './SoundToggle';
 
 interface Game2048Props {
     onExit: () => void;
@@ -50,6 +52,8 @@ const Game2048: React.FC<Game2048Props> = ({ onExit, isVertical = false }) => {
         let newGrid = grid.map(row => [...row]);
         let moved = false;
         let newScore = score;
+        /* The biggest tile made this move decides the pitch of the one note. */
+        let merged = 0;
 
         const rotateGrid = (g: Grid) => {
             const rotated = Array(GRID_SIZE).fill(0).map(() => Array(GRID_SIZE).fill(0));
@@ -67,6 +71,7 @@ const Game2048: React.FC<Game2048Props> = ({ onExit, isVertical = false }) => {
                 if (arr[i] === arr[i + 1]) {
                     arr[i] *= 2;
                     newScore += arr[i];
+                    merged = Math.max(merged, arr[i]);
                     arr.splice(i + 1, 1);
                     moved = true;
                 }
@@ -92,6 +97,7 @@ const Game2048: React.FC<Game2048Props> = ({ onExit, isVertical = false }) => {
         for (let i = 0; i < (4 - rotations) % 4; i++) newGrid = rotateGrid(newGrid);
 
         if (moved) {
+            if (merged) sound.rise(merged);
             const gridWithNewTile = addRandomTile(newGrid);
             setGrid(gridWithNewTile);
             setScore(newScore);
@@ -153,9 +159,12 @@ const Game2048: React.FC<Game2048Props> = ({ onExit, isVertical = false }) => {
             }`}>
             <div className="absolute top-2 left-6 right-6 flex justify-between items-center z-10">
                 <div className="text-[10px] text-ink-muted uppercase tracking-widest">PROTOCOL_2048 v1.0</div>
-                <div className="text-sm font-bold text-accent flex items-center gap-2">
-                    <span className="text-[10px] text-ink-muted">{t.games.score}</span>
-                    {score.toString().padStart(5, '0')}
+                <div className="flex items-center gap-1">
+                    <SoundToggle />
+                    <div className="text-sm font-bold text-accent flex items-center gap-2">
+                        <span className="text-[10px] text-ink-muted">{t.games.score}</span>
+                        {score.toString().padStart(5, '0')}
+                    </div>
                 </div>
             </div>
 

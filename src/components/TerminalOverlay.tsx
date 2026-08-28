@@ -7,6 +7,7 @@ import Game2048 from './Game2048';
 
 import MinesGame from './MinesGame';
 import { useLanguage } from '../i18n/useLanguage';
+import { sound, toggleSound, useSoundPref } from '../sound';
 
 
 interface CommandOutput {
@@ -23,6 +24,7 @@ interface TerminalOverlayProps {
 
 const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dockPosition, setDockPosition }) => {
     const { t } = useLanguage();
+    const [soundOn] = useSoundPref();
     const [inputValue, setInputValue] = useState('');
     const [showSnake, setShowSnake] = useState(false);
     const [show2048, setShow2048] = useState(false);
@@ -68,6 +70,12 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
             return;
         }
 
+        /* One typebar per key that actually changes the line. Held arrows and
+           modifiers do not print anything, so they do not sound like it. */
+        if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Enter') {
+            sound.key();
+        }
+
         if (e.key === 'Enter') {
             const cmd = inputValue.trim().toLowerCase();
             setInputValue('');
@@ -97,6 +105,12 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
                 return;
             }
 
+
+            if (cmd === 'sound') {
+                const on = toggleSound();
+                setOutputs(prev => [...prev, { type: 'response', text: on ? t.terminal.soundOn : t.terminal.soundOff }]);
+                return;
+            }
 
             if (cmd === 'exit') {
                 onClose();
@@ -237,6 +251,8 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
                         }
                         exit={{ opacity: 0, scale: 0.9 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                        data-print="hide"
+                        data-copy-credit="off"
                         className={`fixed z-[100] bg-paper-raised border border-rule-ink shadow-xl overflow-hidden ${getDockStyles()}`}
                         style={{
                             transform: dockPosition === 'floating' ? undefined : 'none'
@@ -282,6 +298,11 @@ const TerminalOverlay: React.FC<TerminalOverlayProps> = ({ isOpen, onClose, dock
                                         {showWelcome && (
                                             <div className="mb-4 text-ink-muted font-light break-words">
                                                 <span className="block">{t.terminal.welcome}</span>
+                                                {/* One line, so the switch is discoverable without a
+                                                    speaker icon sitting in the chrome all day. */}
+                                                <span className="block">
+                                                    {soundOn ? t.terminal.soundHintOn : t.terminal.soundHintOff}
+                                                </span>
                                             </div>
                                         )}
                                         {outputs.map((out, i) => (

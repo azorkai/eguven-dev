@@ -470,6 +470,12 @@
     color: var(--color-ink);
   }
 
+  /* Print furniture. No screen life at all: the source line is display:none
+     until there is paper under it. */
+  .print-only {
+    display: none;
+  }
+
   .hover-underline-animation {
     display: inline-block;
     position: relative;
@@ -491,5 +497,355 @@
   .hover-underline-animation:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
+  }
+}
+
+/* ------------------------------------------------------------------------- */
+/*  THE PRINTED EDITION                                                      */
+/*                                                                           */
+/*  Ctrl+P is not a screenshot of the interface. Somebody printing this is    */
+/*  printing a document, most likely /projects/crmsolid, to read away from a  */
+/*  screen or to put in front of somebody else, so the sheet that comes out   */
+/*  is set as a newspaper page and nothing else.                              */
+/*                                                                           */
+/*  What changes:                                                            */
+/*    - every piece of screen chrome leaves. Nothing fixed, nothing you can   */
+/*      click, no contents column, no games, no wire strip.                   */
+/*    - the stock goes to plain white and the ink to black. The grain is a    */
+/*      screen texture; on paper it is only toner. print-color-adjust is      */
+/*      deliberately NOT forced, so the browser stays free to drop fills.     */
+/*    - the long case study runs in two columns with a gutter rule, which is  */
+/*      the right measure on paper and the wrong one on a screen.             */
+/*    - external links carry their URL, because a link you cannot click is    */
+/*      only useful if you can read where it went.                            */
+/*                                                                           */
+/*  Every colour below is set once, on the theme variables, so the whole      */
+/*  press run re-inks for paper from one block. This sits outside every       */
+/*  cascade layer on purpose: unlayered rules beat Tailwind's layered theme.  */
+/* ------------------------------------------------------------------------- */
+
+@media print {
+
+  /* ---- sheet ------------------------------------------------------------ */
+  @page {
+    size: A4;
+    margin: 16mm 15mm 18mm;
+  }
+
+  /* Folio, in its own rule: a renderer that does not understand margin boxes
+     drops this one and still keeps the page size above.
+
+     Chrome does draw it, and it stands down when the reader has left Chrome's
+     own headers and footers switched on in the print dialog, so the sheet
+     never carries two page numbers. */
+  @page {
+    @bottom-right {
+      content: counter(page) " / " counter(pages);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 8pt;
+      color: #555555;
+    }
+  }
+
+  /* ---- re-ink for paper ------------------------------------------------- */
+  :root,
+  :root.dark,
+  .dark {
+    --color-paper: #ffffff;
+    --color-paper-raised: #ffffff;
+    --color-paper-sunk: #ffffff;
+    --color-paper-edge: #ffffff;
+
+    --color-ink: #000000;
+    --color-ink-body: #000000;
+    --color-ink-muted: #333333;
+    --color-ink-faint: #444444;
+
+    --color-rule: #bbbbbb;
+    --color-rule-strong: #888888;
+    --color-rule-ink: #000000;
+
+    /* One ink. The press red is a screen accent; on a mono printer it comes
+       out a muddy grey that reads as a mistake. */
+    --color-accent: #000000;
+    --color-accent-deep: #000000;
+    --color-accent-soft: #000000;
+    --color-stamp: #ffffff;
+    --color-stamp-ink: #000000;
+    --color-marker: transparent;
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-50: #ffffff;
+    --color-gray-100: #ffffff;
+    --color-gray-200: #dddddd;
+    --color-gray-300: #bbbbbb;
+    --color-gray-400: #444444;
+    --color-gray-500: #333333;
+    --color-gray-600: #333333;
+    --color-gray-700: #000000;
+    --color-gray-800: #000000;
+    --color-gray-900: #000000;
+
+    --paper-noise: none;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+  }
+
+  body {
+    font-size: 10.5pt;
+    line-height: 1.5;
+  }
+
+  /* Nothing floats on paper. */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* ---- screen chrome leaves --------------------------------------------- */
+  [data-print="hide"],
+  nav,
+  footer,
+  button,
+  .print-hide {
+    display: none !important;
+  }
+
+  /* ---- print only furniture --------------------------------------------- */
+  .print-only {
+    display: block;
+  }
+
+  /* ---- geometry --------------------------------------------------------- */
+  .min-h-screen {
+    min-height: 0 !important;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* The page mastheads clear a fixed navbar that is no longer there. */
+  header {
+    padding-top: 0 !important;
+    padding-bottom: 8pt !important;
+  }
+
+  main {
+    padding-bottom: 0 !important;
+  }
+
+  section {
+    margin-bottom: 14pt !important;
+  }
+
+  /* Screen whitespace is generous on purpose; on paper it is wasted sheets. */
+  .mb-16,
+  .mb-14,
+  .mb-12,
+  .mt-20,
+  .mt-12,
+  .my-12,
+  .my-10 {
+    margin-top: 0 !important;
+    margin-bottom: 8pt !important;
+  }
+
+  .pb-16,
+  .pb-12,
+  .pt-12 {
+    padding-top: 0 !important;
+    padding-bottom: 6pt !important;
+  }
+
+  /* ---- type ------------------------------------------------------------- */
+  .masthead {
+    font-size: 30pt !important;
+    line-height: 0.95;
+    margin-bottom: 6pt !important;
+  }
+
+  .standfirst {
+    font-size: 11pt !important;
+    line-height: 1.45;
+  }
+
+  /* The stamp is reversed out of red on screen. With fills dropped it would
+     print as nothing, so on paper it becomes a ruled box. */
+  .kicker {
+    background: none !important;
+    color: #000000 !important;
+    border: 0.75pt solid #000000;
+    padding: 0.24em 0.55em 0.2em;
+  }
+
+  .ink-block {
+    background: none !important;
+    color: #000000 !important;
+    border: 0.75pt solid #000000;
+  }
+
+  /* Highlighter becomes what emphasis is on paper: a rule under the words. */
+  .marker {
+    background-image: none !important;
+    padding: 0;
+    text-decoration: underline;
+    text-decoration-thickness: 0.5pt;
+    text-underline-offset: 2pt;
+    text-decoration-color: #777777;
+  }
+
+  /* The gradient double rule is a background, so it is redrawn with borders. */
+  .rule-double {
+    height: 1.5pt !important;
+    background: none !important;
+    border-top: 1.75pt solid #000000;
+    border-bottom: 0.5pt solid #666666;
+  }
+
+  /* ---- two columns, the way a page is actually set ---------------------- */
+  .print-columns {
+    columns: 2;
+    column-gap: 16pt;
+    column-rule: 0.4pt solid #cccccc;
+  }
+
+  /* Standing heads and pictures cross the gutter. */
+  .print-span,
+  .print-columns figure {
+    column-span: all;
+  }
+
+  .print-columns figure {
+    margin: 8pt 0 10pt !important;
+  }
+
+  /* Newspaper measure: the column is narrow, so the body drops with it. */
+  .print-columns p,
+  .print-columns li,
+  .print-columns dd,
+  .print-columns dt {
+    font-size: 9.5pt !important;
+    line-height: 1.45 !important;
+  }
+
+  .print-columns h2 {
+    font-size: 17pt !important;
+  }
+
+  .print-columns h3 {
+    font-size: 9pt !important;
+  }
+
+  /* ---- where the paper is allowed to break ------------------------------ */
+  h1,
+  h2,
+  h3,
+  h4,
+  .label,
+  dt {
+    break-after: avoid;
+    page-break-after: avoid;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  figure,
+  img,
+  svg,
+  tr,
+  li,
+  dl > div,
+  figcaption,
+  .paper-panel {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  figcaption {
+    break-before: avoid;
+    page-break-before: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* A boxed list is often longer than what is left of the sheet; let it break
+     between its own items rather than jump a whole page to stay whole. */
+  .paper-panel:has(li) {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  /* ---- pictures --------------------------------------------------------- */
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* No !important here: the runtime diagram carries its own max-width and
+     overriding it blows a 380 unit drawing up to full page width, which is
+     how a two page tall picture and a blank sheet behind it happen. */
+  svg {
+    max-width: 100%;
+  }
+
+  /* On screen the drawing stacks into a tall single column, which is right on
+     a phone and wrong on A4: at full height it eats a whole sheet on its own.
+     Capped, it sits inside the spread with the caption under it. */
+  .print-columns figure svg {
+    width: auto !important;
+    height: auto !important;
+    max-height: 820px;
+    margin-inline: auto;
+  }
+
+  /* ---- links you cannot click ------------------------------------------- */
+  a {
+    color: #000000 !important;
+    text-decoration: underline;
+  }
+
+  /* Only real outside sources. Internal navigation is relative, so it never
+     matches, and anything already showing its own URL opts out. */
+  a[href^="http"]:not([data-print-url="off"])::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    font-weight: 400;
+    /* The URL is a URL, whatever case the link it hangs off is set in. */
+    text-transform: none;
+    letter-spacing: 0;
+    word-break: break-all;
+    color: #444444;
+  }
+
+  /* An icon link has no text to hang a URL off: the address would stack up
+     one character wide inside a 44px square. Those stay silent. */
+  a:has(> svg)::after {
+    content: none !important;
+  }
+
+  /* ---- the source line -------------------------------------------------- */
+  .print-only.folio {
+    margin-bottom: 6pt;
+    color: #444444;
+  }
+
+  .print-only:not(.folio) {
+    margin-top: 10pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 }

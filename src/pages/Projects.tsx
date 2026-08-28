@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Terminal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../i18n/useLanguage';
+import Dateline from '../components/Dateline';
 import { rich } from '../i18n/rich';
 import { PROJECTS, PROJECT_FILTERS, type ProjectFilter } from '../content/projects';
 import { projectsEn } from '../content/projects.en';
@@ -73,7 +74,7 @@ const Projects: React.FC = () => {
             <header className="container mx-auto px-6 md:px-12 lg:px-24 pt-32 md:pt-28 pb-20 md:pb-24">
                 <motion.div variants={itemVariants} className="relative">
                     <div className="mb-6"><span className="kicker">{t.projects.kicker}</span></div>
-                    <h1 className="masthead uppercase mb-8 select-none">
+                    <h1 className="masthead uppercase mb-6 select-none">
                         {t.projects.titleLead}{' '}
                         <motion.span
                             animate={worksClickCount >= 5 ? "glitch" : ""}
@@ -85,6 +86,10 @@ const Projects: React.FC = () => {
                             {t.projects.titleAccent}
                         </motion.span>
                     </h1>
+                    {/* Nameplate, hairline, dateline, double rule: the block a
+                        newspaper sets between its name and its first story. */}
+                    <div className="rule-hair max-w-3xl" />
+                    <Dateline className="max-w-3xl py-2.5" />
                     <div className="rule-double mb-8 max-w-3xl" />
                     <p className="standfirst measure">
                         {rich(t.projects.standfirst)}

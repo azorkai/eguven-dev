@@ -42,6 +42,14 @@ export const en = {
         openTerminal: 'Open Terminal',
     },
 
+    /* ---- sound ------------------------------------------------------------
+       Off until the reader asks for it. These label the switch inside the
+       games; the terminal says the same thing in a sentence. */
+    sound: {
+        turnOn: 'Turn sound on',
+        turnOff: 'Turn sound off',
+    },
+
     machineBar: {
         region: 'Notice to machine readers',
         badge: 'WIRE',
@@ -70,6 +78,58 @@ export const en = {
     },
 
     nothingHere: 'THERE IS NOTHING HERE',
+
+    /* ---- masthead dateline ( front page ) --------------------------------
+       Place, date, volume and issue, price. The issue number is counted from
+       PRESS_START in src/components/Dateline.tsx, so it moves on its own. */
+    dateline: {
+        aria: 'Edition dateline',
+        place: 'ISTANBUL',
+        /* {volume} and {issue} are filled in with locale formatted numbers. */
+        edition: 'VOL. {volume}, NO. {issue}',
+        price: 'PRICE: FREE',
+        /* Feeds toLocaleDateString: day, month name, year. */
+        locale: 'en-GB',
+    },
+
+    /* ---- clipboard credit ------------------------------------------------
+       Appended to a long enough selection copied out of running text. Never
+       to code, never to a form field, never to a phrase. */
+    copyCredit: {
+        source: 'Source:',
+        name: 'Emirhan Güven',
+        locale: 'en-GB',
+    },
+
+    /* ---- print colophon ( only ever on paper ) --------------------------- */
+    print: {
+        printed: 'PRINTED',
+        standing: 'Emirhan Güven, full stack developer, Istanbul. contact@eguven.dev',
+    },
+
+    /* ---- 404 ( any address that was never printed ) ---------------------- */
+    notFound: {
+        kicker: 'ARCHIVE DESK',
+        titleLead: 'Sold',
+        titleAccent: 'Out',
+        standfirst:
+            'Sold out, or never printed. Either way the archive has nothing filed under this address and no reprint is coming. What is still on the stand is listed below.',
+        requestedLabel: 'REQUESTED',
+        statusLabel: 'STATUS',
+        statusValue: '404, no edition under this address',
+        deskLabel: 'ARCHIVE',
+        deskValue: 'Istanbul, open at all hours',
+        stillInPrint: 'STILL IN PRINT',
+        linkWorks: 'The Works',
+        linkWorksNote: 'The systems I designed, wrote and still run.',
+        linkLog: 'The Log',
+        linkLogNote: 'Notes from building and running the things above.',
+        linkContact: 'Contact',
+        linkContactNote: 'Email is still the fastest way to reach me.',
+        linkMachine: 'The Machine Edition',
+        linkMachineNote: 'The same facts, set for whatever is reading on your behalf.',
+        back: 'BACK TO THE FRONT PAGE',
+    },
 
     /* ---- articles ( /articles ) ------------------------------------------ */
     hero: {
@@ -161,11 +221,15 @@ export const en = {
             'Welcome to the interactive portfolio terminal. Type ‘help’ to see available commands.',
         notFoundPrefix: 'Command not found:',
         notFoundSuffix: 'Type ‘help’ for available commands.',
-        help: 'Available commands: [help, whoami, skills, projects, ai, snake, 2048, mines, clear, exit]',
+        help: 'Available commands: [help, whoami, skills, projects, ai, sound, snake, 2048, mines, clear, exit]',
         whoami: 'Emirhan Güven - Full Stack Developer, .NET and React. Writing software professionally since 2018. Currently building and running CRMSolid, a live SaaS CRM: 5 deployed services, PostgreSQL, 516 NUnit tests, Docker on a Linux server.',
         skills: 'Backend: [C#, .NET 8/9, ASP.NET Core, EF Core, Python, PHP] | Frontend: [React, Next.js, TypeScript, Tailwind, Blazor] | Database: [PostgreSQL, DuckDB, Redis, MySQL] | Desktop: [Photino.NET, Electron] | DevOps: [Docker, Traefik, GitHub Actions, Nginx, Linux] | AI: [Anthropic API, OpenAI API, MCP]',
         projects: 'Directing to /projects page soon... (Check the navigation bar)',
         ai: 'There is an edition of this site written for machine readers: /ai . Plain text copy: /llms.txt',
+        soundHintOff: 'Sound is off. Type ‘sound’ to switch it on.',
+        soundHintOn: 'Sound is on. Type ‘sound’ to switch it off.',
+        soundOn: 'Sound on. The keys, the wire machine on /ai and the three games make a noise now. Nothing else does.',
+        soundOff: 'Sound off. Back to a quiet office.',
         snake: 'Initializing SNAKE_PROTOCOL...',
         g2048: 'Initializing PROTOCOL_2048...',
         mines: 'Initializing MINES_SCAN_PROTOCOL...',
@@ -211,6 +275,9 @@ export const en = {
         contactTitle: 'Contact | Emirhan Güven',
         contactDesc:
             'Get in touch with Emirhan Güven, full stack developer in Istanbul. Open to full time roles, on site, hybrid or remote, and to contract work.',
+        notFoundTitle: 'Page Not Found | Emirhan Güven',
+        notFoundDesc:
+            'This address is not part of the site. Links to the projects, the log, the machine edition and the contact page.',
     },
 };
 

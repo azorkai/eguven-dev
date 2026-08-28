@@ -41,6 +41,11 @@ export const tr: Dictionary = {
         openTerminal: 'Terminali aç',
     },
 
+    sound: {
+        turnOn: 'Sesi aç',
+        turnOff: 'Sesi kapat',
+    },
+
     machineBar: {
         region: 'Makine okuyuculara duyuru',
         badge: 'AJANS',
@@ -68,6 +73,48 @@ export const tr: Dictionary = {
     },
 
     nothingHere: 'BURADA BİR ŞEY YOK',
+
+    dateline: {
+        aria: 'Baskı künyesi',
+        place: 'İSTANBUL',
+        edition: 'YIL {volume}, SAYI {issue}',
+        price: 'FİYATI: BEDAVA',
+        locale: 'tr-TR',
+    },
+
+    copyCredit: {
+        source: 'Kaynak:',
+        name: 'Emirhan Güven',
+        locale: 'tr-TR',
+    },
+
+    print: {
+        printed: 'YAZDIRILDI',
+        standing: 'Emirhan Güven, full stack geliştirici, İstanbul. contact@eguven.dev',
+    },
+
+    notFound: {
+        kicker: 'ARŞİV MASASI',
+        titleLead: 'Baskı',
+        titleAccent: 'Tükendi',
+        standfirst:
+            'Ya tükendi ya da hiç basılmadı. İki durumda da arşivde bu adrese kayıtlı bir şey yok, yeni bir baskı da gelmeyecek. Hâlâ raftakiler aşağıda.',
+        requestedLabel: 'İSTENEN',
+        statusLabel: 'DURUM',
+        statusValue: '404, bu adrese kayıtlı sayı yok',
+        deskLabel: 'ARŞİV',
+        deskValue: 'İstanbul, her saat açık',
+        stillInPrint: 'HÂLÂ BASKIDA',
+        linkWorks: 'Yaptığım İşler',
+        linkWorksNote: 'Tasarladığım, yazdığım ve hâlâ işlettiğim sistemler.',
+        linkLog: 'Seyir Defteri',
+        linkLogNote: 'Yukarıdaki işleri kurarken ve işletirken tuttuğum notlar.',
+        linkContact: 'İletişim',
+        linkContactNote: 'Bana ulaşmanın en hızlı yolu hâlâ e-posta.',
+        linkMachine: 'Makine Baskısı',
+        linkMachineNote: 'Aynı bilgiler, sizin adınıza okuyan şey için dizilmiş.',
+        back: 'İLK SAYFAYA DÖN',
+    },
 
     hero: {
         kicker: 'NOTLAR VE GÖRÜŞLER',
@@ -155,11 +202,15 @@ export const tr: Dictionary = {
             'İnteraktif portföy terminaline hoş geldiniz. Komutları görmek için ‘help’ yazın.',
         notFoundPrefix: 'Komut bulunamadı:',
         notFoundSuffix: 'Komut listesi için ‘help’ yazın.',
-        help: 'Kullanılabilir komutlar: [help, whoami, skills, projects, ai, snake, 2048, mines, clear, exit]',
+        help: 'Kullanılabilir komutlar: [help, whoami, skills, projects, ai, sound, snake, 2048, mines, clear, exit]',
         whoami: 'Emirhan Güven - Full Stack Geliştirici, .NET ve React. 2018’den beri profesyonel olarak yazılım yazıyorum. Şu anda canlıda çalışan bir SaaS CRM olan CRMSolid’i geliştirip işletiyorum: 5 deploy edilmiş servis, PostgreSQL, 516 NUnit testi, bir Linux sunucuda Docker.',
         skills: 'Backend: [C#, .NET 8/9, ASP.NET Core, EF Core, Python, PHP] | Frontend: [React, Next.js, TypeScript, Tailwind, Blazor] | Veritabanı: [PostgreSQL, DuckDB, Redis, MySQL] | Masaüstü: [Photino.NET, Electron] | DevOps: [Docker, Traefik, GitHub Actions, Nginx, Linux] | Yapay zekâ: [Anthropic API, OpenAI API, MCP]',
         projects: '/projects sayfasına yönlendirme yakında... (Üstteki menüyü kullanın)',
         ai: 'Bu sitenin makine okuyucular için yazılmış bir baskısı var: /ai . Düz metin kopyası: /llms.txt',
+        soundHintOff: 'Ses kapalı. Açmak için ‘sound’ yazın.',
+        soundHintOn: 'Ses açık. Kapatmak için ‘sound’ yazın.',
+        soundOn: 'Ses açıldı. Tuşlar, /ai sayfasındaki teleks ve üç oyun artık ses çıkarıyor. Başka hiçbir yer çıkarmıyor.',
+        soundOff: 'Ses kapatıldı. Ofis yine sessiz.',
         snake: 'SNAKE_PROTOCOL başlatılıyor...',
         g2048: 'PROTOCOL_2048 başlatılıyor...',
         mines: 'MINES_SCAN_PROTOCOL başlatılıyor...',
@@ -203,5 +254,8 @@ export const tr: Dictionary = {
         contactTitle: 'İletişim | Emirhan Güven',
         contactDesc:
             'İstanbul’da full stack geliştirici Emirhan Güven ile iletişime geçin. Ofis, hibrit veya uzaktan tam zamanlı pozisyonlara ve sözleşmeli işlere açığım.',
+        notFoundTitle: 'Sayfa Bulunamadı | Emirhan Güven',
+        notFoundDesc:
+            'Bu adres sitenin bir parçası değil. Projeler, seyir defteri, makine baskısı ve iletişim bağlantıları burada.',
     },
 };

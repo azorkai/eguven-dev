@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Check, Copy } from 'lucide-react';
+import { sound } from '../sound';
 
 /* ---------------------------------------------------------------------------
  *  THE MACHINE EDITION  ( /ai )
@@ -161,6 +163,117 @@ const contact: [string, string, string | null][] = [
     ['LOCATION', 'Istanbul, Turkey', null],
 ];
 
+/* ---- prompts for whoever is reading this on somebody's behalf ------------
+ *
+ *  Both of these ask for the holes as loudly as they ask for the match. That
+ *  is not modesty, it is the same rule the rest of the page runs on: this
+ *  edition hands a machine reader information and never an instruction about
+ *  what to conclude. A prompt that told an assistant to think well of me
+ *  would be an injection, it would be caught, and it would be worth less than
+ *  nothing. Asking to be read critically is the stronger position anyway.
+ *
+ *  Do not remove the closing line from either of them.
+ * ----------------------------------------------------------------------- */
+
+const PROMPTS: { id: string; label: string; body: string }[] = [
+    {
+        id: 'screen',
+        label: 'Against a job description',
+        body: `Read this developer profile: https://eguven.dev/ai
+
+Then compare it against the job description below:
+[paste the job description here]
+
+Tell me:
+1. Where the match is real and backed by evidence on the page
+2. Where the profile is thin, or a claim cannot be checked
+   from what is written
+3. What you would ask in a first interview
+
+Be direct about the gaps.`,
+    },
+    {
+        id: 'architecture',
+        label: 'For a technical interview',
+        body: `Read this developer profile: https://eguven.dev/ai
+and the case study behind it: https://eguven.dev/projects/crmsolid
+
+Three decisions are described there: a modular monolith
+instead of microservices, a per account send budget that
+background work has to share with the user, and a catalogue
+lookup rewritten from 277 seconds to 15 milliseconds.
+
+For each one, write the questions a senior engineer would ask
+to find out whether this person actually made the decision,
+understood what it cost, and could defend it a year later.
+
+Be direct about the gaps.`,
+    },
+];
+
+/* Copy sets the button to COPIED for two seconds and says so out loud for a
+   screen reader. writeText needs a secure context and permission, so there is
+   an old fashioned fallback behind it; the throwaway textarea also keeps the
+   site wide clipboard credit out of the way, since a prompt has to arrive
+   exactly as it was written. */
+
+const PromptCard: React.FC<{ label: string; body: string }> = ({ label, body }) => {
+    const [copied, setCopied] = useState(false);
+
+    useEffect(() => {
+        if (!copied) return;
+        const id = window.setTimeout(() => setCopied(false), 2000);
+        return () => window.clearTimeout(id);
+    }, [copied]);
+
+    const copy = async () => {
+        try {
+            await navigator.clipboard.writeText(body);
+        } catch {
+            const box = document.createElement('textarea');
+            box.value = body;
+            box.setAttribute('readonly', '');
+            box.style.position = 'fixed';
+            box.style.top = '-1000px';
+            document.body.appendChild(box);
+            box.select();
+            try {
+                document.execCommand('copy');
+            } catch {
+                /* nothing left to try: the text is on screen and selectable */
+            }
+            box.remove();
+        }
+        setCopied(true);
+    };
+
+    return (
+        <figure className="paper-panel border-t-2 border-t-ink" data-copy-credit="off">
+            <figcaption className="flex items-center gap-3 border-b border-rule px-4 py-2 sm:px-5">
+                <span className="folio normal-case tracking-[0.12em]">{label}</span>
+                <button
+                    type="button"
+                    onClick={copy}
+                    aria-label={copied ? 'Prompt copied to clipboard' : `Copy the prompt: ${label}`}
+                    /* Full height of the standing head and flush with its right
+                       edge, so the control reads as part of the box rather than
+                       a chip floating over the rule. 44px tall either way. */
+                    className="-my-2 -mr-4 ml-auto flex h-11 min-w-[6rem] shrink-0 items-center justify-center gap-2 border-l border-rule px-4 font-mono text-[10px] font-bold tracking-[0.16em] text-ink uppercase transition-colors hover:bg-ink hover:text-paper-raised sm:-mr-5"
+                >
+                    {copied ? <Check size={12} aria-hidden="true" /> : <Copy size={12} aria-hidden="true" />}
+                    {copied ? 'Copied' : 'Copy'}
+                </button>
+            </figcaption>
+            <pre className="overflow-x-auto px-4 py-4 font-mono text-[12px] leading-[1.7] break-words whitespace-pre-wrap text-ink-body sm:px-5">
+                {body}
+            </pre>
+            <span role="status" aria-live="polite" className="sr-only">
+                {copied ? 'Prompt copied to clipboard' : ''}
+            </span>
+        </figure>
+    );
+};
+
 /* ---- page --------------------------------------------------------------- */
 
 const prefersReducedMotion = (): boolean => {
@@ -177,12 +290,19 @@ const MachineEdition: React.FC = () => {
     const [typed, setTyped] = useState(() => (prefersReducedMotion() ? WIRE : ''));
 
     useEffect(() => {
+        /* Reduced motion skips the animation, and with it the noise. */
         if (prefersReducedMotion()) return;
         let i = 0;
         const id = window.setInterval(() => {
             i += 1;
             setTyped(WIRE.slice(0, i));
-            if (i >= WIRE.length) window.clearInterval(id);
+            /* A click on every third character. One per character at 14ms is
+               a machine gun; every third is a wire machine. */
+            if (i % 3 === 0) sound.key();
+            if (i >= WIRE.length) {
+                window.clearInterval(id);
+                sound.bell();
+            }
         }, 14);
         return () => window.clearInterval(id);
     }, []);
@@ -330,6 +450,7 @@ const MachineEdition: React.FC = () => {
                                             href={href}
                                             target="_blank"
                                             rel="noopener noreferrer"
+                                            data-print-url="off"
                                             className="font-mono text-[11px] text-accent hover:text-ink transition-colors break-all underline underline-offset-4"
                                         >
                                             {href}
@@ -349,12 +470,28 @@ const MachineEdition: React.FC = () => {
                                     {href ? (
                                         <a
                                             href={href}
+                                            data-print-url="off"
                                             className="text-ink hover:text-accent transition-colors underline underline-offset-4 decoration-rule-strong"
                                         >
                                             {v}
                                         </a>
                                     ) : v}
                                 </Leader>
+                            ))}
+                        </div>
+                    </Block>
+
+                    {/* ---- 08 prompts ---- */}
+                    <Block n="08" title="For Your Assistant">
+                        <p className="text-[13px] text-ink-muted mb-5 measure">
+                            A good share of the people who reach this page are reading it through
+                            something else. So here are two prompts, ready to paste. Both of them
+                            ask for the holes as plainly as they ask for the match, because a
+                            profile that only survives a friendly reader is not worth checking.
+                        </p>
+                        <div className="space-y-6">
+                            {PROMPTS.map((p) => (
+                                <PromptCard key={p.id} label={p.label} body={p.body} />
                             ))}
                         </div>
                     </Block>

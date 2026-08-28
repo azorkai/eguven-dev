@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n/useLanguage';
+import { sound } from '../sound';
+import SoundToggle from './SoundToggle';
 
 interface Point {
     x: number;
@@ -75,6 +77,13 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ onExit, isVertical = false }) => 
         });
     }, [direction, food, gameOver, isPaused, generateFood]);
 
+    /* The tick on food hangs off the score rather than off the state updater
+       that raises it: an updater has to stay pure, and React is free to run it
+       more than once. The score only ever moves when something was eaten. */
+    useEffect(() => {
+        if (score > 0) sound.blip();
+    }, [score]);
+
     useEffect(() => {
         gameLoopRef.current = setInterval(moveSnake, INITIAL_SPEED - Math.min(score / 2, 100));
         return () => {
@@ -120,7 +129,10 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ onExit, isVertical = false }) => 
             }`}>
             <div className="absolute top-2 left-6 right-6 flex justify-between items-center z-10">
                 <div className="text-[10px] text-ink-muted uppercase tracking-widest">SNAKE_PROTOCOL v1.0</div>
-                <div className="text-sm font-bold text-accent">{t.games.score}: {score.toString().padStart(4, '0')}</div>
+                <div className="flex items-center gap-1">
+                    <SoundToggle />
+                    <div className="text-sm font-bold text-accent">{t.games.score}: {score.toString().padStart(4, '0')}</div>
+                </div>
             </div>
 
             <div

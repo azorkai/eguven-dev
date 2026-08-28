@@ -4,7 +4,7 @@ const TransitionEffect = () => {
     const nbOfColumns = 5;
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-[100] flex">
+        <div data-print="hide" className="fixed inset-0 pointer-events-none z-[100] flex">
             {[...Array(nbOfColumns)].map((_, i) => (
                 <motion.div
                     key={i}

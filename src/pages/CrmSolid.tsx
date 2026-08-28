@@ -45,12 +45,16 @@ function Section({
 }) {
     return (
         <section id={id} style={ANCHOR} className="mb-20 md:mb-24">
-            <div className="rule-thick mb-3" />
-            <div className="mb-8 flex items-baseline gap-5">
-                <h2 className="font-headline text-[1.6rem] leading-tight font-bold text-ink md:text-[2.1rem]">
-                    {title}
-                </h2>
-                <span className="folio ml-auto shrink-0">{CRM_SECTION_NUMBERS[id]}</span>
+            {/* One wrapper so the whole standing head spans both printed
+                columns instead of the rule and the folio drifting apart. */}
+            <div className="print-span">
+                <div className="rule-thick mb-3" />
+                <div className="mb-8 flex items-baseline gap-5">
+                    <h2 className="font-headline text-[1.6rem] leading-tight font-bold text-ink md:text-[2.1rem]">
+                        {title}
+                    </h2>
+                    <span className="folio ml-auto shrink-0">{CRM_SECTION_NUMBERS[id]}</span>
+                </div>
             </div>
             {children}
         </section>
@@ -242,7 +246,7 @@ const CrmSolid: React.FC = () => {
             <main className="container mx-auto px-6 pb-32 md:px-10 lg:px-16">
                 <div className="xl:grid xl:grid-cols-[14rem_minmax(0,1fr)] xl:gap-14">
                     {/* desktop contents */}
-                    <aside className="hidden xl:block">
+                    <aside data-print="hide" className="hidden xl:block">
                         <nav
                             aria-label={c.contentsAria}
                             className="sticky"
@@ -258,6 +262,7 @@ const CrmSolid: React.FC = () => {
                         <details
                             open={tocOpen}
                             onToggle={(e) => setTocOpen((e.currentTarget as HTMLDetailsElement).open)}
+                            data-print="hide"
                             className="paper-panel sticky z-30 mb-14 border-t-2 border-t-ink xl:hidden"
                             style={{ top: 'calc(var(--machine-bar-h, 0px) + 4.75rem)' }}
                         >
@@ -279,7 +284,7 @@ const CrmSolid: React.FC = () => {
                             </nav>
                         </details>
 
-                        <article>
+                        <article className="print-columns">
                             {/* -------------------------------------------------- 01 */}
                             <Section id="problem" title={c.heading.problem}>
                                 {c.problem.intro.map((para, i) => (
@@ -508,6 +513,7 @@ const CrmSolid: React.FC = () => {
                                                 href={link.href}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
+                                                data-print-url="off"
                                                 className="inline-flex min-h-11 items-center font-headline text-lg font-bold text-ink underline decoration-rule-strong underline-offset-4 transition-colors hover:text-accent xl:min-h-0"
                                             >
                                                 {link.name}

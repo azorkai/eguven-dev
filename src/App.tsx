@@ -14,6 +14,9 @@ import { useState } from 'react';
 import TerminalOverlay from './components/TerminalOverlay';
 import TransitionEffect from './components/TransitionEffect';
 import NothingHere from './components/NothingHere';
+import NotFound from './pages/NotFound';
+import CopyCredit from './components/CopyCredit';
+import PrintColophon from './components/PrintColophon';
 import ScrollToTop from './components/ScrollToTop';
 import MachineBar from './components/MachineBar';
 import DocumentMeta from './components/DocumentMeta';
@@ -69,7 +72,7 @@ function AppContent() {
       className="text-ink-body transition-all duration-500 font-serif antialiased min-h-screen flex flex-col relative overflow-x-clip"
       style={getLayoutStyles()}
     >
-      <div className="fixed left-6 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col items-center gap-6 z-10 text-xs tracking-widest text-ink-muted">
+      <div data-print="hide" className="fixed left-6 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col items-center gap-6 z-10 text-xs tracking-widest text-ink-muted">
         <button
           className="hover:text-ink transition-colors cursor-pointer border border-rule rounded-sm bg-paper-raised p-2"
           onClick={() => setIsTerminalOpen(true)}
@@ -79,10 +82,12 @@ function AppContent() {
         </button>
       </div>
 
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col items-center gap-6 z-10 folio text-ink-faint rotate-180" style={{ writingMode: 'vertical-rl' }}>
+      <div data-print="hide" className="fixed right-6 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col items-center gap-6 z-10 folio text-ink-faint rotate-180" style={{ writingMode: 'vertical-rl' }}>
         <span>{location.pathname === '/contact' ? t.rail.connect : t.rail.scroll}</span>
         <div className="h-12 w-[1px] bg-rule-strong mt-4"></div>
       </div>
+
+      <PrintColophon variant="slug" />
 
       <MachineBar />
 
@@ -98,10 +103,14 @@ function AppContent() {
               <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
               <Route path="/ai" element={<PageTransition><MachineEdition /></PageTransition>} />
               <Route path="/projects/crmsolid" element={<PageTransition><CrmSolid /></PageTransition>} />
+              {/* Every address that was never printed. */}
+              <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
             </Routes>
           </div>
         </AnimatePresence>
       </main>
+
+      <PrintColophon />
 
       <Footer />
 
@@ -123,6 +132,7 @@ function App() {
       <ScrollToTop />
       <LanguageProvider>
         <DocumentMeta />
+        <CopyCredit />
         <AppContent />
       </LanguageProvider>
     </Router>

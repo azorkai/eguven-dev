@@ -72,6 +72,7 @@ const NothingHere: React.FC = () => {
                         duration: 1.2,
                         ease: [0.22, 1, 0.36, 1]
                     }}
+                    data-print="hide"
                     className="flex items-center justify-center overflow-hidden bg-paper-sunk/60 border-t border-rule"
                 >
                     <motion.div
