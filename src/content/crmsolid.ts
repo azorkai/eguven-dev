@@ -48,8 +48,8 @@ export const CRM_LINKS: { key: CrmLinkKey; name: string; href: string }[] = [
 ];
 
 export const CRM_IMAGES = {
-    inbox: { src: '/projects/crmsolid/panel-inbox.png', width: 1600, height: 1000 },
-    pipeline: { src: '/projects/crmsolid/panel-pipeline.png', width: 1600, height: 1000 },
-    mcp: { src: '/projects/crmsolid/mcp-package.png', width: 1280, height: 640 },
-    agents: { src: '/projects/crmsolid/panel-ai-agents.png', width: 1600, height: 1000 },
+    inbox: { src: '/media/crmsolid/panel-inbox.png', width: 1600, height: 1000 },
+    pipeline: { src: '/media/crmsolid/panel-pipeline.png', width: 1600, height: 1000 },
+    mcp: { src: '/media/crmsolid/mcp-package.png', width: 1280, height: 640 },
+    agents: { src: '/media/crmsolid/panel-ai-agents.png', width: 1600, height: 1000 },
 };
