@@ -501,6 +501,70 @@
 }
 
 /* ------------------------------------------------------------------------- */
+/*  MISREGISTRATION - the red plate landing a hair off the black one         */
+/*                                                                           */
+/*  The rest of the page transition is transform and opacity on two elements */
+/*  in <PageTransition>. This is the part that has to reach the page's own   */
+/*  furniture, so it is a CSS animation armed by a data attribute that the   */
+/*  transition puts on the incoming page and takes off again once the sheet  */
+/*  has cleared.                                                             */
+/*                                                                           */
+/*  On a real press the second colour is laid down by a second plate, and if */
+/*  the sheet is a few thou out the red sits beside the black instead of on  */
+/*  it. So the two pieces of red furniture every page carries - the section  */
+/*  stamp, and a ghost of the masthead rule - land out of register and pull  */
+/*  in. 2px over 100ms, once. 4px if the page was never filed at all.        */
+/*                                                                           */
+/*  Unlayered on purpose, so nothing in Tailwind's utility layer outranks    */
+/*  it. Transform and opacity only, so none of it costs a repaint. Reduced   */
+/*  motion is covered twice over: the base layer stops every animation on    */
+/*  the page with !important, and the transition never arms the attribute.   */
+/* ------------------------------------------------------------------------- */
+
+@keyframes press-register {
+  from {
+    transform: translate3d(var(--press-slip, 2px), -1px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes press-ghost {
+  from {
+    opacity: 0.85;
+    transform: translate3d(var(--press-slip, 2px), 1px, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+[data-press] .kicker {
+  animation: press-register 100ms cubic-bezier(0.2, 0.7, 0.3, 1) 30ms both;
+}
+
+[data-press] .rule-double {
+  position: relative;
+}
+
+/* The rule is 4px of gradient; the ghost is the red half of it, off register. */
+[data-press] .rule-double::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  pointer-events: none;
+  animation: press-ghost 130ms cubic-bezier(0.2, 0.7, 0.3, 1) 30ms both;
+}
+
+/* ------------------------------------------------------------------------- */
 /*  THE PRINTED EDITION                                                      */
 /*                                                                           */
 /*  Ctrl+P is not a screenshot of the interface. Somebody printing this is    */
@@ -606,6 +670,11 @@
   * {
     box-shadow: none !important;
     text-shadow: none !important;
+  }
+
+  /* A sheet sent to the printer mid-transition carries no press furniture. */
+  [data-press] .rule-double::after {
+    display: none !important;
   }
 
   /* ---- screen chrome leaves --------------------------------------------- */
