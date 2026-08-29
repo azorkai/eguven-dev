@@ -8,6 +8,7 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import MachineEdition from './pages/MachineEdition';
 import CrmSolid from './pages/CrmSolid';
+import PlayerSells from './pages/PlayerSells';
 import { Terminal } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import TerminalOverlay from './components/TerminalOverlay';
@@ -100,6 +101,7 @@ function AppContent() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/ai" element={<MachineEdition />} />
             <Route path="/projects/crmsolid" element={<CrmSolid />} />
+            <Route path="/projects/playersells" element={<PlayerSells />} />
             {/* Every address that was never printed. */}
             <Route path="*" element={<NotFound />} />
           </Routes>

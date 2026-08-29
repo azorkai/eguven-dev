@@ -12,6 +12,7 @@ export const ROUTES = {
     contact: '/contact',
     machine: '/ai',
     crmsolid: '/projects/crmsolid',
+    playersells: '/projects/playersells',
 } as const;
 
 const KNOWN: string[] = Object.values(ROUTES);

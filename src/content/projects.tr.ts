@@ -7,6 +7,11 @@ export const projectsTr: Record<ProjectKey, ProjectCopy> = {
         impact:
             "Canlıda çalışan bir SaaS CRM’i tek başıma yazdım, hâlâ ben işletiyorum. <span class='ink-strong'>Ayrı ayrı deploy edilen 5 servis</span> hâlinde yayında: REST API, yönetim paneli, masaüstü ajan, sağlık monitörü ve tanıtım sitesi. Mikroservis değil, modüler monolit; arkasında 516 NUnit testi var.",
     },
+    playersells: {
+        subtitle: 'Pazar Yeri ve Sosyal Veri Katmanı, Canlıda',
+        impact:
+            "Crawler yığınını da kataloğu da pazar yerini de tek başıma yazdım. Beş ağda <span class='ink-strong'>25,3 milyon indekslenmiş hesap</span> ve 79,8 milyon kenarlı bir takip grafiği, hepsi salt okunur bir veritabanı rolünün arkasında. Takipçi yüzdeliği sayfaları sıfır veritabanı sorgusuyla cevap veriyor; çünkü 101 noktalı tablo istek dışında ölçülüp kaynak koda yazılıyor.",
+    },
     neriopanel: {
         subtitle: 'Çok Kiracılı SaaS Platformu',
         impact:

@@ -14,6 +14,11 @@ export const projectsEn: Record<ProjectKey, ProjectCopy> = {
         impact:
             "Wrote and run a live SaaS CRM on my own. It ships as <span class='ink-strong'>5 separately deployed services</span>: REST API, admin panel, desktop agent, health monitor and landing site. A modular monolith, not microservices, with 516 NUnit tests behind it.",
     },
+    playersells: {
+        subtitle: 'Marketplace and Social Data Layer, In Production',
+        impact:
+            "Built the crawler stack, the catalog and the marketplace on my own. <span class='ink-strong'>25.3 million indexed accounts</span> across five networks and a 79.8 million edge follow graph, behind a read only database role. The follower percentile pages answer in zero database queries, because the 101 point ladder is measured offline and checked into the source.",
+    },
     neriopanel: {
         subtitle: 'Multi-Tenant SaaS Platform',
         impact:

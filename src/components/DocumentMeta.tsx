@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../i18n/useLanguage';
 import { crmsolidEn } from '../content/crmsolid.en';
 import { crmsolidTr } from '../content/crmsolid.tr';
+import { playersellsEn } from '../content/playersells.en';
+import { playersellsTr } from '../content/playersells.tr';
 import { isKnownPath } from '../routes';
 
 /* ---------------------------------------------------------------------------
@@ -55,6 +57,7 @@ const DocumentMeta: React.FC = () => {
 
     useEffect(() => {
         const crm = lang === 'tr' ? crmsolidTr : crmsolidEn;
+        const ps = lang === 'tr' ? playersellsTr : playersellsEn;
         const path = normalise(pathname);
         const known = isKnownPath(path);
 
@@ -68,6 +71,8 @@ const DocumentMeta: React.FC = () => {
             head = { lang, title: t.meta.contactTitle, desc: t.meta.contactDesc };
         } else if (path === '/projects/crmsolid') {
             head = { lang, title: crm.meta.title, desc: crm.meta.desc };
+        } else if (path === '/projects/playersells') {
+            head = { lang, title: ps.meta.title, desc: ps.meta.desc };
         } else if (!known) {
             head = { lang, title: t.meta.notFoundTitle, desc: t.meta.notFoundDesc };
         }
