@@ -23,6 +23,9 @@ const Contact: React.FC = () => {
        arrives the widget is not mounted, so nobody is shown a captcha that
        cannot be solved. */
     const [siteKey, setSiteKey] = useState<string>('');
+    /* When the form appeared. Sent with the message so the server can throw
+       out anything filled in faster than a person could have read it. */
+    const formOpenedAt = useRef<number>(Date.now());
 
     useEffect(() => {
         let cancelled = false;
@@ -214,6 +217,9 @@ const Contact: React.FC = () => {
                                             name: formData.get('name') as string,
                                             email: formData.get('email') as string,
                                             message: formData.get('message') as string,
+                                            /* Honeypot: empty for anyone who can see the page. */
+                                            company: (formData.get('company') as string) || '',
+                                            startedAt: formOpenedAt.current,
                                             token
                                         };
 
@@ -227,6 +233,13 @@ const Contact: React.FC = () => {
                                             setStatus('error');
                                         }
                                     }}>
+                                        {/* Honeypot. Off-screen rather than display:none, because some
+                                            bots skip anything a stylesheet has hidden. Never focusable,
+                                            never announced, never autofilled. */}
+                                        <div aria-hidden="true" className="absolute left-[-9999px] top-auto h-px w-px overflow-hidden">
+                                            <label htmlFor="eg-company">Company</label>
+                                            <input id="eg-company" name="company" type="text" tabIndex={-1} autoComplete="off" defaultValue="" />
+                                        </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                                             <div className="relative group">
                                                 <label className="block text-[9px] font-bold tracking-[0.3em] text-ink-muted uppercase mb-2 md:mb-4 group-focus-within:text-ink transition-colors">{t.contact.nameLabel}</label>

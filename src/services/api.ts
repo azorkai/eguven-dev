@@ -3,7 +3,16 @@ const API_BASE = '/api';
 
 export const api = {
     contact: {
-        send: async (data: { name: string; email: string; message: string; token: string }) => {
+        send: async (data: {
+            name: string;
+            email: string;
+            message: string;
+            token: string;
+            /* Honeypot value and the moment the form was rendered. Both are
+               spam signals the server reads; neither is shown to anyone. */
+            company?: string;
+            startedAt?: number;
+        }) => {
             const response = await fetch(`${API_BASE}/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

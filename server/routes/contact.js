@@ -44,13 +44,24 @@ if (looksLikePlaceholder(process.env.SMTP_USER) || looksLikePlaceholder(process.
 if (looksLikePlaceholder(process.env.EMAIL_TO)) {
     bootWarnings.push('EMAIL_TO is unset or still a placeholder. There is nowhere to deliver to.');
 }
-if (TURNSTILE_TEST_KEYS.has((process.env.CLOUDFLARE_SECRET_KEY || '').trim())) {
-    bootWarnings.push('Turnstile is running on Cloudflare TEST keys. The captcha verifies nothing.');
+/* Kept separate from the delivery blockers below. A test captcha key is a
+   real weakness, but it is not a reason to drop a message on the floor: the
+   form still has a rate limit, a honeypot and a fill-time floor behind it.
+   Refusing to deliver here would punish the visitor for our configuration. */
+const captchaIsDecorative = TURNSTILE_TEST_KEYS.has(
+    (process.env.CLOUDFLARE_SECRET_KEY || '').trim()
+);
+if (captchaIsDecorative) {
+    console.warn(
+        '[contact] Turnstile is running on Cloudflare TEST keys. The captcha verifies nothing. ' +
+            'Rate limit, honeypot and fill-time floor are carrying the form until real keys are set.'
+    );
 }
 if (bootWarnings.length) {
     console.warn('[contact] ' + bootWarnings.join(' | '));
 }
 
+/* Only the things that make delivery impossible gate delivery. */
 const configured = bootWarnings.length === 0;
 
 const transporter = nodemailer.createTransport({
@@ -90,7 +101,25 @@ const rateLimited = (key) => {
 };
 
 router.post('/', async (req, res) => {
-    const { name, email, message, token } = req.body || {};
+    const { name, email, message, token, company, startedAt } = req.body || {};
+
+    /* Honeypot. `company` is rendered off-screen and hidden from assistive
+       tech; a human never sees it, so anything in it came from something
+       filling every input it could find. Answered 200 on purpose: a bot that
+       is told it failed comes back having learned something. */
+    if (company) {
+        console.warn('[contact] honeypot tripped');
+        return res.status(200).json({ message: 'Email sent successfully' });
+    }
+
+    /* Fill-time floor. Nobody reads a form, thinks of something to say and
+       types it in under three seconds. Missing or unparseable is allowed
+       through: a clock that fails should not cost a real message. */
+    const elapsed = Number(startedAt) ? Date.now() - Number(startedAt) : null;
+    if (elapsed !== null && elapsed < 3000) {
+        console.warn('[contact] submitted in', elapsed, 'ms');
+        return res.status(400).json({ error: 'That was quick. Please try again.' });
+    }
 
     if (!name || !email || !message) {
         return res.status(400).json({ error: 'Please fill in all fields' });
