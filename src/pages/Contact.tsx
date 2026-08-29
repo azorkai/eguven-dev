@@ -3,9 +3,14 @@ import { Turnstile } from '@marsidev/react-turnstile';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Mail, Linkedin, Calendar, ArrowDown, Github, Twitter } from 'lucide-react';
 import { useLanguage } from '../i18n/useLanguage';
+import { useEdition } from '../theme/edition';
 
 const Contact: React.FC = () => {
     const { t } = useLanguage();
+    /* The widget is an iframe served by Cloudflare, so it is the one panel on
+       the page the stylesheet cannot re-ink. It is told the edition instead,
+       or it sits on night stock as a white card with a hole punched round it. */
+    const edition = useEdition();
     const [activeSection, setActiveSection] = useState<'hero' | 'form'>('hero');
     const isScrolling = useRef(false);
     const touchStartY = useRef<number | null>(null);
@@ -219,7 +224,7 @@ const Contact: React.FC = () => {
                                             <Turnstile
                                                 siteKey="2x00000000000000000000AB"
                                                 onSuccess={setToken}
-                                                options={{ theme: 'light', size: 'flexible' }}
+                                                options={{ theme: edition === 'late' ? 'dark' : 'light', size: 'flexible' }}
                                                 className="w-full"
                                             />
                                         </div>

@@ -35,6 +35,13 @@ export const tr: Dictionary = {
         title: 'English',
     },
 
+    edition: {
+        late: 'SON BASKI',
+        morning: 'SABAH BASKISI',
+        switchToLate: 'Son baskıyı bas (karanlık)',
+        switchToMorning: 'Sabah baskısını bas (aydınlık)',
+    },
+
     rail: {
         scroll: 'KAYDIR',
         connect: 'İLETİŞİM',
@@ -270,6 +277,7 @@ export const tr: Dictionary = {
         goContact: 'İletişim',
         goMachine: 'Makine Baskısı',
         console: 'Konsolu aç',
+        edition: 'Son baskıyı aç ve kapat',
         print: 'Sayfayı gazete formunda yazdır',
         card: 'Bu kartı aç ve kapat',
         dismiss: 'Kapat',

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../i18n/useLanguage';
 import LanguageToggle from './LanguageToggle';
+import EditionToggle from './EditionToggle';
 
 /* Below this many pixels the bar stays transparent and lets the masthead
    breathe. Past it, it becomes a printed strip: opaque stock, a rule under it,
@@ -85,9 +86,19 @@ const Navbar: React.FC = () => {
                         </NavLink>
                     </div>
 
-                    {/* Edition switch. Sits with the other controls, never inside
-                        the link list: it changes the page, it does not go to one. */}
+                    {/* The two press controls. Neither belongs in the link list:
+                        they change the page, they do not go to one. Both live in
+                        this bar, which is z-50 and therefore stays above the
+                        mobile menu overlay at z-45 - one of each, reachable with
+                        the menu open or closed, rather than two identical sets on
+                        screen at once.
+
+                        Language first, because it is the older habit; the edition
+                        sits between it and the menu, and holds its place on /ai
+                        after the language switch has stood itself down. */}
                     <LanguageToggle className="pointer-events-auto border border-rule bg-paper-raised md:border-transparent md:bg-transparent" />
+
+                    <EditionToggle className="pointer-events-auto border border-rule bg-paper-raised md:border-transparent md:bg-transparent" />
 
                     {/* Mobile Hamburger Button Container (Hidden on Desktop) */}
                     <div className="md:hidden pointer-events-auto">

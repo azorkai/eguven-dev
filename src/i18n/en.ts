@@ -36,6 +36,17 @@ export const en = {
         title: 'Türkçe',
     },
 
+    /* ---- which edition ----------------------------------------------------
+       The switch is labelled AM / PM. The tooltip names the edition, and the
+       accessible name says the action - with the plain word in brackets, so
+       a reader looking for a dark mode finds one instead of a metaphor. */
+    edition: {
+        late: 'THE LATE EDITION',
+        morning: 'THE MORNING EDITION',
+        switchToLate: 'Print the late edition (dark)',
+        switchToMorning: 'Print the morning edition (light)',
+    },
+
     rail: {
         scroll: 'SCROLL',
         connect: 'CONNECT',
@@ -296,6 +307,7 @@ export const en = {
         goContact: 'Contact',
         goMachine: 'The Machine Edition',
         console: 'Open the console',
+        edition: 'The late edition, on and off',
         print: 'Print this page as a newspaper sheet',
         card: 'This card, on and off',
         dismiss: 'Close it again',

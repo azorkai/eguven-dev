@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { ROUTES } from '../routes';
 import { useLanguage } from '../i18n/useLanguage';
+import { toggleEdition } from '../theme/edition';
 
 /* ---------------------------------------------------------------------------
  *  THE DESK  ( keyboard )
@@ -18,6 +19,7 @@ import { useLanguage } from '../i18n/useLanguage';
  *    g p        the works        g l   the log
  *    g c        contact          g m   the machine edition
  *    t          the console, which otherwise has a button on wide screens only
+ *    e          the edition, morning or late
  *    esc        closes the card
  *
  *  WHAT IT REFUSES TO DO, which is most of the design:
@@ -151,6 +153,14 @@ const CopyDesk: React.FC<Props> = ({ terminalOpen, onOpenTerminal }) => {
                 event.preventDefault();
                 setOpen(false);
                 onOpenTerminal();
+                return;
+            }
+
+            /* The card stays open on purpose: it is on the page like everything
+               else, and watching it come through the nip is half the point. */
+            if (key === 'e') {
+                event.preventDefault();
+                toggleEdition();
             }
         };
 
@@ -272,6 +282,7 @@ const CopyDesk: React.FC<Props> = ({ terminalOpen, onOpenTerminal }) => {
                         </h3>
                         <div className="divide-y divide-rule">
                             <Row keys={<Key>t</Key>}>{t.desk.console}</Row>
+                            <Row keys={<Key>e</Key>}>{t.desk.edition}</Row>
                             <Row
                                 keys={
                                     <>

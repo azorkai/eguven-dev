@@ -4,8 +4,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="light" />
+  <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#f6f2e9" />
+  <!-- WHICH EDITION, decided before anything is painted.
+       This is the only script on the site that has to be inline, synchronous
+       and above the stylesheet. A reader who chose the late edition and comes
+       back must not be shown a white page first: by the time the browser has
+       a stylesheet to paint with, the class is already on <html>.
+       The two stocks are the only colours hard coded anywhere outside
+       src/index.css (--color-paper, morning and .dark) - they are here because
+       nothing has been parsed yet that could be asked. src/theme/edition.ts
+       re-reads them from the theme for every change after this one.
+       try/catch around the lot: localStorage throws on ACCESS in a locked
+       down private window, and a portfolio that white screens in incognito is
+       worse than one that forgets a preference. -->
+  <script>
+    (function () {
+      try {
+        var choice = localStorage.getItem('eg:edition');
+        var late = choice === 'late'
+          || (choice !== 'morning' && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (late) document.documentElement.classList.add('dark');
+        document.documentElement.style.backgroundColor = late ? '#16140f' : '#f6f2e9';
+        document.querySelector('meta[name="theme-color"]')
+          .setAttribute('content', late ? '#16140f' : '#f6f2e9');
+      } catch (e) { /* morning edition, then */ }
+    })();
+  </script>
   <!-- The masthead monogram, cut for every size a browser asks for. The SVG
        carries the frame and both letters; the 16px raster drops to a single E
        because two serif capitals turn to mush in eleven pixels. -->

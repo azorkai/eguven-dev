@@ -148,6 +148,11 @@
 /* ------------------------------------------------------------------------- */
 
 :root {
+  /* Form controls, scrollbars and the canvas the browser paints behind the
+     page. Declared rather than left to the meta tag, so the reader's own
+     choice - not their OS - decides what a <select> looks like. */
+  color-scheme: light;
+
   --paper-noise:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.6' intercept='0.6647'/%3E%3CfeFuncG type='linear' slope='0.6' intercept='0.649'/%3E%3CfeFuncB type='linear' slope='0.6' intercept='0.6137'/%3E%3CfeFuncA type='linear' slope='0' intercept='1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23g)' opacity='0.4'/%3E%3C/svg%3E");
 
@@ -157,6 +162,8 @@
 }
 
 .dark {
+  color-scheme: dark;
+
   /* ---- Night edition: dark stock, paper-white ink ---------------------- */
   --color-paper: #16140f;
   --color-paper-raised: #1e1b15;
@@ -169,7 +176,11 @@
   --color-ink-faint: #968a76;
 
   --color-rule: #3a342a;
-  --color-rule-strong: #554c3d;
+  /* Lifted from #554c3d, which sat at 2.18:1 on night stock. This is the
+     line under a form field, so it is a control boundary and owes 3:1
+     under WCAG 1.4.11, not the 1.5:1 a decorative rule would get away
+     with. #706456 measures 3.20:1 and keeps the same warm grey. */
+  --color-rule-strong: #706456;
   --color-rule-ink: #cdc2ac;
 
   --color-accent: #e05a46;
@@ -213,6 +224,29 @@
 
   --background: var(--color-paper);
   --foreground: var(--color-ink);
+}
+
+/* ------------------------------------------------------------------------- */
+/*  PICTURES IN THE LATE EDITION                                             */
+/*                                                                           */
+/*  The screenshots are photographs of light interfaces, and a photograph is  */
+/*  the one thing on the page that does not re-ink with the stock. Dropped    */
+/*  straight onto night paper they are four white rectangles that pull the    */
+/*  eye off the copy, the way an over-inked halftone does.                    */
+/*                                                                           */
+/*  So they are printed a shade lighter - opacity only. No filter, no         */
+/*  hue-rotate, no grey wash: the picture is evidence, and shifting its       */
+/*  colours would be editing it. Hover, and it comes up to full plate.        */
+/* ------------------------------------------------------------------------- */
+
+.dark figure img {
+  opacity: 0.86;
+  transition: opacity 0.25s ease;
+}
+
+.dark figure:hover img,
+.dark figure img:focus-visible {
+  opacity: 1;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -565,6 +599,125 @@
 }
 
 /* ------------------------------------------------------------------------- */
+/*  THE LATE EDITION GOING TO PRESS  ( changing edition )                    */
+/*                                                                           */
+/*  Same press, bigger job. A page change is a sheet coming out of a roller;  */
+/*  a change of edition is the whole run being printed again in the other     */
+/*  ink, so it is the same move at the same speed - one edge crossing the     */
+/*  screen from the top, the new edition behind it - only longer, because     */
+/*  there is more of it. 420ms against 220ms, on the same cylinder curve.     */
+/*                                                                           */
+/*  Two snapshots, no cross-fade. The incoming edition is UNCOVERED from the  */
+/*  top down (clip-path, one property, composited); the outgoing one is       */
+/*  clipped away 2px behind it. Nothing dissolves, because two editions of a  */
+/*  paper do not dissolve into one another - one is printed over the other.   */
+/*                                                                           */
+/*  The 2px the two snapshots deliberately leave between them is not empty:   */
+/*  the group behind them is press red, so what actually travels down the     */
+/*  screen is the second plate landing at the nip. It is the same red hairline*/
+/*  that rides the edge on every page change, and it is why this reads as     */
+/*  part of the site rather than as an effect bolted onto it.                 */
+/*                                                                           */
+/*  Scoped to .edition-turning, armed by src/theme/edition.ts for the length  */
+/*  of the pass only, so these rules can never reach another transition. And  */
+/*  the JS never starts one at all under prefers-reduced-motion: the edition  */
+/*  simply changes. The guard below is the belt to that pair of braces.       */
+/* ------------------------------------------------------------------------- */
+
+@keyframes edition-print {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes edition-clear {
+  from {
+    clip-path: inset(2px 0 0 0);
+  }
+
+  to {
+    clip-path: inset(calc(100% + 2px) 0 0 0);
+  }
+}
+
+/* NOTHING ELSE MOVES WHILE THE SHEET DOES.
+   The page already carries two long colour transitions from before there was
+   an edition to change - 300ms on the body, 500ms on the app root - and a
+   200ms one on the navbar. Left alone they are still in flight when the
+   browser renders the incoming edition, so the new page is captured halfway
+   between the two stocks and the whole pass reads as a grey dissolve, which
+   is the one thing it is not. The edge is doing the moving; every colour
+   under it changes on a single frame. */
+html.edition-turning *,
+html.edition-turning *::before,
+html.edition-turning *::after {
+  transition: none !important;
+}
+
+html.edition-turning::view-transition-group(root) {
+  background-color: var(--color-accent);
+}
+
+/* The UA blends the pair additively for its cross-fade. Left on, the two
+   editions would add up to a washed-out third one along the edge. */
+html.edition-turning::view-transition-old(root),
+html.edition-turning::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+
+html.edition-turning::view-transition-new(root) {
+  animation: edition-print 420ms cubic-bezier(0.3, 0.62, 0.4, 1) both;
+}
+
+html.edition-turning::view-transition-old(root) {
+  animation: edition-clear 420ms cubic-bezier(0.3, 0.62, 0.4, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html.edition-turning::view-transition-old(root),
+  html.edition-turning::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* ---- the same pass, by hand -------------------------------------------------
+   Firefox, and Safari before 18, have no view transitions. They get the sheet
+   from <PageTransition> instead: the OUTGOING stock laid over the viewport on
+   the frame the edition changes, then pulled off the bottom of the screen.
+   The new edition is underneath from the first frame, so again the only thing
+   that moves is the edge - carrying the same rule, and the same red hairline
+   2px ahead of it at the nip. Built and driven from src/theme/edition.ts;
+   colours are set on the element there, off the outgoing theme. */
+
+.edition-sheet {
+  position: fixed;
+  inset: 0;
+  /* Over the console (z-100) and everything under it: the edition changes
+     across the whole screen at once or it is not an edition. */
+  z-index: 120;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-size: 260px 260px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  will-change: transform;
+}
+
+.edition-nip {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  opacity: 0.6;
+}
+
+/* ------------------------------------------------------------------------- */
 /*  THE PRINTED EDITION                                                      */
 /*                                                                           */
 /*  Ctrl+P is not a screenshot of the interface. Somebody printing this is    */
@@ -615,6 +768,12 @@
   :root,
   :root.dark,
   .dark {
+    /* Whatever is on the stand, what comes out of the printer is the morning
+       edition on white stock. Nobody wants a black A4 sheet, and a UA that
+       took `color-scheme: dark` at its word would ink the form controls to
+       match one. */
+    color-scheme: light;
+
     --color-paper: #ffffff;
     --color-paper-raised: #ffffff;
     --color-paper-sunk: #ffffff;
@@ -862,6 +1021,12 @@
   img {
     max-width: 100% !important;
     height: auto !important;
+  }
+
+  /* The night edition prints its screenshots a shade light so they do not
+     glare off dark stock. On white stock there is nothing to glare off. */
+  .dark figure img {
+    opacity: 1;
   }
 
   /* No !important here: the runtime diagram carries its own max-width and
