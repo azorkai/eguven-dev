@@ -70,6 +70,7 @@ export const tr: Dictionary = {
         linkArticles: 'Yazılar',
         linkContact: 'İletişim',
         linkMachine: 'Makine Baskısı',
+        linkCv: 'CV indir',
         emailAria: 'E-posta',
         localTime: 'YEREL SAAT',
         available: 'Yeni projelere açığım',

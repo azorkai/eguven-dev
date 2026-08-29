@@ -78,6 +78,7 @@ export const en = {
         linkArticles: 'Articles',
         linkContact: 'Contact',
         linkMachine: 'Machine Edition',
+        linkCv: 'Download CV',
         emailAria: 'Email',
         localTime: 'LOCAL TIME',
         available: 'Available for new projects',

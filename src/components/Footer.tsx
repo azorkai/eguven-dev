@@ -114,9 +114,19 @@ const Footer: React.FC = () => {
                                 { label: t.footer.linkArticles, href: '/articles' },
                                 { label: t.footer.linkContact, href: '/contact' },
                                 { label: t.footer.linkMachine, href: '/ai' },
+                                /* The PDF is generated from the same source as the
+                                   page and carries a real text layer, so an applicant
+                                   tracking system can read it rather than guess. */
+                                { label: t.footer.linkCv, href: '/emirhan-guven-cv.pdf', download: true },
                             ].map((item) => (
                                 <motion.li key={item.label} variants={itemVariants}>
-                                    <a href={item.href} className="inline-flex min-h-11 items-center text-[15px] text-ink-muted transition-colors hover:text-ink lg:min-h-0 lg:text-sm">
+                                    <a
+                                        href={item.href}
+                                        {...(item.download
+                                            ? { download: 'emirhan-guven-cv.pdf', type: 'application/pdf' }
+                                            : {})}
+                                        className="inline-flex min-h-11 items-center text-[15px] text-ink-muted transition-colors hover:text-ink lg:min-h-0 lg:text-sm"
+                                    >
                                         {item.label}
                                     </a>
                                 </motion.li>

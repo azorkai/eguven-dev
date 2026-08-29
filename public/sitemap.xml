@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Every address this site prints.
+
+  The two case studies carry the highest priority after the front page: they
+  are the pages the site exists to show, and the repositories behind them are
+  private, so these are the only public evidence.
+
+  No hreflang alternates: both languages are served from the same URL and the
+  choice lives in localStorage, so there is no second address to point at.
+
+  /ai is listed because it is meant to be found by machines.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://eguven.dev/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://eguven.dev/projects/crmsolid</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://eguven.dev/projects/playersells</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://eguven.dev/articles</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://eguven.dev/contact</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://eguven.dev/ai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

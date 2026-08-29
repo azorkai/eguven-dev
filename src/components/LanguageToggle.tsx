@@ -1,12 +1,18 @@
 import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../i18n/useLanguage';
+import { FlagGB, FlagTR } from './Flags';
 
 /* ---------------------------------------------------------------------------
- *  EN / TR.
+ *  EN / TR, with the flags drawn in.
  *
- *  A folio sized text switch, set in the same face as the rest of the page
- *  furniture. No flags: a flag is a country, not a language, and a small
- *  emoji next to newspaper capitals looks like a sticker on a printed page.
+ *  A flag is a country and not a language, which is why the codes stay: the
+ *  flag is the thing you find at a glance, the code is the thing that is
+ *  actually true. English is not England's alone, and the union flag here
+ *  means "the English edition", nothing more.
+ *
+ *  Not emoji. Windows has no country flag glyphs, so an emoji flag renders
+ *  there as two lettered boxes - a bug on the operating system most visitors
+ *  are on. These are inline SVG, sixteen pixels wide, identical everywhere.
  *
  *  One real button, 44px tall so it clears the touch target the rest of the
  *  site was rebuilt for, labelled with the action rather than the state.
@@ -25,8 +31,13 @@ const LanguageToggle: React.FC<{ className?: string }> = ({ className = '' }) =>
 
     if (pathname === '/ai') return null;
 
+    /* The inactive side is dimmed rather than hidden, so the control still
+       reads as a choice between two things. Flags carry their own colour, so
+       the state is told by opacity on that side and by weight on the code. */
     const face = (on: boolean) =>
         on ? 'font-bold text-ink' : 'text-ink-faint transition-colors group-hover:text-ink-muted';
+    const plate = (on: boolean) =>
+        on ? 'opacity-100' : 'opacity-45 transition-opacity group-hover:opacity-75';
 
     return (
         <button
@@ -36,11 +47,17 @@ const LanguageToggle: React.FC<{ className?: string }> = ({ className = '' }) =>
             title={t.lang.title}
             className={`folio group inline-flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-sm px-2 ${className}`}
         >
-            <span className={face(lang === 'en')}>EN</span>
+            <span className="inline-flex items-center gap-1">
+                <FlagGB className={plate(lang === 'en')} />
+                <span className={face(lang === 'en')}>EN</span>
+            </span>
             <span aria-hidden="true" className="text-ink-faint">
                 /
             </span>
-            <span className={face(lang === 'tr')}>TR</span>
+            <span className="inline-flex items-center gap-1">
+                <FlagTR className={plate(lang === 'tr')} />
+                <span className={face(lang === 'tr')}>TR</span>
+            </span>
         </button>
     );
 };

@@ -1,3 +1,4 @@
+import { Moon, Sun } from 'lucide-react';
 import { toggleEdition, useEdition } from '../theme/edition';
 import { useLanguage } from '../i18n/useLanguage';
 
@@ -32,8 +33,12 @@ const EditionToggle: React.FC<{ className?: string }> = ({ className = '' }) => 
     const edition = useEdition();
     const late = edition === 'late';
 
+    /* Sun and moon, because everyone already knows what they mean and nobody
+       should have to work out that this site calls dark mode an edition. The
+       paper's own language is kept where it costs nothing: in the tooltip and
+       the accessible name, which say morning and late. */
     const face = (on: boolean) =>
-        on ? 'font-bold text-ink' : 'text-ink-faint transition-colors group-hover:text-ink-muted';
+        on ? 'text-ink' : 'text-ink-faint transition-colors group-hover:text-ink-muted';
 
     return (
         <button
@@ -42,13 +47,13 @@ const EditionToggle: React.FC<{ className?: string }> = ({ className = '' }) => 
             aria-pressed={late}
             aria-label={late ? t.edition.switchToMorning : t.edition.switchToLate}
             title={late ? t.edition.morning : t.edition.late}
-            className={`folio group inline-flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-sm px-2 ${className}`}
+            className={`group inline-flex h-11 min-w-11 items-center justify-center gap-1.5 rounded-sm px-2 ${className}`}
         >
-            <span className={face(!late)}>AM</span>
-            <span aria-hidden="true" className="text-ink-faint">
+            <Sun size={14} strokeWidth={late ? 1.5 : 2.25} className={face(!late)} aria-hidden="true" />
+            <span aria-hidden="true" className="folio text-ink-faint">
                 /
             </span>
-            <span className={face(late)}>PM</span>
+            <Moon size={13} strokeWidth={late ? 2.25 : 1.5} className={face(late)} aria-hidden="true" />
         </button>
     );
 };
