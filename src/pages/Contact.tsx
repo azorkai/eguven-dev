@@ -17,6 +17,27 @@ const Contact: React.FC = () => {
     const [token, setToken] = useState<string>('');
     const formRef = useRef<HTMLFormElement>(null);
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+    /* The site key comes from the server rather than the bundle. It is public
+       either way, but fetching it means rotating the Turnstile pair is an env
+       change and a restart instead of a rebuild and a redeploy. Until it
+       arrives the widget is not mounted, so nobody is shown a captcha that
+       cannot be solved. */
+    const [siteKey, setSiteKey] = useState<string>('');
+
+    useEffect(() => {
+        let cancelled = false;
+        fetch('/api/config')
+            .then((r) => (r.ok ? r.json() : null))
+            .then((cfg) => {
+                if (!cancelled && cfg?.turnstileSiteKey) setSiteKey(cfg.turnstileSiteKey);
+            })
+            .catch(() => {
+                /* No key, no widget: the address beside the form still works. */
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, []);
 
     useEffect(() => {
         const footer = document.querySelector('footer');
@@ -221,12 +242,16 @@ const Contact: React.FC = () => {
                                             <textarea name="message" required className="w-full bg-transparent border-b border-rule-strong py-2 md:py-2 text-base md:text-sm focus:outline-none focus:border-ink transition-all text-ink font-light min-h-[80px] md:min-h-[120px] resize-none" placeholder={t.contact.messagePlaceholder}></textarea>
                                         </div>
                                         <div className="flex justify-start">
-                                            <Turnstile
-                                                siteKey="2x00000000000000000000AB"
-                                                onSuccess={setToken}
-                                                options={{ theme: edition === 'late' ? 'dark' : 'light', size: 'flexible' }}
-                                                className="w-full"
-                                            />
+                                            {siteKey && (
+                                                <Turnstile
+                                                    siteKey={siteKey}
+                                                    onSuccess={setToken}
+                                                    onExpire={() => setToken('')}
+                                                    onError={() => setToken('')}
+                                                    options={{ theme: edition === 'late' ? 'dark' : 'light', size: 'flexible' }}
+                                                    className="w-full"
+                                                />
+                                            )}
                                         </div>
                                         <div className="pt-2 flex justify-start items-center">
                                             <button disabled={!token || status === 'sending'} className="group relative overflow-hidden bg-ink text-paper-raised border border-ink px-10 py-4 text-[11px] tracking-[0.2em] uppercase font-bold transition-colors hover:bg-accent hover:border-accent disabled:opacity-60 disabled:cursor-not-allowed">
