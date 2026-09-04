@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import contactRoutes from './routes/contact.js';
 import blogRoutes from './routes/blog.js';
+import legalRoutes from './routes/legal.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,6 +36,13 @@ app.get('/api/config', (req, res) => {
 
 app.use('/api/contact', contactRoutes);
 app.use('/api/posts', blogRoutes);
+
+/* Mobil uygulamaların yasal belgeleri. SPA kabuğundan ÖNCE bağlanır: aşağıdaki
+   `/*splat` her adresi React'e yollar ve buradaki tam HTML hiç çalışmazdı.
+   Bu sayfalar JavaScript'siz okunabilir olmak zorunda, çünkü mağazaların
+   gizlilik politikası denetimi ve bağlantı sağlık kontrolleri de tıpkı sosyal
+   kart crawler'ları gibi JS çalıştırmıyor. */
+app.use(legalRoutes);
 
 /* Serve the built assets, but never index.html: with the default `index`
    behaviour a request for / is answered here, straight off disk, and never
