@@ -35,7 +35,11 @@ const ENTITY = {
     taxId: '48727294890',
     taxOffice: 'Küçükçekmece',
     address: 'Cennet Mah. Hürriyet Cad. Küçükçekmece / İstanbul',
-    email: 'info@takipkit.com',
+    /* Cloudflare Email Routing ile e.guven@hotmail.com.tr'ye yonlendiriliyor; acik kural
+       olarak tanimli, yani catch-all bir gun kapatilsa da bu adres calismaya devam eder.
+       Bilerek takipkit.com'da DEGIL: yasal metinlerde gecen adres de o markaya isaret
+       etmemeli, yoksa okuyan kisi alan adini yazip magazayi bulur. */
+    email: 'legal@eguven.dev',
 };
 
 const APP = {
