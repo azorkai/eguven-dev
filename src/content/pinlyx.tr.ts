@@ -1,7 +1,7 @@
-import type { CrmSolidContent } from './crmsolid.en';
+import type { PinlyxContent } from './pinlyx.en';
 
 /* ---------------------------------------------------------------------------
- *  CRMSolid vaka incelemesi, Türkçe.
+ *  Pinlyx vaka incelemesi, Türkçe.
  *
  *  Sayılar ve iddialar İngilizce metinle birebir aynı; sadece dili değişti.
  *  Ürün ve teknoloji adları çevrilmedi. Sektörde yerleşmiş terimler olduğu
@@ -9,11 +9,11 @@ import type { CrmSolidContent } from './crmsolid.en';
  *  Ondalık ayırıcı virgül, binlik ayırıcı nokta.
  * ------------------------------------------------------------------------- */
 
-export const crmsolidTr: CrmSolidContent = {
+export const pinlyxTr: PinlyxContent = {
     meta: {
-        title: 'CRMSolid vaka incelemesi | Emirhan Güven',
+        title: 'Pinlyx vaka incelemesi | Emirhan Güven',
         desc:
-            'CRMSolid nasıl çalışıyor: tek Linux sunucuda deploy edilmiş beş servis, 277 saniye ' +
+            'Pinlyx nasıl çalışıyor: tek Linux sunucuda deploy edilmiş beş servis, 277 saniye ' +
             'yerine 15 ms’de cevap veren 1,79 milyon satırlık firma kataloğu, elle yazılmış bir ' +
             'MCP sunucusu ve ürünü şekillendiren rate limit hataları.',
     },
@@ -91,7 +91,7 @@ export const crmsolidTr: CrmSolidContent = {
             },
         ],
         figure: {
-            alt: 'CRMSolid birleşik gelen kutusu: posta kutusu listesi, farklı kanallardan gelen yazışmaların okunmamış sayıları ve lead puanlarıyla dizildiği bir sütun ve boş bir okuma paneli.',
+            alt: 'Pinlyx birleşik gelen kutusu: posta kutusu listesi, farklı kanallardan gelen yazışmaların okunmamış sayıları ve lead puanlarıyla dizildiği bir sütun ve boş bir okuma paneli.',
             caption:
                 'Satışın ilerlediği bütün kanallar için tek bir gelen kutusu. Buradaki her yazışma, 02. bölümdeki pipeline kartının takip ettiği konuşmanın ta kendisi; e-postaya göre tasarlanmış CRM’lerin kaçırdığı nokta da bu.',
         },
@@ -147,7 +147,7 @@ export const crmsolidTr: CrmSolidContent = {
         diagramCaption:
             'Uçtan uca tek bir istek yolu. Çizimin derdi şu: MCP sunucusu ile REST API aynı süreçte çalışıp aynı veritabanını okuyor, Telegram bağlantısı ise sunucudan değil kullanıcının kendi makinesinden çıkıyor.',
         figure: {
-            alt: 'CRMSolid kişi pipeline panosu: sekmelere dizilmiş dört adlandırılmış pipeline, bir sayaç şeridi ve Prospect, Contacted, Negotiating ve Live başlıklı kanban sütunlarında kullanıcı adları, mesaj önizlemeleri ve etiketleriyle kişi kartları.',
+            alt: 'Pinlyx kişi pipeline panosu: sekmelere dizilmiş dört adlandırılmış pipeline, bir sayaç şeridi ve Prospect, Contacted, Negotiating ve Live başlıklı kanban sütunlarında kullanıcı adları, mesaj önizlemeleri ve etiketleriyle kişi kartları.',
             caption:
                 'Panel, demo çalışma alanında. Tek bir Next.js uygulamasında on altı ürün alanı; hepsi semantik token’lar ve arayüz primitiflerinden oluşan ortak bir tasarım sistemi üzerinde. Buradaki her kart, API’nin sunduğu ve bir SignalR hub’ının güncel tuttuğu bir satır.',
         },
@@ -186,7 +186,7 @@ export const crmsolidTr: CrmSolidContent = {
     /* ---- 04 --------------------------------------------------------------- */
     mcp: {
         intro:
-            'CRMSolid, Model Context Protocol konuşuyor; böylece bir yapay zekâ asistanı CRM’i arayüzünü kazıyarak ya da genel amaçlı bir HTTP sarmalayıcısı üzerinden değil, doğrudan bir araç kümesi olarak kullanabiliyor.',
+            'Pinlyx, Model Context Protocol konuşuyor; böylece bir yapay zekâ asistanı CRM’i arayüzünü kazıyarak ya da genel amaçlı bir HTTP sarmalayıcısı üzerinden değil, doğrudan bir araç kümesi olarak kullanabiliyor.',
         facts: [
             {
                 k: '62 araç',
@@ -260,7 +260,7 @@ export const crmsolidTr: CrmSolidContent = {
             },
         ],
         figure: {
-            alt: 'CRMSolid yapay zekâ ajanları ekranı: toplam ajan, aktif ajan ve son 24 saatteki çalıştırma sayaçlarının altında Inbound Sales Assistant, Support Triage Bot ve Lead Qualifier adlı üç ajan kartı; her biri kanallarını, gönderim modunu ve en son ne zaman çalıştığını gösteriyor.',
+            alt: 'Pinlyx yapay zekâ ajanları ekranı: toplam ajan, aktif ajan ve son 24 saatteki çalıştırma sayaçlarının altında Inbound Sales Assistant, Support Triage Bot ve Lead Qualifier adlı üç ajan kartı; her biri kanallarını, gönderim modunu ve en son ne zaman çalıştığını gösteriyor.',
             caption:
                 'Ajanlar kod değil, yapılandırma. Her biri hangi kanallara baktığını ve kendi başına mı gönderdiğini yoksa sadece öneri mi yaptığını belirtiyor. Yönlendiricinin hangi modelle cevap verebileceğine karar veren de bu mod.',
         },
@@ -390,7 +390,7 @@ export const crmsolidTr: CrmSolidContent = {
     links: {
         intro: 'CRM’in kendisi kapalı kaynak. Şu parçaları herkese açık ve MIT lisanslı.',
         notes: {
-            dotnet: 'CRMSolid API’si için .NET SDK’sı. Tipli kaynaklar, HMAC ve bearer kimlik bilgileri, yeniden deneyen bir rate limit işleyicisi, kendi NUnit paketi.',
+            dotnet: 'Pinlyx API’si için .NET SDK’sı. Tipli kaynaklar, HMAC ve bearer kimlik bilgileri, yeniden deneyen bir rate limit işleyicisi, kendi NUnit paketi.',
             mcp: 'TypeScript ile yazılmış MCP sunucusu. Yapay zekâ asistanlarının CRM’i kullanmasını sağlıyor.',
             clipper: 'Chrome eklentisi, Chrome Web Mağazası’nda yayında.',
             site: 'Ürünün kendisi.',
@@ -398,12 +398,12 @@ export const crmsolidTr: CrmSolidContent = {
         disclaimer:
             'Bu sayfada hiçbir kimlik bilgisi, ürünün herkese açık alan adı dışında bir sunucu adı, müşteri adı veya özel IP yok. Buradaki bir rakam doğrulanamıyorsa bana yazın, sayfadan kalksın.',
         allProjects: 'TÜM PROJELER',
-        visitSite: 'CRMSOLID.COM’A GİT',
+        visitSite: 'PINLYX.COM’A GİT',
     },
 
     /* ---- çalışma zamanı şeması -------------------------------------------- */
     diagram: {
-        title: 'CRMSolid çalışma zamanı mimarisi',
+        title: 'Pinlyx çalışma zamanı mimarisi',
         desc:
             'Solda istemciler: Next.js panelini çalıştıran bir tarayıcı, MCP üzerinden bir yapay zekâ ' +
             'asistanı, siteye gömülü bir sohbet bileşeni ve kullanıcının makinesinde çalışan bir ' +

@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
- *  CRMSolid case study, English. Roughly four thousand words, which is exactly
+ *  Pinlyx case study, English. Roughly four thousand words, which is exactly
  *  why it is not in the UI dictionary.
  *
  *  Inline marks understood by src/i18n/rich.tsx:
@@ -7,11 +7,11 @@
  *      ==phrase==     highlighter, at most one per section
  * ------------------------------------------------------------------------- */
 
-export const crmsolidEn = {
+export const pinlyxEn = {
     meta: {
-        title: 'CRMSolid, a case study | Emirhan Güven',
+        title: 'Pinlyx, a case study | Emirhan Güven',
         desc:
-            'How CRMSolid works: five deployed services on one Linux server, a 1.79 million row ' +
+            'How Pinlyx works: five deployed services on one Linux server, a 1.79 million row ' +
             'business catalogue that answers in 15ms instead of 277 seconds, a hand written MCP ' +
             'server, and the rate limit failures that shaped the product.',
     },
@@ -91,7 +91,7 @@ export const crmsolidEn = {
             },
         ],
         figure: {
-            alt: 'The CRMSolid unified inbox: a mailbox list, a column of conversation threads from several channels with unread counts and lead scores, and an empty reading pane.',
+            alt: 'The Pinlyx unified inbox: a mailbox list, a column of conversation threads from several channels with unread counts and lead scores, and an empty reading pane.',
             caption:
                 'One inbox over every channel the deal moves through. A thread here is the same conversation the pipeline card in section 02 is tracking, which is the part email shaped CRMs get wrong.',
         },
@@ -147,7 +147,7 @@ export const crmsolidEn = {
         diagramCaption:
             'One request path, end to end. The point of the drawing is that the MCP server and the REST API are the same process reading the same database, and that the Telegram connection leaves from the user own machine rather than from the server.',
         figure: {
-            alt: 'The CRMSolid contacts pipeline board: four named pipelines as tabs, a counter strip, and kanban columns headed Prospect, Contacted, Negotiating and Live holding contact cards with handles, message previews and tags.',
+            alt: 'The Pinlyx contacts pipeline board: four named pipelines as tabs, a counter strip, and kanban columns headed Prospect, Contacted, Negotiating and Live holding contact cards with handles, message previews and tags.',
             caption:
                 'The panel, on a demo workspace. Sixteen product areas in one Next.js app on a shared design system of semantic tokens and UI primitives. Every card here is a row the API serves and a SignalR hub keeps current.',
         },
@@ -186,7 +186,7 @@ export const crmsolidEn = {
     /* ---- 04 --------------------------------------------------------------- */
     mcp: {
         intro:
-            'CRMSolid speaks the Model Context Protocol, so an AI assistant can use the CRM as a set of tools rather than through a scraped UI or a generic HTTP wrapper.',
+            'Pinlyx speaks the Model Context Protocol, so an AI assistant can use the CRM as a set of tools rather than through a scraped UI or a generic HTTP wrapper.',
         facts: [
             {
                 k: '62 tools',
@@ -260,7 +260,7 @@ export const crmsolidEn = {
             },
         ],
         figure: {
-            alt: 'The CRMSolid AI agents screen: counters for total agents, active agents and runs in the last 24 hours, above three agent cards named Inbound Sales Assistant, Support Triage Bot and Lead Qualifier, each showing its channels, its send mode and when it last ran.',
+            alt: 'The Pinlyx AI agents screen: counters for total agents, active agents and runs in the last 24 hours, above three agent cards named Inbound Sales Assistant, Support Triage Bot and Lead Qualifier, each showing its channels, its send mode and when it last ran.',
             caption:
                 'Agents are configuration, not code. Each one names its channels and whether it sends on its own or only proposes. That mode is what decides which model the router is allowed to answer with.',
         },
@@ -390,7 +390,7 @@ export const crmsolidEn = {
     links: {
         intro: 'The CRM itself is closed source. These pieces of it are public and MIT licensed.',
         notes: {
-            dotnet: '.NET SDK for the CRMSolid API. Typed resources, HMAC and bearer credentials, a retrying rate limit handler, its own NUnit suite.',
+            dotnet: '.NET SDK for the Pinlyx API. Typed resources, HMAC and bearer credentials, a retrying rate limit handler, its own NUnit suite.',
             mcp: 'MCP server in TypeScript. It lets AI assistants use the CRM.',
             clipper: 'Chrome extension, published on the Chrome Web Store.',
             site: 'The product itself.',
@@ -398,12 +398,12 @@ export const crmsolidEn = {
         disclaimer:
             'Nothing on this page contains a credential, a hostname beyond the public product domain, a customer name, or a private IP. If a number here cannot be checked, write to me and it comes off.',
         allProjects: 'ALL PROJECTS',
-        visitSite: 'VISIT CRMSOLID.COM',
+        visitSite: 'VISIT PINLYX.COM',
     },
 
     /* ---- the runtime diagram ---------------------------------------------- */
     diagram: {
-        title: 'CRMSolid runtime architecture',
+        title: 'Pinlyx runtime architecture',
         desc:
             'Clients on the left: a browser running the Next.js panel, an AI assistant over MCP, ' +
             'an embedded chat widget, and a desktop agent running on the user machine. All of them ' +
@@ -456,4 +456,4 @@ export const crmsolidEn = {
     },
 };
 
-export type CrmSolidContent = typeof crmsolidEn;
+export type PinlyxContent = typeof pinlyxEn;

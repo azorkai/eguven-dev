@@ -30,7 +30,7 @@ numbers and the source links, is at https://eguven.dev/ai
 
 ## Main work
 
-CRMSolid (2025 to present). Own product, in production, paying users. A multi-tenant
+Pinlyx (2025 to present). Own product, in production, paying users. A multi-tenant
 SaaS CRM I designed, wrote and still operate on my own. It is a modular monolith, not
 microservices, and it ships as 5 separately deployed pieces: REST API, admin panel,
 desktop agent, health monitor and landing site. PostgreSQL with EF Core, 40+ entities,
@@ -39,7 +39,7 @@ with SignalR, caching with Redis, structured logging with Serilog, auth with JWT
 BCrypt. Runs on Docker Compose on a Hetzner server behind Traefik with automatic
 Let's Encrypt SSL, deployed by GitHub Actions over key based SSH.
 
-Inside CRMSolid: a business directory built from Overture Maps open data with DuckDB,
+Inside Pinlyx: a business directory built from Overture Maps open data with DuckDB,
 1.79 million records loaded into PostgreSQL, main lookup query cut from 277 seconds to
 15 milliseconds. An MCP server that lets AI assistants read and write CRM data through
 defined tools and prompts, with its own test suite. AI lead scoring on the Anthropic
@@ -65,7 +65,7 @@ connected to 5 payment and service providers. Freelance before that, from 2018.
 
 - 212,000 lines of hand written C# across 686 files
 - 306,000 lines of TypeScript and React across 1,069 components
-- 3,770 tracked files in the CRMSolid repository
+- 3,770 tracked files in the Pinlyx repository
 - 516 NUnit test methods across 34 test files
 - 5 separately deployed services
 - 1.79 million rows in the business catalog
@@ -79,11 +79,11 @@ connected to 5 payment and service providers. Freelance before that, from 2018.
 - GitHub: https://github.com/azorkai
 - LinkedIn: https://www.linkedin.com/in/eguvendev/
 - X: https://x.com/e_guvenn
-- CRMSolid product: https://crmsolid.com
+- Pinlyx product: https://pinlyx.com
 - NerioPanel product: https://neriopanel.com
-- .NET SDK for the CRMSolid API, MIT: https://github.com/CRM-Solid/crmsolid-dotnet
-- MCP server in TypeScript, MIT: https://github.com/CRM-Solid/crmsolid-mcp
-- Chrome extension, on the Chrome Web Store, MIT: https://github.com/CRM-Solid/crmsolid-clipper
+- .NET SDK for the Pinlyx API, MIT: https://github.com/Pinlyx/pinlyx-dotnet
+- MCP server in TypeScript, MIT: https://github.com/Pinlyx/pinlyx-mcp
+- Chrome extension, on the Chrome Web Store, MIT: https://github.com/Pinlyx/pinlyx-clipper
 - Linux kernel audio patch, DKMS, GPL-2.0: https://github.com/azorkai/huawei-matebook-m1080-linux-audio
 - Source of this portfolio site: https://github.com/azorkai/eguven-dev
 

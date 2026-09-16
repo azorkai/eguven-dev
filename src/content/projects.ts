@@ -15,8 +15,7 @@ export type ProjectCategory =
 export type ProjectFilter = 'ALL' | ProjectCategory;
 
 export type ProjectKey =
-    | 'crmsolid'
-    | 'playersells'
+    | 'pinlyx'
     | 'neriopanel'
     | 'evelynn'
     | 'leadScoring'
@@ -35,20 +34,12 @@ export interface ProjectBase {
 
 export const PROJECTS: ProjectBase[] = [
     {
-        key: 'crmsolid',
-        title: 'CRMSolid',
+        key: 'pinlyx',
+        title: 'Pinlyx',
         category: 'BACKEND',
         stack: ['.NET 9', 'C#', 'PostgreSQL', 'Docker'],
-        demo: 'https://crmsolid.com/',
-        detail: '/projects/crmsolid',
-    },
-    {
-        key: 'playersells',
-        title: 'PlayerSells',
-        category: 'PLATFORM',
-        stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Python', 'Docker'],
-        demo: 'https://playersells.com/',
-        detail: '/projects/playersells',
+        demo: 'https://pinlyx.com/',
+        detail: '/projects/pinlyx',
     },
     {
         key: 'neriopanel',

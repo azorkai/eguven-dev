@@ -11,8 +11,7 @@ export const ROUTES = {
     articles: '/articles',
     contact: '/contact',
     machine: '/ai',
-    crmsolid: '/projects/crmsolid',
-    playersells: '/projects/playersells',
+    pinlyx: '/projects/pinlyx',
 } as const;
 
 const KNOWN: string[] = Object.values(ROUTES);

@@ -234,7 +234,7 @@ export const en = {
         notFoundPrefix: 'Command not found:',
         notFoundSuffix: 'Type ‘help’ for available commands.',
         help: 'Available commands: [help, whoami, skills, projects, ai, sound, snake, 2048, mines, clear, exit]',
-        whoami: 'Emirhan Güven - Full Stack Developer, .NET and React. Writing software professionally since 2018. Currently building and running CRMSolid, a live SaaS CRM: 5 deployed services, PostgreSQL, 516 NUnit tests, Docker on a Linux server.',
+        whoami: 'Emirhan Güven - Full Stack Developer, .NET and React. Writing software professionally since 2018. Currently building and running Pinlyx, a live SaaS CRM: 5 deployed services, PostgreSQL, 516 NUnit tests, Docker on a Linux server.',
         skills: 'Backend: [C#, .NET 8/9, ASP.NET Core, EF Core, Python, PHP] | Frontend: [React, Next.js, TypeScript, Tailwind, Blazor] | Database: [PostgreSQL, DuckDB, Redis, MySQL] | Desktop: [Photino.NET, Electron] | DevOps: [Docker, Traefik, GitHub Actions, Nginx, Linux] | AI: [Anthropic API, OpenAI API, MCP]',
         projects: 'Directing to /projects page soon... (Check the navigation bar)',
         ai: 'There is an edition of this site written for machine readers: /ai . Plain text copy: /llms.txt',
@@ -280,7 +280,7 @@ export const en = {
     meta: {
         homeTitle: 'Emirhan Güven | Full Stack Developer, .NET and React',
         homeDesc:
-            'Emirhan Güven, full stack developer in Istanbul. I build and run production systems on .NET and React, including CRMSolid, a live SaaS CRM I wrote and still operate on my own.',
+            'Emirhan Güven, full stack developer in Istanbul. I build and run production systems on .NET and React, including Pinlyx, a live SaaS CRM I wrote and still operate on my own.',
         articlesTitle: 'The Log | Emirhan Güven',
         articlesDesc:
             'Notes from building and running production software on .NET and React: query tuning, deployment, the desktop agent, and the parts that broke before they worked.',

@@ -211,7 +211,7 @@ export const tr: Dictionary = {
         notFoundPrefix: 'Komut bulunamadı:',
         notFoundSuffix: 'Komut listesi için ‘help’ yazın.',
         help: 'Kullanılabilir komutlar: [help, whoami, skills, projects, ai, sound, snake, 2048, mines, clear, exit]',
-        whoami: 'Emirhan Güven - Full Stack Geliştirici, .NET ve React. 2018’den beri profesyonel olarak yazılım yazıyorum. Şu anda canlıda çalışan SaaS CRM’im CRMSolid’i geliştirip işletiyorum: deploy edilmiş 5 servis, PostgreSQL, 516 NUnit testi, Linux sunucuda Docker.',
+        whoami: 'Emirhan Güven - Full Stack Geliştirici, .NET ve React. 2018’den beri profesyonel olarak yazılım yazıyorum. Şu anda canlıda çalışan SaaS CRM’im Pinlyx’i geliştirip işletiyorum: deploy edilmiş 5 servis, PostgreSQL, 516 NUnit testi, Linux sunucuda Docker.',
         skills: 'Backend: [C#, .NET 8/9, ASP.NET Core, EF Core, Python, PHP] | Frontend: [React, Next.js, TypeScript, Tailwind, Blazor] | Veritabanı: [PostgreSQL, DuckDB, Redis, MySQL] | Masaüstü: [Photino.NET, Electron] | DevOps: [Docker, Traefik, GitHub Actions, Nginx, Linux] | Yapay zekâ: [Anthropic API, OpenAI API, MCP]',
         projects: '/projects sayfasına yönlendirme yakında... (Üstteki menüyü kullanın)',
         ai: 'Bu sitenin makine okuyucular için yazılmış bir baskısı var: /ai . Düz metin kopyası: /llms.txt',
@@ -255,7 +255,7 @@ export const tr: Dictionary = {
     meta: {
         homeTitle: 'Emirhan Güven | Full Stack Geliştirici, .NET ve React',
         homeDesc:
-            'Emirhan Güven, İstanbul’da full stack geliştirici. .NET ve React ile canlıda çalışan sistemler kurup işletiyorum; bunlardan biri de tek başıma yazdığım ve hâlâ işlettiğim canlı SaaS CRM CRMSolid.',
+            'Emirhan Güven, İstanbul’da full stack geliştirici. .NET ve React ile canlıda çalışan sistemler kurup işletiyorum; bunlardan biri de tek başıma yazdığım ve hâlâ işlettiğim canlı SaaS CRM Pinlyx.',
         articlesTitle: 'Seyir Defteri | Emirhan Güven',
         articlesDesc:
             '.NET ve React ile canlıda çalışan yazılım yazarken ve işletirken tuttuğum notlar: sorgu optimizasyonu, deploy, masaüstü ajan ve çalışmaya başlamadan önce bozulan kısımlar.',

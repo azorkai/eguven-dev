@@ -1,29 +1,29 @@
-# CRMSolid, image inventory
+# Pinlyx, image inventory
 
 > **Superseded, 2026-08-28.** The four images described below were removed from
-> `public/projects/crmsolid/`. A cleaner marketing set, shot against demo data, was
+> `public/projects/pinlyx/`. A cleaner marketing set, shot against demo data, was
 > found at `C:\xampp\htdocs\funnel_media\marketing\`, and the page now ships:
 >
-> | File in `public/projects/crmsolid/` | Source | Placed in |
+> | File in `public/projects/pinlyx/` | Source | Placed in |
 > |---|---|---|
 > | `panel-inbox.png` | `marketing/screenshots/light/02-inbox.png` | 01, The problem |
 > | `panel-pipeline.png` | `marketing/screenshots/light/03-pipelines.png` | 02, Architecture |
-> | `mcp-package.png` | `marketing/github/crmsolid-mcp.png` | 04, The MCP server |
+> | `mcp-package.png` | `marketing/github/pinlyx-mcp.png` | 04, The MCP server |
 > | `panel-ai-agents.png` | `marketing/screenshots/light/04-ai-agents.png` | 07, Live updates |
 >
 > All four were opened and checked: demo workspace ("Alex Morgan"), invented
 > contacts, no real customer data, no phone numbers, no secrets. Each was
 > flattened to RGB, resized to at most 1600px wide and reduced to a 256 colour
-> palette. Alt text and captions are written inline in `src/pages/CrmSolid.tsx`.
+> palette. Alt text and captions are written inline in `src/pages/Pinlyx.tsx`.
 > The security note at the bottom of this file still stands.
 
 
-Source folder reviewed: `C:\Users\eguve\Desktop\CRMSolid` (root, `inappimages/`, `debug/`).
+Source folder reviewed: `C:\Users\eguve\Desktop\Pinlyx` (root, `inappimages/`, `debug/`).
 Every candidate was opened and looked at. Files that show third party contact data, phone
 numbers, or account secrets were **not** copied.
 
-Shipped files live in `public/projects/crmsolid/` and are referenced from the page as
-`/projects/crmsolid/<file>`.
+Shipped files live in `public/projects/pinlyx/` and are referenced from the page as
+`/projects/pinlyx/<file>`.
 
 ---
 
@@ -31,7 +31,7 @@ Shipped files live in `public/projects/crmsolid/` and are referenced from the pa
 
 ### `panel-social-scheduler.png`
 
-- **Source:** `CRMSolid/crm_p.png`
+- **Source:** `Pinlyx/crm_p.png`
 - **Processing:** flattened to RGB, resized 1912 to 1600 wide, 256 colour palette. 180 KB to 69 KB.
 - **Shows:** The real product panel, Social Scheduler view. Full navigation sidebar (Accounts,
   Scrapers, Templates, Integrations, Contacts, Broadcasting, Social Scheduler, Sequences, Jobs,
@@ -39,7 +39,7 @@ Shipped files live in `public/projects/crmsolid/` and are referenced from the pa
   accounts-by-platform breakdown and a queue of upcoming posts.
 - **Privacy:** Clean. The only personal name is the owner's own. The queued posts are the owner's
   own Turkish aphorisms, no third party content.
-- **alt:** "CRMSolid admin panel showing the social scheduler dashboard with connected account
+- **alt:** "Pinlyx admin panel showing the social scheduler dashboard with connected account
   counts, published and failed post totals, and a list of queued posts."
 - **caption:** "The panel. Sixteen product areas in one Next.js app, all of it on a shared design
   system of semantic tokens and UI primitives."
@@ -48,15 +48,15 @@ Shipped files live in `public/projects/crmsolid/` and are referenced from the pa
 
 ### `landing-hero.png`
 
-- **Source:** `CRMSolid/inappimages/website_ main.png`
+- **Source:** `Pinlyx/inappimages/website_ main.png`
 - **Processing:** flattened to RGB, cropped to the browser window (the grainy decorative gradient
   border was most of the file weight), true colour PNG. 918 KB to 191 KB. Quantization was tried
   and rejected: it shifted the macOS traffic light dots and the pipeline progress bars off-hue.
 - **Shows:** The live marketing site in a browser frame.
 - **Privacy:** Clean. No data of any kind on screen.
-- **alt:** "The CRMSolid marketing site in a browser window, showing the product headline and
+- **alt:** "The Pinlyx marketing site in a browser window, showing the product headline and
   navigation."
-- **caption:** "crmsolid.com. React 18 on Vite, prerendered with Puppeteer, served by Traefik with
+- **caption:** "pinlyx.com. React 18 on Vite, prerendered with Puppeteer, served by Traefik with
   an automatically issued Let's Encrypt certificate."
 - **Placement:** Section 1 hero, or section 8 next to the links.
 - **Note:** The copy in this image ("The Future of Telegram CRM") is marketing voice and does not
@@ -65,7 +65,7 @@ Shipped files live in `public/projects/crmsolid/` and are referenced from the pa
 
 ### `sequence-canvas.png`
 
-- **Source:** `CRMSolid/m3.png`
+- **Source:** `Pinlyx/m3.png`
 - **Processing:** flattened to RGB, true colour PNG optimize (has purple gradients that band under
   quantization). 206 KB to 159 KB. Already under 1600 wide, not resized.
 - **Shows:** A product illustration of the outreach sequence builder: a running sequence with an
@@ -80,11 +80,11 @@ Shipped files live in `public/projects/crmsolid/` and are referenced from the pa
 
 ### `brand-mark.png`
 
-- **Source:** `CRMSolid/1.png`
+- **Source:** `Pinlyx/1.png`
 - **Processing:** flattened to RGB, 256 colour palette. 13 KB to 6 KB. Not resized (617x359).
 - **Shows:** Logo and brand colour swatches.
 - **Privacy:** Clean.
-- **alt:** "CRMSolid logo with its brand colour palette."
+- **alt:** "Pinlyx logo with its brand colour palette."
 - **caption:** "Brand mark."
 - **Placement:** Optional. A small logo in the page header or in the links block. Lowest priority
   of the four.
@@ -102,7 +102,7 @@ Shipped files live in `public/projects/crmsolid/` and are referenced from the pa
 | `inappimages/pipeline.png` | Pipeline board with three real Telegram handles and partial names. |
 | `inappimages/Mockup 01.png` | Same pipeline board as above, inside a browser mockup. Same handles. |
 | `inappimages/Mockup 01 (1).png` | Dashboard in a browser mockup. A full phone number appears repeatedly in the Recent Activity feed. |
-| `inappimages/screencapture-app-crmsolid-2025-09-30-14_50_11.png` | Full dashboard. A phone number repeated eight times, plus a list of third party target usernames and message excerpts. |
+| `inappimages/screencapture-app-pinlyx-2025-09-30-14_50_11.png` | Full dashboard. A phone number repeated eight times, plus a list of third party target usernames and message excerpts. |
 | `accounts.png` | Connected accounts page. Shows a full phone number and a social handle. |
 | `scrapers.png` | Shows a full phone number and a third party Telegram group. Also framed as "automate member extraction from Telegram groups", which is the exact positioning to keep off a page aimed at employers. |
 
@@ -148,7 +148,7 @@ Shots worth taking, in priority order:
 
 ## Security note, act on this first
 
-`C:\Users\eguve\Desktop\CRMSolid\Screenshot_1.png` shows plaintext two factor backup codes for a
+`C:\Users\eguve\Desktop\Pinlyx\Screenshot_1.png` shows plaintext two factor backup codes for a
 billing provider account. Regenerate those codes and delete the file.
 
 Separately, and outside this folder: the private repository still carries a plaintext server password

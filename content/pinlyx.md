@@ -1,6 +1,6 @@
-# CRMSolid
+# Pinlyx
 
-> Source-of-truth content for the CRMSolid project page.
+> Source-of-truth content for the Pinlyx project page.
 > Language: English. A Turkish translation is a separate pass.
 > Every number here was measured on the repository or read out of production logs.
 > The repository is private, so this page is the evidence.
@@ -9,14 +9,14 @@
 
 ## 1. Summary
 
-**slug:** `crmsolid`
+**slug:** `pinlyx`
 **role:** Sole developer. Design, code, deploy, on call.
 **status:** In production since 2025. Paying users.
 **one-line hook:** A CRM that runs five services on one Hetzner box, serves 1.79 million business records in 15ms, and exposes the whole thing to AI assistants over MCP.
 
 **Intro paragraph:**
 
-CRMSolid is a multi-tenant SaaS CRM for teams that sell over messaging apps rather than email.
+Pinlyx is a multi-tenant SaaS CRM for teams that sell over messaging apps rather than email.
 I built and still run all of it: a .NET 8 API, a Next.js panel, a .NET 9 desktop agent, a health
 monitor, and a landing site, behind Traefik on a single Linux server. The interesting parts are
 not the CRUD. They are a 1.79 million row business directory built from open map data, an MCP
@@ -121,8 +121,8 @@ A left-to-right flow in three bands.
 
 **Band 2, middle, "Edge".** One wide box labelled `Traefik 3.1` with a small subtitle
 `TLS via Let's Encrypt, HTTP to HTTPS redirect`. Every arrow from band 1 enters here.
-Four labelled arrows leave it, one per hostname: `crmsolid.com`, `app.crmsolid.com`,
-`api.crmsolid.com`, `health.crmsolid.com`.
+Four labelled arrows leave it, one per hostname: `pinlyx.com`, `app.pinlyx.com`,
+`api.pinlyx.com`, `health.pinlyx.com`.
 
 **Band 3, right, "Server".** A large rounded container labelled
 `TelegramSimple API (.NET 8, single process)` holding five stacked inner boxes:
@@ -184,7 +184,7 @@ Turkish rows and inconsistent on the rest. Province and district filtering is en
 
 ### 4.2 An MCP server, hand written against the spec
 
-CRMSolid speaks the Model Context Protocol, so an AI assistant can use the CRM as a set of tools
+Pinlyx speaks the Model Context Protocol, so an AI assistant can use the CRM as a set of tools
 rather than through a scraped UI or a generic HTTP wrapper.
 
 - **62 tools**, from `crm_search_contacts` and `crm_get_contact` through `crm_create_deal`,
@@ -449,10 +449,10 @@ The CRM itself is closed source. These pieces of it are public and MIT licensed.
 
 | Link | What it is |
 |---|---|
-| https://github.com/CRM-Solid/crmsolid-dotnet | .NET SDK for the CRMSolid API. Typed resources, HMAC and bearer credentials, a retrying rate limit handler, its own NUnit suite. |
-| https://github.com/CRM-Solid/crmsolid-mcp | MCP server in TypeScript. Lets AI assistants use the CRM. |
-| https://github.com/CRM-Solid/crmsolid-clipper | Chrome extension, published on the Chrome Web Store. |
-| https://crmsolid.com | The product. |
+| https://github.com/Pinlyx/pinlyx-dotnet | .NET SDK for the Pinlyx API. Typed resources, HMAC and bearer credentials, a retrying rate limit handler, its own NUnit suite. |
+| https://github.com/Pinlyx/pinlyx-mcp | MCP server in TypeScript. Lets AI assistants use the CRM. |
+| https://github.com/Pinlyx/pinlyx-clipper | Chrome extension, published on the Chrome Web Store. |
+| https://pinlyx.com | The product. |
 
 ---
 

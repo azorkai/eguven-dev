@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from '../i18n/useLanguage';
-import { crmsolidEn, type CrmSolidContent } from '../content/crmsolid.en';
-import { crmsolidTr } from '../content/crmsolid.tr';
+import { pinlyxEn, type PinlyxContent } from '../content/pinlyx.en';
+import { pinlyxTr } from '../content/pinlyx.tr';
 
 /* ---------------------------------------------------------------------------
- *  CRMSolid runtime diagram.
+ *  Pinlyx runtime diagram.
  *
  *  Two layouts, one at a time in the DOM so a screen reader is not handed the
  *  same picture twice. Wide is a left to right read: clients, edge, server.
@@ -28,10 +28,10 @@ const PAPER = 'var(--color-paper-raised)';
 const SUNK = 'var(--color-paper-sunk)';
 const ACCENT = 'var(--color-accent)';
 
-const TITLE_ID = 'crmsolid-diagram-title';
-const DESC_ID = 'crmsolid-diagram-desc';
+const TITLE_ID = 'pinlyx-diagram-title';
+const DESC_ID = 'pinlyx-diagram-desc';
 
-type Labels = CrmSolidContent['diagram'];
+type Labels = PinlyxContent['diagram'];
 
 /* ---- primitives --------------------------------------------------------- */
 
@@ -167,13 +167,13 @@ const Wide = ({ d }: { d: Labels }) => (
 
         {/* edge into the server, one arrow per hostname */}
         <Line d="M368,46 H498" />
-        <Tag x={433} y={40} anchor="middle">crmsolid.com</Tag>
+        <Tag x={433} y={40} anchor="middle">pinlyx.com</Tag>
         <Line d="M368,96 H498" />
-        <Tag x={433} y={90} anchor="middle">app.crmsolid.com</Tag>
+        <Tag x={433} y={90} anchor="middle">app.pinlyx.com</Tag>
         <Line d="M368,146 H498" />
-        <Tag x={433} y={140} anchor="middle">health.crmsolid.com</Tag>
+        <Tag x={433} y={140} anchor="middle">health.pinlyx.com</Tag>
         <Line d="M368,210 H498" />
-        <Tag x={433} y={204} anchor="middle">api.crmsolid.com</Tag>
+        <Tag x={433} y={204} anchor="middle">api.pinlyx.com</Tag>
 
         {/* server */}
         <Box x={500} y={26} w={240} h={40} title={d.landing} sub={d.landingSub} />
@@ -242,7 +242,7 @@ const Stacked = ({ d }: { d: Labels }) => (
         <Box x={32} y={232} w={316} h={64} title="" />
         <text x={44} y={250} fontSize="10.5" fontWeight="700" fill={INK}>Traefik 3.1</text>
         <text x={44} y={264} fontSize="8.2" fill={MUTED}>{d.traefikTlsStacked}</text>
-        <text x={44} y={278} fontSize="8.2" fill={MUTED}>crmsolid.com, app., api., health.crmsolid.com</text>
+        <text x={44} y={278} fontSize="8.2" fill={MUTED}>pinlyx.com, app., api., health.pinlyx.com</text>
 
         <Line d="M100,296 V330" />
 
@@ -285,9 +285,9 @@ const Stacked = ({ d }: { d: Labels }) => (
 
 const QUERY = '(min-width: 1024px)';
 
-const CrmSolidDiagram = () => {
+const PinlyxDiagram = () => {
     const { lang } = useLanguage();
-    const d = (lang === 'tr' ? crmsolidTr : crmsolidEn).diagram;
+    const d = (lang === 'tr' ? pinlyxTr : pinlyxEn).diagram;
 
     const [wide, setWide] = useState(() => {
         try {
@@ -316,4 +316,4 @@ const CrmSolidDiagram = () => {
     );
 };
 
-export default CrmSolidDiagram;
+export default PinlyxDiagram;

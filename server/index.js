@@ -44,6 +44,26 @@ app.use('/api/posts', blogRoutes);
    kart crawler'ları gibi JS çalıştırmıyor. */
 app.use(legalRoutes);
 
+/* ---------------------------------------------------------------------------
+ *  TAŞINMIŞ ADRESLER
+ *
+ *  CRMSolid artık Pinlyx, PlayerSells ise sitede değil. İki adres de aylarca
+ *  basıldı ve indekslendi; 404 vermek yerine 301 ile devrediyorlar, böylece
+ *  birikmiş sıralama yeni adrese geçiyor. SPA kabuğundan ÖNCE bağlı, çünkü
+ *  aşağıdaki `/*splat` her adrese cevap verir ve bu ikisini de yutardı.
+ * ------------------------------------------------------------------------- */
+
+const MOVED = {
+    '/projects/crmsolid': '/projects/pinlyx',
+    '/projects/playersells': '/',
+};
+
+app.use((req, res, next) => {
+    const to = MOVED[req.path.replace(/\/+$/, '') || '/'];
+    if (to) return res.redirect(301, to);
+    next();
+});
+
 /* Serve the built assets, but never index.html: with the default `index`
    behaviour a request for / is answered here, straight off disk, and never
    reaches the handler below that writes the social card tags. The front page
@@ -75,15 +95,10 @@ const CARDS = {
         description:
             'Systems I designed, wrote and still run. A live SaaS CRM on .NET and PostgreSQL, a multi-tenant hosting platform, and a 1.79 million row business catalogue that answers in 15 milliseconds.',
     },
-    '/projects/crmsolid': {
-        title: 'CRMSolid, a case study',
+    '/projects/pinlyx': {
+        title: 'Pinlyx, a case study',
         description:
             'A multi-tenant SaaS CRM written and run by one person. Five separately deployed services, a modular monolith rather than microservices, 516 NUnit tests, and a catalogue query taken from 277 seconds to 15 milliseconds.',
-    },
-    '/projects/playersells': {
-        title: 'PlayerSells, a case study',
-        description:
-            'Percentile ranks across five networks, 25 free tools behind one gate, and an insight engine. The ranking query takes 12 to 44 seconds and the timeout is 15, so the page never runs it.',
     },
     '/articles': {
         title: 'The Log, notes from production',

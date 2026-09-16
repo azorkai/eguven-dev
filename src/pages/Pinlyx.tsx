@@ -1,21 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Minus, Plus } from 'lucide-react';
-import CrmSolidDiagram from '../components/CrmSolidDiagram';
+import PinlyxDiagram from '../components/PinlyxDiagram';
 import { useLanguage } from '../i18n/useLanguage';
 import { rich } from '../i18n/rich';
 import {
-    CRM_IMAGES,
-    CRM_LINKS,
-    CRM_SECTION_IDS,
-    CRM_SECTION_NUMBERS,
-    type CrmSectionId,
-} from '../content/crmsolid';
-import { crmsolidEn } from '../content/crmsolid.en';
-import { crmsolidTr } from '../content/crmsolid.tr';
+    PINLYX_IMAGES,
+    PINLYX_LINKS,
+    PINLYX_SECTION_IDS,
+    PINLYX_SECTION_NUMBERS,
+    type PinlyxSectionId,
+} from '../content/pinlyx';
+import { pinlyxEn } from '../content/pinlyx.en';
+import { pinlyxTr } from '../content/pinlyx.tr';
 
 /* ---------------------------------------------------------------------------
- *  CRMSOLID  ( /projects/crmsolid )
+ *  PINLYX  ( /projects/pinlyx )
  *
  *  A case study set as a newspaper feature. Long, so it carries its own index:
  *  a sticky contents column on wide screens, a collapsible bar on narrow ones.
@@ -26,7 +26,7 @@ import { crmsolidTr } from '../content/crmsolid.tr';
  *  Every number on this page is either counted from the repository or read out
  *  of production logs. The repository is private, so the page is the evidence.
  *
- *  The prose itself lives in src/content/crmsolid.{en,tr}.ts. This file is the
+ *  The prose itself lives in src/content/pinlyx.{en,tr}.ts. This file is the
  *  layout; the title and description are set by <DocumentMeta>.
  * ------------------------------------------------------------------------- */
 
@@ -39,7 +39,7 @@ function Section({
     title,
     children,
 }: {
-    id: CrmSectionId;
+    id: PinlyxSectionId;
     title: string;
     children: React.ReactNode;
 }) {
@@ -53,7 +53,7 @@ function Section({
                     <h2 className="font-headline text-[1.6rem] leading-tight font-bold text-ink md:text-[2.1rem]">
                         {title}
                     </h2>
-                    <span className="folio ml-auto shrink-0">{CRM_SECTION_NUMBERS[id]}</span>
+                    <span className="folio ml-auto shrink-0">{PINLYX_SECTION_NUMBERS[id]}</span>
                 </div>
             </div>
             {children}
@@ -134,13 +134,13 @@ function TocList({
     active,
     onPick,
 }: {
-    titles: Record<CrmSectionId, string>;
-    active: CrmSectionId;
+    titles: Record<PinlyxSectionId, string>;
+    active: PinlyxSectionId;
     onPick?: () => void;
 }) {
     return (
         <ol className="space-y-0">
-            {CRM_SECTION_IDS.map((id) => {
+            {PINLYX_SECTION_IDS.map((id) => {
                 const on = id === active;
                 return (
                     <li key={id}>
@@ -155,7 +155,7 @@ function TocList({
                             }`}
                         >
                             <span className="folio shrink-0 pt-[3px] tabular-nums">
-                                {CRM_SECTION_NUMBERS[id]}
+                                {PINLYX_SECTION_NUMBERS[id]}
                             </span>
                             <span>{titles[id]}</span>
                         </a>
@@ -168,11 +168,11 @@ function TocList({
 
 /* ---- page --------------------------------------------------------------- */
 
-const CrmSolid: React.FC = () => {
+const Pinlyx: React.FC = () => {
     const { lang } = useLanguage();
-    const c = lang === 'tr' ? crmsolidTr : crmsolidEn;
+    const c = lang === 'tr' ? pinlyxTr : pinlyxEn;
 
-    const [active, setActive] = useState<CrmSectionId>(CRM_SECTION_IDS[0]);
+    const [active, setActive] = useState<PinlyxSectionId>(PINLYX_SECTION_IDS[0]);
     const [tocOpen, setTocOpen] = useState(false);
 
     /* Which section the reader is in. Read on scroll, throttled to one frame:
@@ -181,8 +181,8 @@ const CrmSolid: React.FC = () => {
         let frame = 0;
         const read = () => {
             frame = 0;
-            let current: CrmSectionId = CRM_SECTION_IDS[0];
-            for (const id of CRM_SECTION_IDS) {
+            let current: PinlyxSectionId = PINLYX_SECTION_IDS[0];
+            for (const id of PINLYX_SECTION_IDS) {
                 const el = document.getElementById(id);
                 if (el && el.getBoundingClientRect().top <= 180) current = id;
             }
@@ -212,9 +212,9 @@ const CrmSolid: React.FC = () => {
                 </div>
 
                 {/* lang="en" so CSS uppercasing does not put a Turkish dot on the
-                    product name: CRMSOLID, never CRMSOLID with a dotted I. */}
+                    product name: PINLYX, never PİNLYX with a dotted I. */}
                 <h1 lang="en" className="masthead mb-8 uppercase select-none">
-                    CRM<span className="headline-accent">Solid</span>
+                    Pin<span className="headline-accent">lyx</span>
                 </h1>
 
                 <div className="rule-double mb-8 max-w-4xl" />
@@ -269,7 +269,7 @@ const CrmSolid: React.FC = () => {
                             <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3 marker:content-['']">
                                 <span className="label shrink-0">{c.contents}</span>
                                 <span className="folio truncate normal-case tracking-[0.08em]">
-                                    {CRM_SECTION_NUMBERS[active]} {c.toc[active]}
+                                    {PINLYX_SECTION_NUMBERS[active]} {c.toc[active]}
                                 </span>
                                 <span aria-hidden="true" className="ml-auto shrink-0 text-ink-muted">
                                     {tocOpen ? <Minus size={15} /> : <Plus size={15} />}
@@ -299,9 +299,9 @@ const CrmSolid: React.FC = () => {
                                 ))}
 
                                 <Figure
-                                    src={CRM_IMAGES.inbox.src}
-                                    width={CRM_IMAGES.inbox.width}
-                                    height={CRM_IMAGES.inbox.height}
+                                    src={PINLYX_IMAGES.inbox.src}
+                                    width={PINLYX_IMAGES.inbox.width}
+                                    height={PINLYX_IMAGES.inbox.height}
                                     alt={c.problem.figure.alt}
                                     caption={c.problem.figure.caption}
                                     eager
@@ -340,7 +340,7 @@ const CrmSolid: React.FC = () => {
 
                                 <figure className="my-12">
                                     <div className="paper-panel p-4 md:p-6">
-                                        <CrmSolidDiagram />
+                                        <PinlyxDiagram />
                                     </div>
                                     <figcaption className="mt-3 border-t border-rule pt-2 text-[13px] leading-relaxed text-ink-muted">
                                         {c.architecture.diagramCaption}
@@ -348,9 +348,9 @@ const CrmSolid: React.FC = () => {
                                 </figure>
 
                                 <Figure
-                                    src={CRM_IMAGES.pipeline.src}
-                                    width={CRM_IMAGES.pipeline.width}
-                                    height={CRM_IMAGES.pipeline.height}
+                                    src={PINLYX_IMAGES.pipeline.src}
+                                    width={PINLYX_IMAGES.pipeline.width}
+                                    height={PINLYX_IMAGES.pipeline.height}
                                     alt={c.architecture.figure.alt}
                                     caption={c.architecture.figure.caption}
                                 />
@@ -389,9 +389,9 @@ const CrmSolid: React.FC = () => {
                                 ))}
 
                                 <Figure
-                                    src={CRM_IMAGES.mcp.src}
-                                    width={CRM_IMAGES.mcp.width}
-                                    height={CRM_IMAGES.mcp.height}
+                                    src={PINLYX_IMAGES.mcp.src}
+                                    width={PINLYX_IMAGES.mcp.width}
+                                    height={PINLYX_IMAGES.mcp.height}
                                     alt={c.mcp.figure.alt}
                                     caption={c.mcp.figure.caption}
                                     className="max-w-2xl"
@@ -424,9 +424,9 @@ const CrmSolid: React.FC = () => {
                                 ))}
 
                                 <Figure
-                                    src={CRM_IMAGES.agents.src}
-                                    width={CRM_IMAGES.agents.width}
-                                    height={CRM_IMAGES.agents.height}
+                                    src={PINLYX_IMAGES.agents.src}
+                                    width={PINLYX_IMAGES.agents.width}
+                                    height={PINLYX_IMAGES.agents.height}
                                     alt={c.realtime.figure.alt}
                                     caption={c.realtime.figure.caption}
                                 />
@@ -507,7 +507,7 @@ const CrmSolid: React.FC = () => {
                                 <P>{rich(c.links.intro)}</P>
 
                                 <ul className="mb-4 divide-y divide-rule border-y border-rule">
-                                    {CRM_LINKS.map((link) => (
+                                    {PINLYX_LINKS.map((link) => (
                                         <li key={link.href} className="py-4">
                                             <a
                                                 href={link.href}
@@ -540,7 +540,7 @@ const CrmSolid: React.FC = () => {
                                             <span aria-hidden="true">&larr;</span> {c.links.allProjects}
                                         </Link>
                                         <a
-                                            href="https://crmsolid.com"
+                                            href="https://pinlyx.com"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center gap-3 border border-rule-strong px-8 py-4 text-[11px] font-bold tracking-[0.2em] text-ink-muted uppercase transition-colors hover:border-ink hover:text-ink"
@@ -558,4 +558,4 @@ const CrmSolid: React.FC = () => {
     );
 };
 
-export default CrmSolid;
+export default Pinlyx;

@@ -80,7 +80,7 @@ type System = {
 
 const systems: System[] = [
     {
-        name: 'CRMSolid',
+        name: 'Pinlyx',
         dateline: '2025 to present / own product / in production, paying users',
         lines: [
             'Multi-tenant SaaS CRM. I designed it, wrote it and still run it on my own.',
@@ -94,7 +94,7 @@ const systems: System[] = [
             'Runs on Docker Compose on a Hetzner server behind Traefik with automatic SSL. GitHub Actions deploys over key based SSH, and a separate health monitor service watches the other four.',
         ],
         stack: ['.NET 9', 'C#', 'PostgreSQL', 'EF Core', 'Redis', 'SignalR', 'DuckDB', 'Docker', 'Traefik'],
-        link: { label: 'crmsolid.com', href: 'https://crmsolid.com/' },
+        link: { label: 'pinlyx.com', href: 'https://pinlyx.com/' },
     },
     {
         name: 'NerioPanel',
@@ -146,9 +146,9 @@ const corrections: string[] = [
 ];
 
 const links: [string, string, string][] = [
-    ['crmsolid-dotnet', 'https://github.com/CRM-Solid/crmsolid-dotnet', '.NET SDK for the CRMSolid API. MIT licensed.'],
-    ['crmsolid-mcp', 'https://github.com/CRM-Solid/crmsolid-mcp', 'MCP server in TypeScript. Lets AI assistants use the CRM. MIT licensed.'],
-    ['crmsolid-clipper', 'https://github.com/CRM-Solid/crmsolid-clipper', 'Chrome extension, published on the Chrome Web Store. MIT licensed.'],
+    ['pinlyx-dotnet', 'https://github.com/Pinlyx/pinlyx-dotnet', '.NET SDK for the Pinlyx API. MIT licensed.'],
+    ['pinlyx-mcp', 'https://github.com/Pinlyx/pinlyx-mcp', 'MCP server in TypeScript. Lets AI assistants use the CRM. MIT licensed.'],
+    ['pinlyx-clipper', 'https://github.com/Pinlyx/pinlyx-clipper', 'Chrome extension, published on the Chrome Web Store. MIT licensed.'],
     ['huawei-matebook-m1080-linux-audio', 'https://github.com/azorkai/huawei-matebook-m1080-linux-audio', 'Linux kernel audio patch for AMD Renoir and ES8316 laptops. DKMS package, GPL-2.0.'],
     ['eguven-dev', 'https://github.com/azorkai/eguven-dev', 'Source and deployment setup for this site, including the page you are reading.'],
 ];
@@ -196,7 +196,7 @@ Be direct about the gaps.`,
         id: 'architecture',
         label: 'For a technical interview',
         body: `Read this developer profile: https://eguven.dev/ai
-and the case study behind it: https://eguven.dev/projects/crmsolid
+and the case study behind it: https://eguven.dev/projects/pinlyx
 
 Three decisions are described there: a modular monolith
 instead of microservices, a per account send budget that

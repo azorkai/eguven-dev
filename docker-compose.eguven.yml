@@ -4,7 +4,7 @@
 # socket'ini dinledigi icin bu container'i label'larindan otomatik alir; ayni
 # `web` agina external olarak katilmasi yeterli.
 #
-# Boylece bu servis coksede/bozulsa da crmsolid yigini etkilenmez.
+# Boylece bu servis coksede/bozulsa da pinlyx yigini etkilenmez.
 
 services:
   eguven:

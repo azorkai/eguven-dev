@@ -15,7 +15,7 @@ Yerelde dogrulandi: imaj kuruluyor, container 8080'de dinliyor, `/`, `/contact`,
 `/root/docker-compose.yml` dosyasina dokunmaz. Traefik zaten Docker socket'ini
 dinledigi icin bu container'i label'larindan otomatik alir.
 
-Kazanc: bu servis coksede, build'i bozulsa da **crmsolid yigini etkilenmez**.
+Kazanc: bu servis coksede, build'i bozulsa da **pinlyx yigini etkilenmez**.
 
 ---
 
@@ -26,11 +26,11 @@ delege edilmis, ama atandigi nameserver'lar cevap vermiyor.
 
 ```
 eguven.dev   NS/A/SOA  ->  Status=2 SERVFAIL
-crmsolid.com A         ->  Status=0  188.114.97.7  (Cloudflare)
+pinlyx.com   A         ->  Status=0  188.114.97.7  (Cloudflare)
 ```
 
 Onerilen: Yoncu panelinden nameserver'lari **Cloudflare**'e cevir (ucretsiz,
-crmsolid.com zaten orada). Sonra Cloudflare'de:
+pinlyx.com zaten orada). Sonra Cloudflare'de:
 
 | Tip | Ad          | Deger            | Proxy |
 |-----|-------------|------------------|-------|
@@ -114,7 +114,7 @@ docker logs traefik --tail 50 | grep -i acme
 
 Production'in hala saglam oldugunu da teyit et:
 ```bash
-curl -I https://crmsolid.com https://app.crmsolid.com https://api.crmsolid.com
+curl -I https://pinlyx.com https://app.pinlyx.com https://api.pinlyx.com
 ```
 
 ---
